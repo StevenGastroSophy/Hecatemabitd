@@ -40,31 +40,51 @@ $(function() {
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
+		text-align:center;
         margin-top: 30%;
     }
+	
+	#cautionb{
+	    font-size: 1.5em;
+	}
 }
 @media (min-width: 992px) and (max-width:1200px){
 		
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
+		text-align:center;
         margin-top: 30%;
     }
+	
+	#cautionb{
+	    font-size: 2em;
+	}
 }
 @media (min-width: 1200px){
 		
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
+		text-align:center;
         margin-top: 30%;
     }
+	
+	#cautionb{
+	    font-size: 3em;
+	}
 }
 @media (max-width: 767px){
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
+		text-align:center;
         margin-top: 200%;
     }
+	
+	#cautionb{
+	    font-size: 1.3em;
+	}
 }
 
 #products{
@@ -92,7 +112,7 @@ $(function() {
 		    <li><a id="products-click" style="cursor: pointer;"><i class="fa fa-shopping-cart"></i> 商品介紹 </a></li>
 			<li><a id="flowchart-click" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 購物流程 </a></li>
 			<li><a id="aboutme-click" style="cursor: pointer;"><i class="fa fa-sun-o"></i> 關於天梁 </a></li>
-			<li><a id="contactus-click"  style="cursor: pointer;"><i class="fa fa-envelope"></i> 聯絡方式 </a></li>
+			<li><a id="contactus-click"  style="cursor: pointer;"><i class="fa fa-envelope"></i> 版權聲明 </a></li>
 		</ul>
 	</nav> <!-- navigation end -->
 		
@@ -125,9 +145,11 @@ $(function() {
     </div>
 	
 	<div id="flowchart">
-      <p>
-        <strong>模里西斯</strong>
-        是一座位在非洲南端的小島。
+      <p style="font-size: 3em;">
+        <strong>購物流程</strong>
+	  </p>
+	  <p id="cautionb">
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i><strong>本賣場之物品皆於貝婷伺服器</strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
       </p>
       <p>
         <br>《瑪奇》是一個以西歐凱爾特神話為背景的3D大型多人線上角色扮演遊戲。</br>
@@ -153,11 +175,20 @@ $(function() {
 	<div id="aboutme">
       <strong style="font-family:Microsoft JhengHei; font-size: 3em;">關於天梁</strong>
       <img src="{{ url_for('static', filename='img/icon.jpg') }}" style="display:block; margin:auto; margin-top: 1em;" /> 
+	  <p>
+        <br>伺服器: 貝婷</br>
+        <br>出沒時間: 19:00~23:00</br>
+        <br>賦予、生產技能皆R1無大師，歡迎短訊代工</br>
+		<br>「酒的好喝，往往，就在於它的難喝。」</br>
+      </p>
     </div>
 
     <footer id="contactus" style="text-align:center;">
-      <strong style="font-family:Microsoft JhengHei; font-size: 3em;">聯絡方式</strong>
-      <p>電話:香港3345678</p>
+      <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
+      <p>
+	    <br>本站所有遊戲圖片以及數據皆由遊戲官方Nexon, Devcat, Gamania所有</br>
+	    <br>若有任何侵權之疑慮請聯絡本站協助撤下內容</br>
+	  </p>
     </footer>
 	
 </body>

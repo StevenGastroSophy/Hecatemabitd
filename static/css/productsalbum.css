@@ -1,0 +1,123 @@
+
+.album{
+	width: 100%;
+}
+.album img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	height: 100%;
+	width: auto;
+}
+.album a{
+	display:block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+	border:2px solid #191970;
+	text-align: center;
+	text-decoration: none;
+	font-size: 36px;
+	color:#cccccc;
+}
+.album a:before{
+	content:'';
+	display:inline-block;
+	height: 100%;
+	vertical-align:middle;
+}
+	
+
+@media (min-width: 768px) and (max-width:992px){
+		
+	.album .pic{
+		position: relative;
+		width: 10% ;
+		height: 0;
+		padding-top: 10%;
+		float: left;
+		/*will-change: all;*/
+	}
+	.album .pic:nth-child(24n+4),
+	.album .pic:nth-child(24n+8){
+		width: 19.9%;
+		padding-top: 19.9%;
+	}
+	.album .pic:nth-child(24n+9),
+	.album .pic:nth-child(24n+11),
+	.album .pic:nth-child(24n+13),
+	.album .pic:nth-child(24n+17),
+	.album .pic:nth-child(24n+19),
+	.album .pic:nth-child(24n+21){
+		margin-top: -10%;
+	}
+}
+@media (min-width: 992px) and (max-width:1200px){
+		
+	.album .pic{
+		position: relative;
+		width: 10%;
+		height: 0;
+		padding-top: 10%;
+		float: left;
+		/*will-change: auto;*/
+	}
+	.album .pic:nth-child(24n+1),
+	.album .pic:nth-child(24n+6){
+			width: 19.9%;
+			padding-top: 19.9%;
+	}
+	.album .pic:nth-child(24n+13),
+	.album .pic:nth-child(24n+15),
+	.album .pic:nth-child(24n+17),
+	.album .pic:nth-child(24n+19){
+		margin-top: -10%;
+	}
+}
+@media (min-width: 1200px){
+		
+	.album .pic{
+		position: relative;
+		width: 10%;
+		height: 0;
+		padding-top: 10%;
+		float: left;
+		/*will-change: all;*/
+	}
+	.album .pic:nth-child(21n+3),
+	.album .pic:nth-child(21n+7),
+	.album .pic:nth-child(21n+18){
+		width: 19.9%;
+		padding-top: 19.9%;
+	}
+	.album .pic:nth-child(21n+10),
+	.album .pic:nth-child(21n+12),
+	.album .pic:nth-child(21n+16),
+	.album .pic:nth-child(21n+18){
+		margin-top: -10%;
+	}
+}
+@media (max-width: 767px){
+	.album .pic{
+		position: relative;
+		width: 25%;
+		height: 0;
+		padding-top: 25%;
+		float: left;
+	}
+	.album .pic:nth-child(12n+5){
+		width: 75%;
+		padding-top: 75%;
+	}
+	.album .pic:nth-child(12n+9){
+		width: 75%;
+		padding-top: 75%;
+		float: right;
+	}
+}

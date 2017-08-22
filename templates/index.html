@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/webicon.png') }}" />
+	<title>天梁小舖</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<!-- js files -->
+	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.flexslider.js') }}"></script>
+	<!-- css files -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/productsalbum.css') }}" type="text/css">
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script type="text/javascript">
+$(function() { 
+    $(".flexslider").flexslider({
+	slideshowSpeed: 4000,
+	animationSpeed: 400,
+	controlNav: false,
+	after: function(slider) {
+    /* auto-restart player if paused after action */
+    if (!slider.playing) {
+      slider.play();
+    }
+  }
+	}); 
+});  
+</script>
+
+	
+<style>
+.content { margin:50px auto; max-width:728px; line-height:1.7}
+
+@media (min-width: 768px) and (max-width:992px){
+		
+	#flowchart{
+	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
+        background-size: cover;
+        margin-top: 30%;
+    }
+}
+@media (min-width: 992px) and (max-width:1200px){
+		
+	#flowchart{
+	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
+        background-size: cover;
+        margin-top: 30%;
+    }
+}
+@media (min-width: 1200px){
+		
+	#flowchart{
+	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
+        background-size: cover;
+        margin-top: 30%;
+    }
+}
+@media (max-width: 767px){
+	#flowchart{
+	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
+        background-size: cover;
+        margin-top: 200%;
+    }
+}
+
+#products{
+  width: 100%;
+}
+
+#aboutme{
+  text-align:center;
+  width: 100%;
+}
+
+</style>
+
+</head>
+
+	<!-- header starts -->
+<header>
+	<!-- responsive nav bar -->
+	<div class="nav-bar">
+		<a href=""><i class="fa fa-bars"></i><span>MENU</span></a>
+	</div>
+	<!-- navigation -->
+	<nav>
+		<ul>
+		    <li><a id="products-click" style="cursor: pointer;"><i class="fa fa-shopping-cart"></i> 商品介紹 </a></li>
+			<li><a id="flowchart-click" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 購物流程 </a></li>
+			<li><a id="aboutme-click" style="cursor: pointer;"><i class="fa fa-sun-o"></i> 關於天梁 </a></li>
+			<li><a id="contactus-click"  style="cursor: pointer;"><i class="fa fa-envelope"></i> 聯絡方式 </a></li>
+		</ul>
+	</nav> <!-- navigation end -->
+		
+</header> <!-- header end -->
+
+<div id="blank"></div>
+<body>
+	<!-- body contents -->
+	<div class="flexslider"> 
+      <ul class="slides"> 
+	    {% for slidepic in slidelist %}
+          <li>
+			<img src="{{ url_for('static', filename=slidepic) }}"/>
+　        </li>
+        {% endfor %}
+        
+     </ul> 
+    </div>
+	
+	<div id="products">
+     <ul class="album">
+		{% for product in productlist %}
+		<li class="pic">
+				<a href={{productdict[product][1]}} target="_blank">
+	    	     <img src="{{ url_for('static', filename=productdict[product][0]) }}" title={{product}}>
+	    	    </a>
+		</li>
+        {% endfor %}	    	
+     </ul>
+    </div>
+	
+	<div id="flowchart">
+      <p>
+        <strong>模里西斯</strong>
+        是一座位在非洲南端的小島。
+      </p>
+      <p>
+        <br>《瑪奇》是一個以西歐凱爾特神話為背景的3D大型多人線上角色扮演遊戲。</br>
+        <br>遊戲由南韓Nexon公司devCAT工作室製作，並由Nexon營運。</br>
+      </p>
+      <p>
+     　 <br>《瑪奇》原文名「Mabinogi」一詞是源自於西歐中古吟遊詩人所演奏的歌曲，建構出遊戲中的世界——愛爾琳（Erinn）。</br>　
+        <br>遊戲引擎雖然是以三維顯示遊戲中的一花一草，但亦塑造出如人手繪畫似的平面質感。</br>
+        <br>儘管開發商在遊戲推出了主線任務，但玩家仍可以玩其它東西。</br>
+      </p>
+      <p>
+        <br>與其他網路遊戲不同的是，玩家沒有強制職業分類，可於轉生時選定技能修習方向，通過練習不同的技能來使角色的各方面能力變得更強。</br>
+        <br>除此之外，玩家亦可選擇角色的年齡、技能的組合、角色稱號等等。不同的生活習慣亦會改變角色的體型，例如進食。</br>
+        <br>玩家亦可使用動作，來改變角色交談時的樣子，或是進行一些小活動例如釣魚、進行兼職、生營火、個人農場等等。</br>
+　    </p>
+      <p>
+        <br>雖然《瑪奇》是以西歐塞爾特神話為背景，但遊戲中沒很確實地表達出該神話的意思，並且故事內容與標題的馬比諾吉昂完全沒有關係。</br>
+        <br>而它的標誌是採用凱爾特結的形式，同類型的結都出現在遊戲的不同的地方。</br>
+        <br>遊戲中的情節會不斷增加，以「代」（Generation）和「季節」（Season）為單位來增加新地區、人物和主線任務。</br>
+      </p>
+    </div>
+	
+	<div id="aboutme">
+      <strong style="font-family:Microsoft JhengHei; font-size: 3em;">關於天梁</strong>
+      <img src="{{ url_for('static', filename='img/icon.jpg') }}" style="display:block; margin:auto; margin-top: 1em;" /> 
+    </div>
+
+    <footer id="contactus" style="text-align:center;">
+      <strong style="font-family:Microsoft JhengHei; font-size: 3em;">聯絡方式</strong>
+      <p>電話:香港3345678</p>
+    </footer>
+	
+</body>
+</html>

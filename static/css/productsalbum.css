@@ -25,12 +25,14 @@
 	text-decoration: none;
 	font-size: 36px;
 	color:#cccccc;
+	background: #191970;
 }
 .album a:before{
 	content:'';
 	display:inline-block;
 	height: 100%;
 	vertical-align:middle;
+	background: #191970;
 }
 	
 

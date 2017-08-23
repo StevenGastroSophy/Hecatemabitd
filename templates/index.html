@@ -11,6 +11,7 @@
 	<script src="{{ url_for('static', filename='js/jquery.flexslider.js') }}"></script>
 	<!-- css files -->
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/rpg-awesome.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/productsalbum.css') }}" type="text/css">
 	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -40,12 +41,13 @@ $(function() {
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
-		text-align:center;
-        margin-top: 30%;
+        margin-top: 35%;
+		margin-bottom: 2%;
     }
 	
 	#cautionb{
 	    font-size: 1.5em;
+		text-align:center;
 	}
 }
 @media (min-width: 992px) and (max-width:1200px){
@@ -53,12 +55,13 @@ $(function() {
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
-		text-align:center;
-        margin-top: 30%;
+        margin-top: 35%;
+		margin-bottom: 2%;
     }
 	
 	#cautionb{
 	    font-size: 2em;
+		text-align:center;
 	}
 }
 @media (min-width: 1200px){
@@ -66,24 +69,26 @@ $(function() {
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
-		text-align:center;
-        margin-top: 30%;
+        margin-top: 35%;
+		margin-bottom: 2%;
     }
 	
 	#cautionb{
-	    font-size: 3em;
+	    font-size: 2em;
+		text-align:center;
 	}
 }
 @media (max-width: 767px){
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
-		text-align:center;
-        margin-top: 200%;
+        margin-top: 205%;
+		margin-bottom: 2%;
     }
 	
 	#cautionb{
 	    font-size: 1.3em;
+		text-align:center;
 	}
 }
 
@@ -94,6 +99,7 @@ $(function() {
 #aboutme{
   text-align:center;
   width: 100%;
+  margin-bottom: 5%;
 }
 
 </style>
@@ -109,10 +115,10 @@ $(function() {
 	<!-- navigation -->
 	<nav>
 		<ul>
-		    <li><a id="products-click" style="cursor: pointer;"><i class="fa fa-shopping-cart"></i> 商品介紹 </a></li>
-			<li><a id="flowchart-click" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 購物流程 </a></li>
-			<li><a id="aboutme-click" style="cursor: pointer;"><i class="fa fa-sun-o"></i> 關於天梁 </a></li>
-			<li><a id="contactus-click"  style="cursor: pointer;"><i class="fa fa-envelope"></i> 版權聲明 </a></li>
+		    <li><a id="products-click" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 商品介紹 </a></li>
+			<li><a id="flowchart-click" style="cursor: pointer;"><i class="ra ra-cycle"></i> 購物流程 </a></li>
+			<li><a id="aboutme-click" style="cursor: pointer;"><i class="ra ra-crown"></i> 關於天梁 </a></li>
+			<li><a id="contactus-click"  style="cursor: pointer;"><i class="ra ra-wooden-sign"></i> 版權聲明 </a></li>
 		</ul>
 	</nav> <!-- navigation end -->
 		
@@ -133,7 +139,10 @@ $(function() {
     </div>
 	
 	<div id="products">
-     <ul class="album">
+      <p style="font-size: 3em; text-align: center; margin-bottom: 0.3em; border-bottom:thick dashed #ffbf00;">
+        <strong>商品介紹</strong>
+	  </p>
+      <ul class="album">
 		{% for product in productlist %}
 		<li class="pic">
 				<a href={{productdict[product][1]}} target="_blank">
@@ -141,44 +150,42 @@ $(function() {
 	    	    </a>
 		</li>
         {% endfor %}	    	
-     </ul>
+      </ul>
     </div>
 	
 	<div id="flowchart">
-      <p style="font-size: 3em;">
-        <strong>購物流程</strong>
-	  </p>
-	  <p id="cautionb">
-        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i><strong>本賣場之物品皆於貝婷伺服器</strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-      </p>
-      <p>
-        <br>《瑪奇》是一個以西歐凱爾特神話為背景的3D大型多人線上角色扮演遊戲。</br>
-        <br>遊戲由南韓Nexon公司devCAT工作室製作，並由Nexon營運。</br>
-      </p>
-      <p>
-     　 <br>《瑪奇》原文名「Mabinogi」一詞是源自於西歐中古吟遊詩人所演奏的歌曲，建構出遊戲中的世界——愛爾琳（Erinn）。</br>　
-        <br>遊戲引擎雖然是以三維顯示遊戲中的一花一草，但亦塑造出如人手繪畫似的平面質感。</br>
-        <br>儘管開發商在遊戲推出了主線任務，但玩家仍可以玩其它東西。</br>
-      </p>
-      <p>
-        <br>與其他網路遊戲不同的是，玩家沒有強制職業分類，可於轉生時選定技能修習方向，通過練習不同的技能來使角色的各方面能力變得更強。</br>
-        <br>除此之外，玩家亦可選擇角色的年齡、技能的組合、角色稱號等等。不同的生活習慣亦會改變角色的體型，例如進食。</br>
-        <br>玩家亦可使用動作，來改變角色交談時的樣子，或是進行一些小活動例如釣魚、進行兼職、生營火、個人農場等等。</br>
-　    </p>
-      <p>
-        <br>雖然《瑪奇》是以西歐塞爾特神話為背景，但遊戲中沒很確實地表達出該神話的意思，並且故事內容與標題的馬比諾吉昂完全沒有關係。</br>
-        <br>而它的標誌是採用凱爾特結的形式，同類型的結都出現在遊戲的不同的地方。</br>
-        <br>遊戲中的情節會不斷增加，以「代」（Generation）和「季節」（Season）為單位來增加新地區、人物和主線任務。</br>
-      </p>
+	  <div style="padding: 5%">
+        <p style="font-size: 3em; text-align:center;">
+          <strong>購物流程</strong>
+	    </p>
+	    <p id="cautionb">
+          <i class="ra ra-biohazard" aria-hidden="true"></i><strong>本賣場之物品皆於貝婷伺服器</strong><i class="ra ra-biohazard" aria-hidden="true"></i>
+        </p>
+	    <div style="font-size: 2em; text-align: left;">
+          <br>
+            <strong>STEP 1: 將商品放入購物車</strong>
+          </br>
+          <br>
+            <strong>STEP 2: 點選結帳</strong>
+　        </br>
+          <br>
+            <strong>STEP 3: 填寫遊戲ID與希望交易時間</strong>
+　        </br>
+          <br>
+            <strong>STEP 4: 等候天梁主動與您聯絡</strong>
+          </br>
+	    </div>
+	  </div>
     </div>
 	
 	<div id="aboutme">
       <strong style="font-family:Microsoft JhengHei; font-size: 3em;">關於天梁</strong>
       <img src="{{ url_for('static', filename='img/icon.jpg') }}" style="display:block; margin:auto; margin-top: 1em;" /> 
 	  <p>
+	    <br>遊戲ID: 沐刃一大</br>
         <br>伺服器: 貝婷</br>
         <br>出沒時間: 19:00~23:00</br>
-        <br>賦予、生產技能皆R1無大師，歡迎短訊代工</br>
+        <br>賦予、生產技能皆R1無大師，歡迎短訊代賦代工</br>
 		<br>「酒的好喝，往往，就在於它的難喝。」</br>
       </p>
     </div>

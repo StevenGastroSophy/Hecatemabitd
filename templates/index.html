@@ -41,7 +41,7 @@ $(function() {
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
-        margin-top: 35%;
+        margin-top: 33%;
 		margin-bottom: 2%;
     }
 	
@@ -55,7 +55,7 @@ $(function() {
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
-        margin-top: 35%;
+        margin-top: 33%;
 		margin-bottom: 2%;
     }
 	
@@ -69,7 +69,7 @@ $(function() {
 	#flowchart{
 	    background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
         background-size: cover;
-        margin-top: 35%;
+        margin-top: 33%;
 		margin-bottom: 2%;
     }
 	
@@ -146,7 +146,7 @@ $(function() {
 		{% for product in productlist %}
 		<li class="pic">
 				<a href={{productdict[product][1]}} target="_blank">
-	    	     <img src="{{ url_for('static', filename=productdict[product][0]) }}" title={{product}}>
+	    	     <img src="{{ url_for('static', filename=productdict[product][2]) }}" title={{product}}>
 	    	    </a>
 		</li>
         {% endfor %}	    	
@@ -162,17 +162,20 @@ $(function() {
           <i class="ra ra-biohazard" aria-hidden="true"></i><strong>本賣場之物品皆於貝婷伺服器</strong><i class="ra ra-biohazard" aria-hidden="true"></i>
         </p>
 	    <div style="font-size: 2em; text-align: left;">
-          <br>
-            <strong>STEP 1: 將商品放入購物車</strong>
+		  <br>
+            <strong>STEP 1: 選擇商品</strong>
           </br>
           <br>
-            <strong>STEP 2: 點選結帳</strong>
+            <strong>STEP 2: 將商品放入購物車</strong>
+          </br>
+          <br>
+            <strong>STEP 3: 點選結帳</strong>
 　        </br>
           <br>
-            <strong>STEP 3: 填寫遊戲ID與希望交易時間</strong>
+            <strong>STEP 4: 填寫遊戲ID與希望交易時間</strong>
 　        </br>
           <br>
-            <strong>STEP 4: 等候天梁主動與您聯絡</strong>
+            <strong>STEP 5: 等候天梁主動與您聯絡</strong>
           </br>
 	    </div>
 	  </div>

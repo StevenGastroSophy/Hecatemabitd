@@ -16,7 +16,7 @@ def index():
     productdict = dict()
     productlist = list()
     for data in data_products:
-        productdict[data.name] = [pathbyname(data.picname, data.picext), data.external]
+        productdict[data.name] = [pathbyname(data.picname, data.picext), data.external, pathbyname(data.psqname, data.psqext)]
         productlist.append(data.name)
         print(data.name)
 

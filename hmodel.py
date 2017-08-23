@@ -41,17 +41,26 @@ class products(db.Model):
     name = db.Column(db.String(256))
     picname = db.Column(db.String(256))
     picext = db.Column(db.String(64))
+    psqname = db.Column(db.String(256))
+    psqext = db.Column(db.String(64))
     external = db.Column(db.String(256))
+    price = db.Column(db.Integer)
     def __init__(self
                  , name
                  , picname
                  , picext
                  , external
+                 , psqname
+                 , psqext
+                 , price
                  ):
         self.name = name
         self.picname = picname
         self.picext = picext
+        self.psqname = psqname
+        self.psqext = psqext
         self.external = external
+        self.price = price
 
 if __name__ == '__main__':
     manager.run()

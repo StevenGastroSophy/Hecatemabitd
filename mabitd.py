@@ -4,39 +4,71 @@ from hmodel import *
 def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
 
-@app.route('/_add_numbers')
-def add_numbers():
-    """Add two numbers server side, ridiculous but well..."""
+@app.route('/_another_product')
+def another_product():
     data_products = products.query.order_by(products.id).all()
 
     productdict = dict()
     productlist = list()
     for data in data_products:
-        productdict[data.name] = [pathbyname(data.picname, data.picext), data.external, pathbyname(data.psqname, data.psqext)]
+        pricelist = []
+        w = int(int(data.price )/10000)
+        k = int(int(data.price )%10000)
+        if w  is not 0:
+            pricelist.append(str(w))
+        if k  is not 0:
+            pricelist.append(str(k))
+        else:
+            pricelist.append('')
+        data.price  = '萬'.join(pricelist)
+        productdict[data.name] = [pathbyname(data.picname, data.picext), pathbyname(data.psqname, data.psqext), data.id, data.price, data.description, data.external]
         productlist.append(data.name)
         print(data.name)
 
     print(productdict)
     print(productlist)
-    a = request.args.get('a', 0, type=int)
-    resultpic = productdict[productlist[a]][0]
-    return jsonify(result=resultpic)
+    productname = request.args.get('productname')
+    print(productname)
+    resultdict = dict()
+    resultdict['resultpic'] = productdict[productname][0]
+    resultdict['resultname'] = productname
+    resultdict['resultprice'] = productdict[productname][3]
+    resultdict['resultdescription'] = productdict[productname][4]
+    return jsonify(resultdict)
 
 @app.route('/products', methods=['GET'])
 def productpage():
+    defaultproductid = int(request.args.get('default'))
+    print("defaultproductid is"+str(defaultproductid))
+    print(type(defaultproductid))
 
     data_products = products.query.order_by(products.id).all()
 
     productdict = dict()
     productlist = list()
     for data in data_products:
-        productdict[data.name] = [pathbyname(data.picname, data.picext), data.external, pathbyname(data.psqname, data.psqext)]
+        print(data.id)
+        print(type(data.id))
+        if data.id == defaultproductid:
+            defaultproduct = data.name
+            print("defaultproduct is"+str(defaultproduct))   
+        pricelist = []
+        w = int(int(data.price )/10000)
+        k = int(int(data.price )%10000)
+        if w  is not 0:
+            pricelist.append(str(w))
+        if k  is not 0:
+            pricelist.append(str(k))
+        else:
+            pricelist.append('')
+        data.price  = '萬'.join(pricelist)
+        productdict[data.name] = [pathbyname(data.picname, data.picext), pathbyname(data.psqname, data.psqext), data.id, data.price, data.description, data.external]
         productlist.append(data.name)
         print(data.name)
 
     print(productdict)
     print(productlist)
-    return render_template('products.html', productdict = productdict, productlist = productlist)
+    return render_template('products.html', productdict = productdict, productlist = productlist, default = defaultproduct)
 
 
 @app.route('/', methods=['GET'])
@@ -51,7 +83,17 @@ def index():
     productdict = dict()
     productlist = list()
     for data in data_products:
-        productdict[data.name] = [pathbyname(data.picname, data.picext), data.external, pathbyname(data.psqname, data.psqext)]
+        pricelist = []
+        w = int(int(data.price )/10000)
+        k = int(int(data.price )%10000)
+        if w  is not 0:
+            pricelist.append(str(w))
+        if k  is not 0:
+            pricelist.append(str(k))
+        else:
+            pricelist.append('')
+        data.price  = '萬'.join(pricelist)
+        productdict[data.name] = [pathbyname(data.picname, data.picext), pathbyname(data.psqname, data.psqext), data.id, data.price, data.description, data.external]
         productlist.append(data.name)
         print(data.name)
 
@@ -61,6 +103,6 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=os.environ['PORT'])
+    app.run()
 
 

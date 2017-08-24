@@ -39,28 +39,36 @@ class products(db.Model):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
+    code = db.Column(db.String(256))
     picname = db.Column(db.String(256))
     picext = db.Column(db.String(64))
     psqname = db.Column(db.String(256))
     psqext = db.Column(db.String(64))
     external = db.Column(db.String(256))
     price = db.Column(db.Integer)
+    description = db.Column(db.String(256))
     def __init__(self
+                 , id
                  , name
+                 , code
                  , picname
                  , picext
                  , external
                  , psqname
                  , psqext
                  , price
+                 , description
                  ):
+        self.id = id
         self.name = name
+        self.code = code
         self.picname = picname
         self.picext = picext
         self.psqname = psqname
         self.psqext = psqext
         self.external = external
         self.price = price
+        self.description = description
 
 if __name__ == '__main__':
     manager.run()

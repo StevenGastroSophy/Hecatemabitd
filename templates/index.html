@@ -145,8 +145,8 @@ $(function() {
       <ul class="album">
 		{% for product in productlist %}
 		<li class="pic">
-				<a href={{productdict[product][1]}} target="_blank">
-	    	     <img src="{{ url_for('static', filename=productdict[product][2]) }}" title={{product}}>
+				<a href="../products?default={{productdict[product][2]}}">
+	    	     <img src="{{ url_for('static', filename=productdict[product][1]) }}" title={{product}}>
 	    	    </a>
 		</li>
         {% endfor %}	    	

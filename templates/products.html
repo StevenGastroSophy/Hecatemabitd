@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/webicon.png') }}" />
+	<title>商品一覽</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<!-- js files -->
+	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.flexslider.js') }}"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<!-- css files -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/rpg-awesome.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/productdetail.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/productsalbum.css') }}" type="text/css">
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+<script type="text/javascript">
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<script type="text/javascript">
+  $(function() {
+    var submit_form = function(e) {
+      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
+        a: 4
+      }, function(data) {
+        $('#productpic').attr("src", "static/"+data.result);
+      });
+      return false;
+    };
+
+    $('a#kirito').bind('click', submit_form);
+  });
+</script>
+
+<style>
+#products{
+  width: 100%;
+}
+</style>
+
+</head>
+<header>
+	<!-- responsive nav bar -->
+	<div class="nav-bar">
+		<a href=""><i class="fa fa-bars"></i><span>MENU</span></a>
+	</div>
+	<!-- navigation -->
+	<nav>
+		<ul>
+			<li><a id="aboutm-click" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 回首頁 </a></li>
+			<li><a id="aboutm-click" style="cursor: pointer;"><i class="fa fa-shopping-cart"></i> 其他商品 </a></li>
+		</ul>
+	</nav> <!-- navigation end -->
+		
+</header> <!-- header end -->
+<div id="blank"></div>
+<body>
+    <div class="row-fluid">
+			  <div class="span5">
+			    <div id="myCarousel" class="carousel slide cntr">
+                    <div class="carousel-inner">
+                      <div class="item active">
+                       <img id="productpic" src="static/img/p004.jpg" alt="">
+                      </div>
+                    </div>
+                </div>
+		  	  </div>
+		  	  <div class="span7">
+				  <h3 id="name">桐人假髮</h3>
+				  <hr class="soft"/>
+				
+				  <form class="form-horizontal qtyFrm">
+				    <div class="control-group">
+					  <label class="control-label" id="price"><span>$20000000</span></label>
+				    </div>
+				    <div style="margin-bottom:30px">
+				      <p id="decription">
+				        使用的話可以變裝為桐人的道具
+				      </p>
+				    </div>
+				    <button class="shopBtn"><span class=" icon-shopping-cart"></span> 前往奇幻</button>
+				  </form>
+			  </div>
+  </div>
+ 
+  <div id="products">
+    <p style="font-size: 3em; text-align: center; margin-bottom: 0.3em; border-bottom:thick dashed #FFBF00;">
+      <strong>所有商品</strong>
+	</p>
+    <ul class="album">
+      <li class="pic">
+		<a id="kirito">
+	    	<img src="{{ url_for('static', filename='img/p005.jpg') }}" title="桐人服裝SAO版本">
+	    </a>
+	  </li>    	
+    </ul>
+  </div>
+</body>

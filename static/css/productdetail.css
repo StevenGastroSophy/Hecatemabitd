@@ -1,11 +1,5 @@
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="static/css/style.css" rel="stylesheet"/>
-<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-<script src="static/js/main.js"></script>
-<style>
 #productpic{
-  width: 500px
+  width: 200px
 }
 
 h3 {font-size: 18px;line-height: 1.5em;}
@@ -47,6 +41,7 @@ h3 {font-size: 18px;line-height: 1.5em;}
 
 .row-fluid .span5 {
   width: 40%;
+  text-align:center;
 }
 
 .span5 {
@@ -122,49 +117,3 @@ h3 {font-size: 18px;line-height: 1.5em;}
   display: block;
 }
 }
-
-</style>
-<header>
-	<!-- responsive nav bar -->
-	<div class="nav-bar">
-		<a href=""><i class="fa fa-bars"></i><span>MENU</span></a>
-	</div>
-	<!-- navigation -->
-	<nav>
-		<ul>
-			<li><a id="aboutm-click" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 回首頁 </a></li>
-			<li><a id="aboutm-click" style="cursor: pointer;"><i class="fa fa-shopping-cart"></i> 其他商品 </a></li>
-		</ul>
-	</nav> <!-- navigation end -->
-		
-</header> <!-- header end -->
-<div id="blank"></div>
-<body>
-<div class="row-fluid">
-			<div class="span5">
-			  <div id="myCarousel" class="carousel slide cntr">
-                  <div class="carousel-inner">
-                    <div class="item active">
-                     <img id="productpic" src="static/img/food001.gif" alt="">
-                    </div>
-                  </div>
-              </div>
-			</div>
-			<div class="span7">
-				<h3>巧克力</h3>
-				<hr class="soft"/>
-				
-				<form class="form-horizontal qtyFrm">
-				  <div class="control-group">
-					<label class="control-label"><span>$30.00</span></label>
-				  </div>
-				  <div style="margin-bottom:30px">
-				    <p>
-				    送禮用包裝精美的巧克力。可以直接吃，也可製作為料理材料使用。
-				    </p>
-				  </div>
-				  <button class="shopBtn"><span class=" icon-shopping-cart"></span> 前往奇幻</button>
-				</form>
-			</div>
-</div>
-</body>

@@ -1,5 +1,9 @@
+#products{
+  width: 100%;
+}
+
 #productpic{
-  width: 200px
+  height: 250px
 }
 
 h3 {font-size: 18px;line-height: 1.5em;}
@@ -96,7 +100,7 @@ h3 {font-size: 18px;line-height: 1.5em;}
 }
 
 #productpic{
-  width: 200px
+  height: 100px
 }
 .row-fluid [class*="span"] {
   float: none;

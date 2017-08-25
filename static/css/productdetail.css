@@ -1,9 +1,11 @@
 #products{
   width: 100%;
+  padding-left:50px;
+  padding-right:50px;
 }
 
 #productpic{
-  height: 250px
+  height: 250px;
 }
 
 h3 {font-size: 18px;line-height: 1.5em;}
@@ -14,6 +16,8 @@ h3 {font-size: 18px;line-height: 1.5em;}
 
 .row-fluid {
   width: 100%;
+  padding-left:50px;
+  padding-right:50px;
 }
 
 .row-fluid:before,
@@ -100,7 +104,7 @@ h3 {font-size: 18px;line-height: 1.5em;}
 }
 
 #productpic{
-  height: 100px
+  height: 100px;
 }
 .row-fluid [class*="span"] {
   float: none;

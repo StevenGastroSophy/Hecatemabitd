@@ -1,4 +1,29 @@
-
+#btn_cart{
+    position: fixed;
+    top: 30%;  /*垂直位置*/
+    right: 0px;  /*水平位置*/
+    background: #FFBF00;
+    padding: 0px 6px 10px 4px;
+	color: #191970;
+	z-index: 1000;
+	border-radius:50px;
+	width:48px;
+	height:48px;
+	text-align: center;
+}
+#CartCount{
+  display:block;
+  color:#ffffff;
+  top:-5px;
+  right:-8px;
+  position:absolute;
+  font-size:15px;
+  background:#f00000;
+  border-radius: 10px;
+  width:20px;
+  height:20px;
+  text-align: center;
+}
 * {
   padding: 0;
   margin: 0;
@@ -10,7 +35,7 @@
 
 body{
 	font-family:Microsoft JhengHei;
-	font-weight: lighter;
+	font-weight:lighter;
 	font-size:12pt;
 	background-color:#191970;
 	color:#FFBF00;
@@ -19,7 +44,9 @@ body{
 	   height:3em;
 }
 
-header { width: 100%; }
+header { 
+       width: 100%; 
+}
 
 .nav-bar { display: none; }
 

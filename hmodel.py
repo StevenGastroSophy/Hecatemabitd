@@ -27,12 +27,6 @@ class slidepics(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
     ext = db.Column(db.String(64))
-    def __init__(self
-                 , name
-                 , ext
-                 ):
-        self.name = name
-        self.ext = ext
 
 
 class products(db.Model):
@@ -47,28 +41,6 @@ class products(db.Model):
     external = db.Column(db.String(256))
     price = db.Column(db.Integer)
     description = db.Column(db.String(256))
-    def __init__(self
-                 , id
-                 , name
-                 , code
-                 , picname
-                 , picext
-                 , external
-                 , psqname
-                 , psqext
-                 , price
-                 , description
-                 ):
-        self.id = id
-        self.name = name
-        self.code = code
-        self.picname = picname
-        self.picext = picext
-        self.psqname = psqname
-        self.psqext = psqext
-        self.external = external
-        self.price = price
-        self.description = description
 
 if __name__ == '__main__':
     manager.run()

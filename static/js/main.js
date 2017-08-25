@@ -47,7 +47,7 @@ $(document).ready(function(){
 $(document).ready(function() {
     $('#products-click').click(function(){ 
         $('html,body').animate({
-	        scrollTop:$('#products').offset().top - 60}, 800);
+	        scrollTop:$('#products').offset().top - 50}, 800);
     });
     $('#flowchart-click').click(function(){ 
         $('html,body').animate({

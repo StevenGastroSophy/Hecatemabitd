@@ -4,102 +4,72 @@ from hmodel import *
 def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
 
+def mabipricestyle(price):
+    pricelist = []
+    w = int(int(price )/10000)
+    k = int(int(price )%10000)
+    if w  is not 0:
+        pricelist.append(str(w))
+    if k  is not 0:
+        pricelist.append(str(k))
+    else:
+        pricelist.append('')
+    return '萬'.join(pricelist)
+
+class readproduct:
+    def __init__(self, orderby):
+        self.data_products = products.query.order_by(orderby).all()
+        self.productdict = dict()
+        self.productlist = list()
+    def addstuff(self, defaultid = None):
+        self.defaultproduct = None
+        print("defaultid is "+str(defaultid))
+        print("self.defaultproduct is "+str(self.defaultproduct))
+        for data in self.data_products:
+            if defaultid:
+                if data.id == defaultid:
+                    self.defaultproduct = data.name
+                    print("self.defaultproduct is "+str(self.defaultproduct))
+            price = mabipricestyle(data.price)
+            self.productdict[data.name] = [pathbyname(data.picname, data.picext),
+                                           pathbyname(data.psqname, data.psqext),
+                                           data.id,
+                                           price,
+                                           data.description,
+                                           data.external]
+            self.productlist.append(data.name)
+
 @app.route('/_another_product')
 def another_product():
-    data_products = products.query.order_by(products.id).all()
-
-    productdict = dict()
-    productlist = list()
-    for data in data_products:
-        pricelist = []
-        w = int(int(data.price )/10000)
-        k = int(int(data.price )%10000)
-        if w  is not 0:
-            pricelist.append(str(w))
-        if k  is not 0:
-            pricelist.append(str(k))
-        else:
-            pricelist.append('')
-        data.price  = '萬'.join(pricelist)
-        productdict[data.name] = [pathbyname(data.picname, data.picext), pathbyname(data.psqname, data.psqext), data.id, data.price, data.description, data.external]
-        productlist.append(data.name)
-        print(data.name)
-
-    print(productdict)
-    print(productlist)
     productname = request.args.get('productname')
-    print(productname)
+    getproduct = readproduct(products.id)
+    getproduct.addstuff()
     resultdict = dict()
-    resultdict['resultpic'] = productdict[productname][0]
+    resultdict['resultpic'] = getproduct.productdict[productname][0]
     resultdict['resultname'] = productname
-    resultdict['resultprice'] = productdict[productname][3]
-    resultdict['resultdescription'] = productdict[productname][4]
+    resultdict['resultprice'] = getproduct.productdict[productname][3]
+    resultdict['resultdescription'] = getproduct.productdict[productname][4]
     return jsonify(resultdict)
 
 @app.route('/products', methods=['GET'])
 def productpage():
     defaultproductid = int(request.args.get('default'))
-    print("defaultproductid is"+str(defaultproductid))
+    print("defaultproductid is "+str(defaultproductid))
     print(type(defaultproductid))
-
-    data_products = products.query.order_by(products.id).all()
-
-    productdict = dict()
-    productlist = list()
-    for data in data_products:
-        print(data.id)
-        print(type(data.id))
-        if data.id == defaultproductid:
-            defaultproduct = data.name
-            print("defaultproduct is"+str(defaultproduct))   
-        pricelist = []
-        w = int(int(data.price )/10000)
-        k = int(int(data.price )%10000)
-        if w  is not 0:
-            pricelist.append(str(w))
-        if k  is not 0:
-            pricelist.append(str(k))
-        else:
-            pricelist.append('')
-        data.price  = '萬'.join(pricelist)
-        productdict[data.name] = [pathbyname(data.picname, data.picext), pathbyname(data.psqname, data.psqext), data.id, data.price, data.description, data.external]
-        productlist.append(data.name)
-        print(data.name)
-
-    print(productdict)
-    print(productlist)
-    return render_template('products.html', productdict = productdict, productlist = productlist, default = defaultproduct)
+    getproduct = readproduct(products.id)
+    getproduct.addstuff(defaultproductid)
+    return render_template('products.html', productdict = getproduct.productdict, productlist = getproduct.productlist, default = getproduct.defaultproduct)
 
 
 @app.route('/', methods=['GET'])
 def index():
     data_slidepics = slidepics.query.order_by(slidepics.id).all()
-
     slidelist = [pathbyname(data.name,data.ext) for data in data_slidepics]
     print(slidelist)
 
-    data_products = products.query.order_by(products.id).all()
-
-    productdict = dict()
-    productlist = list()
-    for data in data_products:
-        pricelist = []
-        w = int(int(data.price )/10000)
-        k = int(int(data.price )%10000)
-        if w  is not 0:
-            pricelist.append(str(w))
-        if k  is not 0:
-            pricelist.append(str(k))
-        else:
-            pricelist.append('')
-        data.price  = '萬'.join(pricelist)
-        productdict[data.name] = [pathbyname(data.picname, data.picext), pathbyname(data.psqname, data.psqext), data.id, data.price, data.description, data.external]
-        productlist.append(data.name)
-        print(data.name)
-
-    print(productdict)
-    print(productlist)
-    return render_template('index.html', slidelist = slidelist, productdict = productdict, productlist = productlist)
+    getproduct = readproduct(products.id)
+    getproduct.addstuff()
+    return render_template('index.html', slidelist = slidelist, productdict = getproduct.productdict, productlist = getproduct.productlist)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
 <head>
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/webicon.png') }}" />
@@ -31,7 +31,8 @@
 		$('#name').text(data.resultname);
 		$('#price').text(data.resultprice);
 		$('#description').text(data.resultdescription);
-      });
+		$('html,body').animate({scrollTop:$('.row-fluid').offset().top - 100}, 800);
+      });     
       return false;
     });
   });
@@ -47,8 +48,8 @@
 	<!-- navigation -->
 	<nav>
 		<ul>
-			<li><a id="aboutm-click" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 回首頁 </a></li>
-			<li><a id="aboutm-click" style="cursor: pointer;"><i class="fa fa-shopping-cart"></i> 其他商品 </a></li>
+			<li><a href="https://hecatemabitd.herokuapp.com" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 回首頁 </a></li>
+			<li><a id="products-click" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 其他商品 </a></li>
 		</ul>
 	</nav> <!-- navigation end -->
 		
@@ -78,7 +79,7 @@
 				        {{productdict[default][4]}}
 				      </p>
 				    </div>
-				    <button class="shopBtn"><span class=" icon-shopping-cart"></span> 前往奇幻</button>
+				    <button class="shopBtn"><span class=" icon-shopping-cart"></span> 放入購物車</button>
 				  </form>
 			  </div>
   </div>

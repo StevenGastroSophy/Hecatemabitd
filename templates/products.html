@@ -50,6 +50,7 @@
 		<ul>
 			<li><a href="https://hecatemabitd.herokuapp.com" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 回首頁 </a></li>
 			<li><a id="products-click" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 其他商品 </a></li>
+			<li><a id="contactus-click"  style="cursor: pointer;"><i class="ra ra-wooden-sign"></i> 版權聲明 </a></li>
 		</ul>
 	</nav> <!-- navigation end -->
 		
@@ -85,20 +86,27 @@
 				    <button class="shopBtn"><span class=" icon-shopping-cart"></span> 放入購物車</button>
 				  </form>
 			  </div>
-  </div>
+    </div>
  
-  <div id="products">
-    <p style="font-size: 3em; text-align: center; margin-bottom: 0.3em; border-bottom:thick dashed #FFBF00;">
-      <strong>所有商品</strong>
-	</p>
-    <ul class="album">
-	  {% for product in productlist %}
-      <li class="pic">
-		<a class="allproducts">
-	    	<img src="{{ url_for('static', filename=productdict[product][1]) }}" title={{product}}>
-	    </a>
-	  </li>
-      {% endfor %}	  
-    </ul>
-  </div>
+    <div id="products">
+      <p style="font-size: 3em; text-align: center; margin-bottom: 0.3em; border-bottom:thick dashed #FFBF00;">
+        <strong>所有商品</strong>
+	  </p>
+      <ul class="album">
+	    {% for product in productlist %}
+        <li class="pic">
+		  <a class="allproducts">
+	    	  <img src="{{ url_for('static', filename=productdict[product][1]) }}" title={{product}}>
+	      </a>
+	    </li>
+        {% endfor %}	  
+      </ul>
+    </div>
+    <footer id="contactus" style="text-align:center; color: #191970; background:#FFBF00; filter:alpha(opacity=70); background-color: rgba(255, 191, 0, .7);">
+      <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
+      <p>
+	    <br><strong>本站所有遊戲圖片以及數據皆由遊戲官方Nexon, Devcat, Gamania所有</strong></br>
+	    <br><strong>若有任何侵權之疑慮請聯絡本站協助撤下內容</strong></br>
+	  </p>
+    </footer>
 </body>

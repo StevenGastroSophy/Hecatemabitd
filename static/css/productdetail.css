@@ -1,11 +1,14 @@
 #products{
   width: 100%;
-  padding-left:50px;
   padding-right:50px;
 }
 
 #productpic{
   height: 300px;
+}
+
+#contactus{
+    margin-top: 33%;
 }
 
 h3 {font-size: 18px;line-height: 1.5em;}
@@ -98,7 +101,7 @@ h3 {font-size: 18px;line-height: 1.5em;}
 
 /*responsive style*/
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 767px) {
 .row-fluid .span5 {
   width: 100%;
 }
@@ -124,4 +127,10 @@ h3 {font-size: 18px;line-height: 1.5em;}
   margin-bottom: 10px;
   display: block;
 }
+
+#contactus{
+    margin-top: 190%;
 }
+}
+
+

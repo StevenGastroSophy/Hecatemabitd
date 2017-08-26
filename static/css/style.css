@@ -21,9 +21,9 @@ body{
 #btn_cart{
     position: fixed;
     top: 30%;  /*垂直位置*/
-    right: 0px;  /*水平位置*/
+    right: 0;  /*水平位置*/
     background: #FFBF00;
-    padding: 0px 6px 10px 4px;
+    padding: 0px 6px 50px 4px;
 	color: #191970;
 	z-index: 1000;
 	border-radius:50px;

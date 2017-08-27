@@ -72,7 +72,7 @@
       }, function(data) {
         $('#productpic').attr("src", "static/"+data.resultpic);
 		$('#name').text(data.resultname);
-		$('#price').text(data.resultprice);
+		$('#price').text('$'+data.resultprice);
 		$('#description').text(data.resultdescription);
 		$('html,body').animate({scrollTop:$('.row-fluid').offset().top - 100}, 800);
       });     

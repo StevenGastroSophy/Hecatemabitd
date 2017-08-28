@@ -109,6 +109,7 @@ $(document).ready(function() {
   });
  
   $( "#btn_cart" ).on( "click", function() {
+	$("#dialog-form").parent().css({position : "fixed"}).end();
     dialog.dialog( "open" );
   });
   $( "#add-cart" ).button().on( "click", function() {

@@ -69,3 +69,67 @@ $(document).ready(function() {
   })
 
 }); 
+
+  //shopcart
+  $( function() {
+    var dialog, form,	
+    name = $( "#name" ),
+    price = $( "#price" ),
+    quantity = $( "#quantity" );
+  
+  function addcart() {
+    $( "#users tbody" ).append( "<tr>" +
+      "<td>" + name.text() + "</td>" +
+      "<td>" + price.text() + "</td>" +
+      "<td>" + quantity.text() + "</td>" +
+      "</tr>" );
+
+  }
+ 
+  dialog = $( "#dialog-form" ).dialog({
+    autoOpen: false,
+    height: 300,
+    width: 300,
+    modal: true,
+    buttons: {
+	  '結帳': function() {
+        dialog.dialog( "close" );
+      },
+      '繼續購買': function() {
+        dialog.dialog( "close" );
+      },
+    },
+    close: function() {
+      form[ 0 ].reset();
+    }
+  });
+ 
+  form = dialog.find( "form" ).on( "submit", function( event ) {
+    event.preventDefault();
+  });
+ 
+  $( "#btn_cart" ).on( "click", function() {
+    dialog.dialog( "open" );
+  });
+  $( "#add-cart" ).button().on( "click", function() {
+    addcart();
+	$('#CartCount').text(parseInt($('#CartCount').text())+1);
+	
+    var total = 0;
+	var totalquantity = 0;
+    $( "#users tbody tr td:nth-child(3n-1)" ).each(function(){
+		if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
+	      var i = parseInt($(this).text().replace('$','').split('萬',1));
+		}
+		else {
+		  var i = parseInt($(this).text().replace('$','').split('萬',1)) + parseInt($(this).text().replace('$','').split('萬',2)[1]);
+		}
+		total += i;
+		totalquantity += 1;
+    })
+	$('#totalamount').text(total.toString()+'萬');
+	$('#CartCount').text(totalquantity)
+	
+	dialog.dialog( "open" );
+  });
+});

@@ -13,52 +13,12 @@
 	<!-- css files -->
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/rpg-awesome.css') }}" type="text/css">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/productdetail.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/productsalbum.css') }}" type="text/css">
 	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<style>
-  div#dialog-form table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-  
-  .ui-widget-header {
-	border: 1px solid #dddddd;
-	background: #FFBF00;
-	color: #191970;
-	font-weight: bold;
-	text-align: left;
-}
-
-  .ui-widget-content{
-	border: 1px solid #cccccc;
-	background: #191970;
-	font-weight: normal;
-	color: #FFBF00;
-}
-  .ui-button {
-    background: #FFBF00;
-	color: #191970;
-	text-decoration: none;
-}
-
-  .ui-button:hover,
-  .ui-button:focus {
-	border: 1px solid #cccccc;
-	background: #FFBF00;
-	font-weight: normal;
-	color: #191970;
-}
-
-  .ui-button:active,
-  .ui-button.ui-state-active:hover {
-	border: 1px solid #003eff;
-	background: #8F5D00;
-	font-weight: normal;
-	color: #8C8CFF;
-}
-
-</style>
 	
 <script type="text/javascript">
   var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
@@ -82,68 +42,7 @@
 </script>
 
 <script>
-$( function() {
-    var dialog, form,	
-    name = $( "#name" ),
-    price = $( "#price" ),
-    quantity = $( "#quantity" );
-  
-  function addcart() {
-    $( "#users tbody" ).append( "<tr>" +
-      "<td>" + name.text() + "</td>" +
-      "<td>" + price.text() + "</td>" +
-      "<td>" + quantity.text() + "</td>" +
-      "</tr>" );
 
-  }
- 
-  dialog = $( "#dialog-form" ).dialog({
-    autoOpen: false,
-    height: 300,
-    width: 300,
-    modal: true,
-    buttons: {
-	  '結帳': function() {
-        dialog.dialog( "close" );
-      },
-      '繼續購買': function() {
-        dialog.dialog( "close" );
-      },
-    },
-    close: function() {
-      form[ 0 ].reset();
-    }
-  });
- 
-  form = dialog.find( "form" ).on( "submit", function( event ) {
-    event.preventDefault();
-  });
- 
-  $( "#btn_cart" ).on( "click", function() {
-    dialog.dialog( "open" );
-  });
-  $( "#add-cart" ).button().on( "click", function() {
-    addcart();
-	$('#CartCount').text(parseInt($('#CartCount').text())+1);
-	
-    var total = 0;
-	var totalquantity = 0;
-    $( "#users tbody tr td:nth-child(3n-1)" ).each(function(){
-		if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
-	      var i = parseInt($(this).text().replace('$','').split('萬',1));
-		}
-		else {
-		  var i = parseInt($(this).text().replace('$','').split('萬',1)) + parseInt($(this).text().replace('$','').split('萬',2)[1]);
-		}
-		total += i;
-		totalquantity += 1;
-    })
-	$('#totalamount').text(total.toString()+'萬');
-	$('#CartCount').text(totalquantity)
-	
-	dialog.dialog( "open" );
-  });
-});
 </script>
 
 </head>

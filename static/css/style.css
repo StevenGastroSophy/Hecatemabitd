@@ -8,28 +8,67 @@
 }
 
 body{
-	font-family:Microsoft JhengHei;
-	font-weight:lighter;
-	font-size:12pt;
-	background-color:#191970;
-	color:#FFBF00;
+  font-family:Microsoft JhengHei;
+  font-weight:lighter;
+  font-size:12pt;
+  background-color:#191970;
+  color:#FFBF00;
 }
 #blank {
-	   height:3em;
+  height:3em;
+}
+
+div#dialog-form table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+  
+.ui-widget-header {
+  border: 1px solid #dddddd;
+  background: #FFBF00;
+  color: #191970;
+  font-weight: bold;
+  text-align: left;
+}
+
+.ui-widget-content{
+  border: 1px solid #cccccc;
+  background: #191970;
+  font-weight: normal;
+  color: #FFBF00;
+}
+
+.ui-button {
+  background: #FFBF00;
+  color: #191970;
+  text-decoration: none;
+}
+
+.ui-button:hover,
+.ui-button:focus {
+  border: 1px solid #cccccc;
+  background: #FFBF00;
+  font-weight: normal;
+  color: #191970;
+}
+
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+  border: 1px solid #003eff;
+  background: #8F5D00;
+  font-weight: normal;
+  color: #8C8CFF;
 }
 
 #btn_cart{
-    position: fixed;
-    top: 30%;  /*垂直位置*/
-    right: 0;  /*水平位置*/
-    background: #FFBF00;
-    padding: 0px 6px 50px 4px;
-	color: #191970;
-	z-index: 1000;
-	border-radius:50px;
-	width:48px;
-	height:48px;
-	text-align: center;
+  position: fixed;
+  top: 30%;  /*垂直位置*/
+  right: 0;  /*水平位置*/
+  background: #FFBF00;
+  padding: 0px 6px 50px 4px;
+  color: #191970;
+  z-index: 1000;
+  border-radius:50px;
+  width:48px;
+  height:48px;
+  text-align: center;
 }
 
 #CartCount{
@@ -47,7 +86,7 @@ body{
 }
 
 header { 
-       width: 100%; 
+  width: 100%; 
 }
 
 .nav-bar { display: none; }

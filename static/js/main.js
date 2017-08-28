@@ -89,8 +89,9 @@ $(document).ready(function() {
   dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,
     height: 300,
-    width: 300,
+    width: 271,
     modal: true,
+	position: { my: "center-20%", at: "center", of: window  } ,
     buttons: {
 	  '結帳': function() {
         dialog.dialog( "close" );
@@ -103,13 +104,14 @@ $(document).ready(function() {
       form[ 0 ].reset();
     }
   });
+  
  
   form = dialog.find( "form" ).on( "submit", function( event ) {
     event.preventDefault();
   });
  
   $( "#btn_cart" ).on( "click", function() {
-	$("#dialog-form").parent().css({position : "fixed"}).end();
+	$("#dialog-form").parent().css({position : "fixed" }).end();
     dialog.dialog( "open" );
   });
   $( "#add-cart" ).button().on( "click", function() {

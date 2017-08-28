@@ -27,7 +27,7 @@ $(document).ready(function(){
   });
   
   $(window).resize(function() {
-        wdth=$(window).width();
+        var wdth=$(window).width();
 		if (wdth > 800) {
 		$("header nav").animate({
 	    	'left' : '0'
@@ -80,7 +80,7 @@ $(document).ready(function() {
   function addcart() {
     $( "#users tbody" ).append( "<tr>" +
       "<td>" + name.text() + "</td>" +
-      "<td>" + price.text() + "</td>" +
+      "<td>" + price.text().replace('$','') + "</td>" +
       "<td>" + quantity.text() + "</td>" +
       "</tr>" );
 
@@ -122,16 +122,23 @@ $(document).ready(function() {
 	var totalquantity = 0;
     $( "#users tbody tr td:nth-child(3n-1)" ).each(function(){
 		if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
-	      var i = parseInt($(this).text().replace('$','').split('萬',1));
+	      var i = parseInt($(this).text().replace('$','').split('萬',1))*10000;
 		}
 		else {
-		  var i = parseInt($(this).text().replace('$','').split('萬',1)) + parseInt($(this).text().replace('$','').split('萬',2)[1]);
+		  var i = parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]);
 		}
 		total += i;
 		totalquantity += 1;
     })
-	$('#totalamount').text(total.toString()+'萬');
-	$('#CartCount').text(totalquantity)
+    if (parseInt(total%10000) !=0){
+	    var underTenThousand = parseInt(total%10000).toString();
+	}
+	else {
+	    var underTenThousand = '';
+	}
+	var totalmabistyle = [ parseInt(total/10000).toString(), underTenThousand];
+	$('#totalamount').text(totalmabistyle.join('萬'));
+	$('#CartCount').text(totalquantity);
 	
 	dialog.dialog( "open" );
   });

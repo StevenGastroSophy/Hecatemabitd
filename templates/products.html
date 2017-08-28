@@ -32,11 +32,18 @@
       }, function(data) {
         $('#productpic').attr("src", "static/"+data.resultpic);
 		$('#name').text(data.resultname);
-		$('#price').text('$'+data.resultprice);
+		if (data.resultprice%10000 !=0){
+		  var underTenThousand = parseInt(data.resultprice%10000).toString();
+		}
+		else {
+		  var underTenThousand = '';
+		}
+		var totalmabistyle = [ parseInt(data.resultprice/10000).toString(), underTenThousand];
+		$('#price').text('$'+totalmabistyle.join('萬'));
 		$('#description').text(data.resultdescription);
 		$('html,body').animate({scrollTop:$('.row-fluid').offset().top - 100}, 800);
       });     
-      return false;
+      event.preventDefault()
     });
   });
 </script>
@@ -102,7 +109,7 @@
 				
 				  <div class="form-horizontal qtyFrm">
 				    <div class="control-group">
-					  <label class="control-label" id="price"><span>${{productdict[default][3]}}</span></label>
+					  <label class="control-label" id="price"><span>${{[(productdict[default][3]/10000) |int, (productdict[default][3]%10000 if productdict[default][3]%10000 != 0) ] |join('萬')}}</span></label>
 				    </div>
 				    <div class="control-group">
 					  <label class="control-label" id="quantity"><span>1個</span></label>

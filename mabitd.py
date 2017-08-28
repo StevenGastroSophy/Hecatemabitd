@@ -30,11 +30,11 @@ class readproduct:
                 if data.id == defaultid:
                     self.defaultproduct = data.name
                     print("self.defaultproduct is "+str(self.defaultproduct))
-            price = mabipricestyle(data.price)
+            
             self.productdict[data.name] = [pathbyname(data.picname, data.picext),
                                            pathbyname(data.psqname, data.psqext),
                                            data.id,
-                                           price,
+                                           data.price,
                                            data.description,
                                            data.external]
             self.productlist.append(data.name)

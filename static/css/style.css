@@ -18,7 +18,8 @@ body{
   height:3em;
 }
 
-div#dialog-form table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+#dialog-form{padding: 0;}
+#dialog-form  table { margin: 0; border-collapse: collapse; width: 100%;}
   
 .ui-widget-header {
   border: 1px solid #dddddd;

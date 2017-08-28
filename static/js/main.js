@@ -82,6 +82,7 @@ $(document).ready(function() {
       "<td>" + name.text() + "</td>" +
       "<td>" + price.text().replace('$','') + "</td>" +
       "<td>" + quantity.text() + "</td>" +
+	  "<td style=\"text-align: center;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
       "</tr>" );
 
   }
@@ -116,7 +117,6 @@ $(document).ready(function() {
   });
   $( "#add-cart" ).button().on( "click", function() {
     addcart();
-	$('#CartCount').text(parseInt($('#CartCount').text())+1);
 	
     var total = 0;
 	var totalquantity = 0;

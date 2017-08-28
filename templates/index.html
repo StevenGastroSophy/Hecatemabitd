@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<!-- js files -->
 	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	
 	<script src="{{ url_for('static', filename='js/jquery.flexslider.js') }}"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!-- css files -->
@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/productsalbum.css') }}" type="text/css">
 	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 <script type="text/javascript">
 $(function() { 
@@ -143,6 +144,7 @@ $(function() {
         <th>品名</th>
         <th>價格</th>
         <th>數量</th>
+		<th>移除</th>
       </tr>
     </thead>
     <tbody>

@@ -91,7 +91,7 @@ $(document).ready(function() {
     height: 300,
     width: 271,
     modal: true,
-	position: { my: "center-20%", at: "center", of: window  } ,
+	position: { my: "center-10%", at: "center", of: window  } ,
     buttons: {
 	  '結帳': function() {
         dialog.dialog( "close" );

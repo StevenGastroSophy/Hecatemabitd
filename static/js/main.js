@@ -81,7 +81,7 @@ $(document).ready(function() {
     $( "#users tbody" ).append( "<tr>" +
       "<td>" + name.text() + "</td>" +
       "<td>" + price.text().replace('$','') + "</td>" +
-      "<td>" + quantity.text() + "</td>" +
+      "<td style=\"text-align: right;\">" + quantity.text() + "</td>" +
 	  "<td style=\"text-align: center;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
       "</tr>" );
 

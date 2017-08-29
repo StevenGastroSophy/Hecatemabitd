@@ -128,13 +128,13 @@ $(function() {
 
 <div id="blank"></div>
 <div id="btn_cart" style="cursor: pointer;">
-    <span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><b id="CartCount">0</b></span>
+    <span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><b id="CartCount">{{CartCount}}</b></span>
 </div>
 <div id="dialog-form" title="購物車明細">
   <form>
   <div style="text-align: right;">
     <label>共</label>
-    <label id="totalamount">0</label>
+    <label id="totalamount">{{totalamount}}</label>
 	<label>gold</label>
   </div>
   <table id="users" class="ui-widget ui-widget-content">

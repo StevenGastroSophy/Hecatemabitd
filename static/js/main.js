@@ -84,8 +84,31 @@ $(document).ready(function() {
       "<td style=\"text-align: right; cursor: pointer;\">" + quantity.text().replace('個', '') + "</td>" +
 	  "<td class=\"remove\" style=\"text-align: center; font-size: 1.6em;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
       "</tr>" );
-
-  }
+  }; //將商品加入購物車清單
+ 
+  function sumup() {
+	var total = 0;
+	var totalquantity = 0;
+    $( "#users tbody tr td:nth-child(3n-1)" ).each(function(){
+		if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
+	      var i = parseInt($(this).text().replace('$','').split('萬',1))*10000;
+		}
+		else {
+		  var i = parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]);
+		}
+		total += i;
+		totalquantity += 1;
+    })
+    if (parseInt(total%10000) !=0){
+	    var underTenThousand = parseInt(total%10000).toString();
+	}
+	else {
+	    var underTenThousand = '';
+	}
+	var totalmabistyle = [ parseInt(total/10000).toString(), underTenThousand];
+	$('#totalamount').text(totalmabistyle.join('萬'));
+	$('#CartCount').text(totalquantity);
+  }; //計算購物車清單內的加總
  
   dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,
@@ -114,36 +137,17 @@ $(document).ready(function() {
   $( "#btn_cart" ).on( "click", function() {
 	$("#dialog-form").parent().css({position : "fixed" }).end();
     dialog.dialog( "open" );
-  });
+  }); //按下購物車按鈕
+  
   $( "#add-cart" ).button().on( "click", function() {
     addcart();
-	
-    var total = 0;
-	var totalquantity = 0;
-    $( "#users tbody tr td:nth-child(3n-1)" ).each(function(){
-		if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
-	      var i = parseInt($(this).text().replace('$','').split('萬',1))*10000;
-		}
-		else {
-		  var i = parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]);
-		}
-		total += i;
-		totalquantity += 1;
-    })
-    if (parseInt(total%10000) !=0){
-	    var underTenThousand = parseInt(total%10000).toString();
-	}
-	else {
-	    var underTenThousand = '';
-	}
-	var totalmabistyle = [ parseInt(total/10000).toString(), underTenThousand];
-	$('#totalamount').text(totalmabistyle.join('萬'));
-	$('#CartCount').text(totalquantity);
+	sumup();
 	
 	dialog.dialog( "open" );
-  });
+  }); //按下加入購物車
+  
   $( "#users" ).on( "click", '.remove', function() {
     $(this).closest('tr').remove();
-	$('#CartCount').text($('#CartCount').text() - 1);
-  });
+	sumup();
+  }); //按下購物車清單內的移除鈕
 });

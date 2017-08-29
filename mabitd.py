@@ -58,7 +58,12 @@ def productpage():
     print(type(defaultproductid))
     getproduct = readproduct(products.id)
     getproduct.addstuff(defaultproductid)
-    return render_template('products.html', productdict = getproduct.productdict, productlist = getproduct.productlist, default = getproduct.defaultproduct)
+    return render_template('products.html',
+                           productdict = getproduct.productdict,
+                           productlist = getproduct.productlist,
+                           default = getproduct.defaultproduct,
+                           totalamount = 0,
+                           CartCount = 0)
 
 
 @app.route('/', methods=['GET'])
@@ -69,7 +74,12 @@ def index():
 
     getproduct = readproduct(products.id)
     getproduct.addstuff()
-    return render_template('index.html', slidelist = slidelist, productdict = getproduct.productdict, productlist = getproduct.productlist)
+    return render_template('index.html',
+                           slidelist = slidelist,
+                           productdict = getproduct.productdict,
+                           productlist = getproduct.productlist,
+                           totalamount = 0,
+                           CartCount = 0)
 
 
 if __name__ == '__main__':

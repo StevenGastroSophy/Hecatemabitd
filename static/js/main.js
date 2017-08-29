@@ -81,7 +81,7 @@ $(document).ready(function() {
     $( "#users tbody" ).append( "<tr style=\"height: 3em;\">" +
       "<td>" + name.text() + "</td>" +
       "<td>" + price.text().replace('$','') + "</td>" +
-      "<td style=\"text-align: right;\">" + quantity.text().replace('個', '') + "</td>" +
+      "<td style=\"text-align: right; cursor: pointer;\">" + quantity.text().replace('個', '') + "</td>" +
 	  "<td class=\"remove\" style=\"text-align: center; font-size: 1.6em;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
       "</tr>" );
 
@@ -144,5 +144,6 @@ $(document).ready(function() {
   });
   $( "#users" ).on( "click", '.remove', function() {
     $(this).closest('tr').remove();
+	$('#CartCount').text($('#CartCount').text() - 1);
   });
 });

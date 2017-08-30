@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, url_for, redirect, jsonify
+from flask import Flask, render_template, request, url_for, redirect, jsonify, session
 from hmodel import *
+
+app.secret_key = 'my_secret_key'
 
 def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
@@ -39,7 +41,26 @@ class readproduct:
                                            data.external]
             self.productlist.append(data.name)
 
-@app.route('/_another_product')
+@app.route('/_update_cart', methods=['POST'])
+def update_cart():
+    namelist = request.form.getlist('namelist[]')
+    session['name'] = namelist
+    print(session.get('name'))
+    pricelist = request.form.getlist('pricelist[]')
+    session['price'] = pricelist
+    print(session.get('price'))
+    quantitylist = request.form.getlist('quantitylist[]')
+    session['quantity'] = quantitylist
+    print(session.get('quantity'))
+    totalamount = request.form.get('totalamount')
+    session['totalamount'] = totalamount
+    print(session.get('totalamount'))
+    CartCount = request.form.get('CartCount')
+    session['CartCount'] = CartCount
+    print(session.get('CartCount'))
+    return 'OK'
+
+@app.route('/_another_product', methods=['GET'])
 def another_product():
     productname = request.args.get('productname')
     getproduct = readproduct(products.id)
@@ -58,12 +79,27 @@ def productpage():
     print(type(defaultproductid))
     getproduct = readproduct(products.id)
     getproduct.addstuff(defaultproductid)
+
+    CartNameList = session.get('name')
+    CartPriceList = session.get('price')
+    CartQuantityList = session.get('quantity')
+    if session.get('totalamount'):
+        totalamount = session.get('totalamount')
+    else:
+        totalamount = 0
+    if session.get('CartCount'):
+        Cartcount = session.get('CartCount')
+    else:
+        Cartcount = 0
     return render_template('products.html',
                            productdict = getproduct.productdict,
                            productlist = getproduct.productlist,
                            default = getproduct.defaultproduct,
-                           totalamount = 0,
-                           CartCount = 0)
+                           CartNameList = CartNameList,
+                           CartPriceList = CartPriceList,
+                           CartQuantityList = CartQuantityList,
+                           totalamount = totalamount,
+                           CartCount = Cartcount)
 
 
 @app.route('/', methods=['GET'])
@@ -74,12 +110,27 @@ def index():
 
     getproduct = readproduct(products.id)
     getproduct.addstuff()
+
+    CartNameList = session.get('name')
+    CartPriceList = session.get('price')
+    CartQuantityList = session.get('quantity')
+    if session.get('totalamount'):
+        totalamount = session.get('totalamount')
+    else:
+        totalamount = 0
+    if session.get('CartCount'):
+        Cartcount = session.get('CartCount')
+    else:
+        Cartcount = 0
     return render_template('index.html',
                            slidelist = slidelist,
                            productdict = getproduct.productdict,
                            productlist = getproduct.productlist,
-                           totalamount = 0,
-                           CartCount = 0)
+                           CartNameList = CartNameList,
+                           CartPriceList = CartPriceList,
+                           CartQuantityList = CartQuantityList,
+                           totalamount = totalamount,
+                           CartCount = Cartcount)
 
 
 if __name__ == '__main__':

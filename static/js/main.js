@@ -71,7 +71,7 @@ $(document).ready(function() {
 }); 
 
   //shopcart
-  $( function() {
+$( function() {
     var dialog, form,	
     name = $( "#name" ),
     price = $( "#price" ),
@@ -142,12 +142,40 @@ $(document).ready(function() {
   $( "#add-cart" ).button().on( "click", function() {
     addcart();
 	sumup();
-	
+	UpdateSession();
 	dialog.dialog( "open" );
   }); //按下加入購物車
   
   $( "#users" ).on( "click", '.remove', function() {
     $(this).closest('tr').remove();
 	sumup();
+	UpdateSession();
   }); //按下購物車清單內的移除鈕
 });
+
+function UpdateSession() {
+	var namelist = [];
+	var pricelist = [];
+	var quantitylist = [];
+	var totalamount = $('#totalamount').text();
+	var CartCount = $('#CartCount').text();
+	var count = 0;
+    $( "#users tbody tr td" ).each(function(){
+		count += 1;
+		switch(count%4){
+		  case 0:
+		    //抓到移除紐,不做事
+            break;
+          case 1:
+            namelist.push($(this).text());		  
+            break;
+		  case 2:
+		    pricelist.push($(this).text());
+			break;
+		  case 3:
+		    quantitylist.push($(this).text());
+			break;
+		}
+    });
+    $.post("/_update_cart", { 'namelist[]':namelist, 'pricelist[]':pricelist, 'quantitylist[]':quantitylist, totalamount:totalamount, CartCount: CartCount});
+}

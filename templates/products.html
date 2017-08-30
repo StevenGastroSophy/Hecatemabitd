@@ -48,9 +48,6 @@
   });
 </script>
 
-<script>
-
-</script>
 
 </head>
 <header>
@@ -87,6 +84,16 @@
       </tr>
     </thead>
     <tbody>
+	    {% if CartCount !=0 %} 
+	    {% for i in range(0, CartCount |int) %}
+        <tr style="height: 3em;">
+          <td>{{CartNameList[i]}}</td>
+          <td>{{CartPriceList[i]}}</td>
+          <td style="text-align: right; cursor: pointer;">{{CartQuantityList[i]}}</td>
+	      <td class="remove" style="text-align: center; font-size: 1.6em;"><i class="fa fa-times"></i></td>
+	    </tr>
+        {% endfor %}
+        {%endif %}		
     </tbody>
   </table>
   </form>

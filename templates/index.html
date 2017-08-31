@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html lang="zh-Hant-TW">
-<head>
-	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/webicon.png') }}" />
-	<title>天梁小舖</title>
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<!-- js files -->
-	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/jquery.flexslider.js') }}"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<!-- css files -->
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}" type="text/css">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/rpg-awesome.css') }}" type="text/css">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}" type="text/css">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/productsalbum.css') }}" type="text/css">
-	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+{% extends "base.html" %}
+{% block content %}
 <script type="text/javascript">
-$(function() { 
+//首頁的投影片
+$(function() {
     $(".flexslider").flexslider({
 	slideshowSpeed: 4000,
 	animationSpeed: 400,
@@ -31,10 +14,9 @@ $(function() {
     }
   }
 	}); 
-});  
+}); 
 </script>
 
-	
 <style>
 
 @media (min-width: 768px) and (max-width:992px){
@@ -93,11 +75,6 @@ $(function() {
 	}
 }
 
-#products{
-  width: 100%;
-  padding-right:50px;
-}
-
 #aboutme{
   text-align:center;
   width: 100%;
@@ -106,63 +83,25 @@ $(function() {
 
 </style>
 
-</head>
-
-	<!-- header starts -->
 <header>
-	<!-- responsive nav bar -->
 	<div class="nav-bar">
 		<a href=""><i class="fa fa-bars"></i><span>MENU</span></a>
 	</div>
-	<!-- navigation -->
 	<nav>
 		<ul>
-		    <li><a id="products-click" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 商品介紹 </a></li>
+		    <li><a id="products_index-click" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 商品介紹 </a></li>
 			<li><a id="flowchart-click" style="cursor: pointer;"><i class="ra ra-cycle"></i> 購物流程 </a></li>
 			<li><a id="aboutme-click" style="cursor: pointer;"><i class="ra ra-crown"></i> 關於天梁 </a></li>
-			<li><a id="contactus-click"  style="cursor: pointer;"><i class="ra ra-wooden-sign"></i> 版權聲明 </a></li>
+			<li><a id="footer_index-click"  style="cursor: pointer;"><i class="ra ra-wooden-sign"></i> 版權聲明 </a></li>
 		</ul>
-	</nav> <!-- navigation end -->
+	</nav>
 		
-</header> <!-- header end -->
+</header> 
 
 <div id="blank"></div>
-<div id="btn_cart" style="cursor: pointer;">
-    <span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><b id="CartCount">{{CartCount}}</b></span>
-</div>
-<div id="dialog-form" title="購物車明細">
-  <form>
-  <div style="text-align: right;">
-    <label>共</label>
-    <label id="totalamount">{{totalamount}}</label>
-	<label>gold</label>
-  </div>
-  <table id="users" class="ui-widget ui-widget-content">
-    <thead>
-      <tr class="ui-widget-header">
-        <th>品名</th>
-        <th>價格</th>
-        <th style="text-align: right;">數量</th>
-		<th style="text-align: right;">移除</th>
-      </tr>
-    </thead>
-    <tbody>
-	    {% if CartCount !=0 %} 
-	    {% for i in range(0, CartCount |int) %}
-        <tr style="height: 3em;">
-          <td>{{CartNameList[i]}}</td>
-          <td>{{CartPriceList[i]}}</td>
-          <td style="text-align: right; cursor: pointer;">{{CartQuantityList[i]}}</td>
-	      <td class="remove" style="text-align: center; font-size: 1.6em;"><i class="fa fa-times"></i></td>
-	    </tr>
-        {% endfor %}
-        {%endif %}		
-    </tbody>
-  </table>
-  </form>
-</div>
+
+
 <body>
-	<!-- body contents -->
 	<div class="flexslider"> 
       <ul class="slides"> 
 	    {% for slidepic in slidelist %}
@@ -174,7 +113,7 @@ $(function() {
      </ul> 
     </div>
 	
-	<div id="products">
+	<div id="products_index">
       <p style="font-size: 3em; text-align: center; margin-bottom: 0.3em; border-bottom:thick dashed #FFBF00;">
         <strong>商品介紹</strong>
 	  </p>
@@ -229,7 +168,7 @@ $(function() {
       </p>
     </div>
 
-    <footer id="contactus" style="text-align:center; color: #191970; background:#FFBF00; filter:alpha(opacity=70); background-color: rgba(255, 191, 0, .7);">
+    <footer id="footer_index" style="text-align:center; color: #191970; background:#FFBF00; filter:alpha(opacity=70); background-color: rgba(255, 191, 0, .7);">
       <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
       <p>
 	    <br><strong>本站所有遊戲圖片以及數據皆由遊戲官方Nexon, Devcat, Gamania所有</strong></br>
@@ -238,4 +177,4 @@ $(function() {
     </footer>
 	
 </body>
-</html>
+{% endblock %}

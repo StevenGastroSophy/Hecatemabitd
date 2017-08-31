@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/webicon.png') }}" />
+	<title>天梁小舖</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<!-- js files -->
+	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.flexslider.js') }}"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<!-- css files -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/rpg-awesome.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/productdetail.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/productsalbum.css') }}" type="text/css">
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<div id="btn_cart" style="cursor: pointer;">
+    <span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><b id="CartCount">{{CartCount}}</b></span>
+</div>
+<div id="dialog-form" title="購物車明細">
+  <form>
+  <div style="text-align: right;">
+    <label>共</label>
+    <label id="totalamount">{{totalamount}}</label>
+	<label>gold</label>
+  </div>
+  <table id="users" class="ui-widget ui-widget-content">
+    <thead>
+      <tr class="ui-widget-header">
+        <th>品名</th>
+        <th>價格</th>
+        <th style="text-align: right;">數量</th>
+		<th style="text-align: right;">移除</th>
+      </tr>
+    </thead>
+    <tbody>
+	    {% if CartCount !=0 %} 
+	    {% for i in range(0, CartCount |int) %}
+        <tr style="height: 3em;">
+          <td>{{CartNameList[i]}}</td>
+          <td>{{CartPriceList[i]}}</td>
+          <td style="text-align: right; cursor: pointer;">{{CartQuantityList[i]}}</td>
+	      <td class="remove" style="text-align: center; font-size: 1.6em;"><i class="fa fa-times"></i></td>
+	    </tr>
+        {% endfor %}
+        {%endif %}		
+    </tbody>
+  </table>
+  </form>
+</div>
+{% block content %}
+{% endblock %}
+</html>

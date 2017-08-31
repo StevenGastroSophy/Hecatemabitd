@@ -1,4 +1,6 @@
-  //navbar
+ 
+
+//選單
 $(document).ready(function(){
 
 	var val = 1;
@@ -21,11 +23,9 @@ $(document).ready(function(){
 		$(".nav-bar i").toggleClass("fa fa-close").toggleClass("fa fa-bars");
   	}
 
-
-
     return false;
   });
-  
+ //應對螢幕放大縮小 
   $(window).resize(function() {
         var wdth=$(window).width();
 		if (wdth > 800) {
@@ -42,12 +42,17 @@ $(document).ready(function(){
 		if (navclass == "fa fa-close") {
 		$(".nav-bar i").toggleClass("fa fa-close").toggleClass("fa fa-bars");
 	}
+	return false;
     });
-   //scroll
+//選單內選項的捲動特效
 $(document).ready(function() {
-    $('#products-click').click(function(){ 
+    $('#products_index-click').click(function(){ 
         $('html,body').animate({
-	        scrollTop:$('#products').offset().top - 50}, 800);
+	        scrollTop:$('#products_index').offset().top - 50}, 800);
+    });
+    $('#products_products-click').click(function(){ 
+        $('html,body').animate({
+	        scrollTop:$('#products_products').offset().top - 50}, 800);
     });
     $('#flowchart-click').click(function(){ 
         $('html,body').animate({
@@ -57,26 +62,31 @@ $(document).ready(function() {
         $('html,body').animate({
 	        scrollTop:$('#aboutme').offset().top - 60}, 800);
     });
-	$('#contactus-click').click(function(){ 
+	$('#footer_index-click').click(function(){ 
         $('html,body').animate({
-	        scrollTop:$('#contactus').offset().top - 60}, 800);
+	        scrollTop:$('#footer_index').offset().top - 60}, 800);
+    });
+	$('#footer_products-click').click(function(){ 
+        $('html,body').animate({
+	        scrollTop:$('#footer_products').offset().top - 60}, 800);
     });
 });
  
-  // submenu
+// 次級選單
   $('.sub-menu').click(function(){
   	$(this).children('.children').slideToggle();
   })
 
 }); 
 
-  //shopcart
+//購物車
 $( function() {
     var dialog, form,	
     name = $( "#name" ),
     price = $( "#price" ),
     quantity = $( "#quantity" );
-  
+ 
+//將商品加入購物車清單 
   function addcart() {
     $( "#users tbody" ).append( "<tr style=\"height: 3em;\">" +
       "<td>" + name.text() + "</td>" +
@@ -84,8 +94,9 @@ $( function() {
       "<td style=\"text-align: right; cursor: pointer;\">" + quantity.text().replace('個', '') + "</td>" +
 	  "<td class=\"remove\" style=\"text-align: center; font-size: 1.6em;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
       "</tr>" );
-  }; //將商品加入購物車清單
- 
+  }; 
+
+//計算購物車清單內的加總  
   function sumup() {
 	var total = 0;
 	var totalquantity = 0;
@@ -108,7 +119,7 @@ $( function() {
 	var totalmabistyle = [ parseInt(total/10000).toString(), underTenThousand];
 	$('#totalamount').text(totalmabistyle.join('萬'));
 	$('#CartCount').text(totalquantity);
-  }; //計算購物車清單內的加總
+  }; 
  
   dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,
@@ -133,24 +144,24 @@ $( function() {
   form = dialog.find( "form" ).on( "submit", function( event ) {
     event.preventDefault();
   });
- 
+//按下購物車按鈕 
   $( "#btn_cart" ).on( "click", function() {
 	$("#dialog-form").parent().css({position : "fixed" }).end();
     dialog.dialog( "open" );
-  }); //按下購物車按鈕
-  
+  }); 
+//按下加入購物車  
   $( "#add-cart" ).button().on( "click", function() {
     addcart();
 	sumup();
 	UpdateSession();
 	dialog.dialog( "open" );
-  }); //按下加入購物車
-  
+  }); 
+//按下購物車清單內的移除鈕 
   $( "#users" ).on( "click", '.remove', function() {
     $(this).closest('tr').remove();
 	sumup();
 	UpdateSession();
-  }); //按下購物車清單內的移除鈕
+  }); 
 });
 
 function UpdateSession() {

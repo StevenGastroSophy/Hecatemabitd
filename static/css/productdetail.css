@@ -1,4 +1,4 @@
-#products{
+#products_products{
   width: 100%;
   padding-right:50px;
   margin-top: 10%;
@@ -8,7 +8,7 @@
   height: 300px;
 }
 
-#contactus{
+#footer_products{
     margin-top: 33%;
 }
 
@@ -129,7 +129,7 @@ h3 {font-size: 18px;line-height: 1.5em;}
   display: block;
 }
 
-#contactus{
+#footer_products{
     margin-top: 190%;
 }
 }

@@ -3,22 +3,26 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/webicon.png') }}" />
-	<title>天梁小舖</title>
+	<title>{% block title %}天梁小舖{% endblock %}</title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<!-- js files -->
 	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/jquery.flexslider.js') }}"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	{% block jquery %}
+    {% endblock %}
 	<!-- css files -->
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/rpg-awesome.css') }}" type="text/css">
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/productdetail.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/productsalbum.css') }}" type="text/css">
-	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	{% block css %}
+    {% endblock %}
 </head>
+
+{% block content %}
+{% endblock %}
 <div id="btn_cart" style="cursor: pointer;">
     <span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><b id="CartCount">{{CartCount}}</b></span>
 </div>
@@ -53,6 +57,4 @@
   </table>
   </form>
 </div>
-{% block content %}
-{% endblock %}
 </html>

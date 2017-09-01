@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% block title %}商品詳細{% endblock %}
+{% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/productdetail.css') }}" type="text/css">
+{% endblock %}
 {% block content %}
 <script type="text/javascript">
 //產品頁用ajax更改產品資訊

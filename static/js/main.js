@@ -1,6 +1,4 @@
- 
-
-//選單
+ //選單
 $(document).ready(function(){
 
 	var val = 1;
@@ -25,7 +23,7 @@ $(document).ready(function(){
 
     return false;
   });
- //應對螢幕放大縮小 
+ //選單應對螢幕放大縮小 
   $(window).resize(function() {
         var wdth=$(window).width();
 		if (wdth > 800) {

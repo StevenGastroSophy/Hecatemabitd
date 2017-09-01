@@ -1,5 +1,20 @@
 from flask import Flask, render_template, request, url_for, redirect, jsonify, session
-from hmodel import *
+import os
+import sys
+from hmodel import db, slidepics, products
+
+mabitdpostgre = os.getenv('mabitdpostgre', None)
+
+if mabitdpostgre is None:
+    print('Specify mabitdpostgre as environment variable.')
+    sys.exit(1)
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = mabitdpostgre
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ECHO'] = False
+db.init_app(app)
+
 
 app.secret_key = 'my_secret_key'
 
@@ -58,7 +73,7 @@ def update_cart():
     CartCount = request.form.get('CartCount')
     session['CartCount'] = CartCount
     print(session.get('CartCount'))
-    return 'OK'
+    return 'OK', 200
 
 @app.route('/_another_product', methods=['GET'])
 def another_product():

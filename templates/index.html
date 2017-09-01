@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% block jquery %}
+	<script src="{{ url_for('static', filename='js/jquery.flexslider.js') }}"></script>
+{% endblock %}
+{% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}" type="text/css">
+{% endblock %}
 {% block content %}
 <script type="text/javascript">
 //首頁的投影片
@@ -89,7 +95,7 @@ $(function() {
 	</div>
 	<nav>
 		<ul>
-		    <li><a id="products_index-click" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 商品介紹 </a></li>
+		    <li><a id="products_index-click" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 所有商品 </a></li>
 			<li><a id="flowchart-click" style="cursor: pointer;"><i class="ra ra-cycle"></i> 購物流程 </a></li>
 			<li><a id="aboutme-click" style="cursor: pointer;"><i class="ra ra-crown"></i> 關於天梁 </a></li>
 			<li><a id="footer_index-click"  style="cursor: pointer;"><i class="ra ra-wooden-sign"></i> 版權聲明 </a></li>
@@ -115,7 +121,7 @@ $(function() {
 	
 	<div id="products_index">
       <p style="font-size: 3em; text-align: center; margin-bottom: 0.3em; border-bottom:thick dashed #FFBF00;">
-        <strong>商品介紹</strong>
+        <strong>所有商品</strong>
 	  </p>
       <ul class="album">
 		{% for product in productlist %}

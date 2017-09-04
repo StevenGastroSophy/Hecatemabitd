@@ -139,7 +139,10 @@ def another_product():
 
 @app.route('/products', methods=['GET'])
 def productpage():
-    defaultproductid = int(request.args.get('default'))
+    if request.args.get('default'):
+        defaultproductid = int(request.args.get('default'))
+    else:
+        defaultproductid = 1
     print("defaultproductid is "+str(defaultproductid))
     print(type(defaultproductid))
     getproduct = readproduct(products.id)

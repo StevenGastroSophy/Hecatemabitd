@@ -73,7 +73,42 @@ $(document).ready(function() {
 // 次級選單
   $('.sub-menu').click(function(){
   	$(this).children('.children').slideToggle();
+  return false;
   })
+
+});
+
+$(document).ready(function() {
+    // Use a "/test" namespace.
+    // An application can open a connection on multiple namespaces, and
+    // Socket.IO will multiplex all those connections on a single
+    // physical channel. If you don't care about multiple channels, you
+    // can set the namespace to an empty string.
+    namespace = '/test';
+
+    // Connect to the Socket.IO server.
+    // The connection URL has the following format:
+    //     http[s]://<domain>:<port>[/<namespace>]
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+
+
+    // Event handler for server sent data.
+    // The callback function is invoked whenever the server emits data
+    // to the client. The data is then displayed in the "Received"
+    // section of the page.
+    socket.on('my_response', function(msg) {
+	    if (msg.status == 'ONLINE') {
+            $('#hecate_status span').css('color','#39A735');
+			$('#status').text('ONLINE');
+			$('.channel').css('visibility','visible');
+			$('h2.channel').text(msg.channel);
+  	    }else{
+            $('#hecate_status span').css('color','#c1403b');
+		    $('#status').text('OFFLINE');
+			$('.channel').css('visibility','hidden');
+			$('h2.channel').text('');
+  	    }
+    });
 
 }); 
 
@@ -90,7 +125,7 @@ $( function() {
       "<td>" + name.text() + "</td>" +
       "<td>" + price.text().replace('$','') + "</td>" +
       "<td style=\"text-align: right; cursor: pointer;\">" + quantity.text().replace('個', '') + "</td>" +
-	  "<td class=\"remove\" style=\"text-align: center; font-size: 1.6em;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
+	  "<td class=\"remove\" style=\"text-align: center; font-size: 1.6em; cursor: pointer;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
       "</tr>" );
   }; 
 
@@ -153,12 +188,14 @@ $( function() {
 	sumup();
 	UpdateSession();
 	dialog.dialog( "open" );
+  return false;
   }); 
 //按下購物車清單內的移除鈕 
   $( "#users" ).on( "click", '.remove', function() {
     $(this).closest('tr').remove();
 	sumup();
 	UpdateSession();
+  return false;
   }); 
 });
 

@@ -10,9 +10,10 @@
 
 #footer_products{
     margin-top: 33%;
+	padding-right:50px;
 }
 
-h3 {font-size: 18px;line-height: 1.5em;}
+#name {font-size: 18px;line-height: 1.5em;}
 .shopBtn {min-height: 34px;font-size: 14px;font-weight: bold;line-height: 34px;text-align: center;color: #fff;border-radius: 2px;background: #f89406;display:inline-block;padding:0 12px;border:0;}
 .form-horizontal.qtyFrm .control-label{text-align: left;}
 .form-horizontal.qtyFrm .control-label span{font-size:18px}
@@ -21,7 +22,7 @@ h3 {font-size: 18px;line-height: 1.5em;}
 .row-fluid {
   width: 100%;
   padding-left:50px;
-  padding-right:50px;
+  padding-right:55px;
 }
 
 .row-fluid:before,
@@ -131,6 +132,7 @@ h3 {font-size: 18px;line-height: 1.5em;}
 
 #footer_products{
     margin-top: 190%;
+	padding-right:50px;
 }
 }
 

@@ -1,8 +1,12 @@
+from threading import Lock
 from flask import Flask, render_template, request, url_for, redirect, jsonify, session
+from flask_socketio import SocketIO, emit, disconnect
 import os
 import sys
-from hmodel import db, slidepics, products
+from hmodel import db, slidepics, products, hecatestatus
 
+
+async_mode = None
 mabitdpostgre = os.getenv('mabitdpostgre', None)
 
 if mabitdpostgre is None:
@@ -10,10 +14,14 @@ if mabitdpostgre is None:
     sys.exit(1)
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = mabitdpostgre
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 db.init_app(app)
+socketio = SocketIO(app, async_mode=async_mode)
+thread = None
+thread_lock = Lock()
 
 
 app.secret_key = 'my_secret_key'
@@ -75,6 +83,40 @@ def update_cart():
     print(session.get('CartCount'))
     return 'OK', 200
 
+def create_app():
+    with app.app_context():
+        # Extensions like Flask-SQLAlchemy now know what the "current" app
+        # is while within this block. Therefore, you can now run........
+        db.create_all()
+    return app
+
+def check_status():
+    while True:
+        socketio.sleep(10)
+        create_app().app_context().push()
+        data_hecatestatus = hecatestatus.query.first()
+        status = data_hecatestatus.status
+        channel = data_hecatestatus.channel
+        print(status, channel)
+        socketio.emit('my_response',
+                      {'status': status, 'channel': channel},
+                      namespace='/test')
+
+@app.route('/status/online/<int:channel>', methods=['GET'])
+def switch_online(channel):
+    if channel:
+        hecatestatus.query.filter_by(id=1).update({'status':'ONLINE', 'channel': channel})
+        db.session.commit()
+        return 'ONLINE '+str(channel)
+    else:
+        abort(404)
+
+@app.route('/status/offline', methods=['GET'])
+def switch_offline():
+    hecatestatus.query.filter_by(id=1).update({'status':'OFFLINE', 'channel': 0})
+    db.session.commit()
+    return 'OFFLINE'
+
 @app.route('/_another_product', methods=['GET'])
 def another_product():
     productname = request.args.get('productname')
@@ -106,6 +148,10 @@ def productpage():
         Cartcount = session.get('CartCount')
     else:
         Cartcount = 0
+
+    data_hecatestatus = hecatestatus.query.first()
+    status = data_hecatestatus.status
+    channel = data_hecatestatus.channel
     return render_template('products.html',
                            productdict = getproduct.productdict,
                            productlist = getproduct.productlist,
@@ -114,7 +160,10 @@ def productpage():
                            CartPriceList = CartPriceList,
                            CartQuantityList = CartQuantityList,
                            totalamount = totalamount,
-                           CartCount = Cartcount)
+                           CartCount = Cartcount,
+                           status = status,
+                           channel = channel,
+                           async_mode=socketio.async_mode)
 
 
 @app.route('/', methods=['GET'])
@@ -137,6 +186,9 @@ def index():
         Cartcount = session.get('CartCount')
     else:
         Cartcount = 0
+    data_hecatestatus = hecatestatus.query.first()
+    status = data_hecatestatus.status
+    channel = data_hecatestatus.channel
     return render_template('index.html',
                            slidelist = slidelist,
                            productdict = getproduct.productdict,
@@ -145,10 +197,19 @@ def index():
                            CartPriceList = CartPriceList,
                            CartQuantityList = CartQuantityList,
                            totalamount = totalamount,
-                           CartCount = Cartcount)
+                           CartCount = Cartcount,
+                           status = status,
+                           channel = channel,
+                           async_mode=socketio.async_mode)
 
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    global thread
+    with thread_lock: #thread_lock.acquire() = __enter__跟thread_lock.release() = __exit__
+        if thread is None:
+            thread = socketio.start_background_task(target=check_status)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=os.environ['PORT'])
+    socketio.run(app,host='0.0.0.0',port=os.environ['PORT'])
 
 

@@ -112,7 +112,7 @@ def check_status():
 #上下線調整功能暫時開放各位使用
 @app.route('/status/online/<int:channel>', methods=['GET'])
 def switch_online(channel):
-    if channel:
+    if 0< channel <99:
         hecatestatus.query.filter_by(id=1).update({'status':'ONLINE', 'channel': channel})
         db.session.commit()
         return 'ONLINE '+str(channel)

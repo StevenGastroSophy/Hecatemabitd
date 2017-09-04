@@ -78,6 +78,7 @@ $(document).ready(function() {
 
 });
 
+//接收server端傳來的上線狀態並改變#hecate_status
 $(document).ready(function() {
     // Use a "/test" namespace.
     // An application can open a connection on multiple namespaces, and
@@ -133,7 +134,7 @@ $( function() {
   function sumup() {
 	var total = 0;
 	var totalquantity = 0;
-    $( "#users tbody tr td:nth-child(3n-1)" ).each(function(){
+    $( "#users tbody tr td:nth-child(4n-2)" ).each(function(){
 		if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
 	      var i = parseInt($(this).text().replace('$','').split('萬',1))*10000;
 		}
@@ -141,7 +142,11 @@ $( function() {
 		  var i = parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]);
 		}
 		total += i;
-		totalquantity += 1;
+    })
+    $( "#users tbody tr td:nth-child(4n-1)" ).each(function(){
+		alert($(this).text())
+		var q = parseInt($(this).text());
+		totalquantity += q;
     })
     if (parseInt(total%10000) !=0){
 	    var underTenThousand = parseInt(total%10000).toString();
@@ -198,7 +203,7 @@ $( function() {
   return false;
   }); 
 });
-
+//將購物車的內容用post傳回server更新session
 function UpdateSession() {
 	var namelist = [];
 	var pricelist = [];

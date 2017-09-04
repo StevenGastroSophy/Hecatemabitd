@@ -109,7 +109,7 @@ def check_status():
                       {'status': status, 'channel': channel},
                       namespace='/test')
 
-#上下線調整功能暫時開放各位使用
+#上下線調整功能暫時開放所有人使用
 @app.route('/status/online/<int:channel>', methods=['GET'])
 def switch_online(channel):
     if 0< channel <=99:

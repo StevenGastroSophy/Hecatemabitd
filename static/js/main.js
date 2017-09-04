@@ -144,7 +144,6 @@ $( function() {
 		total += i;
     })
     $( "#users tbody tr td:nth-child(4n-1)" ).each(function(){
-		alert($(this).text())
 		var q = parseInt($(this).text());
 		totalquantity += q;
     })

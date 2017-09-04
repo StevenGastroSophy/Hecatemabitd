@@ -8,13 +8,21 @@ from hmodel import db, slidepics, products, hecatestatus
 
 async_mode = None
 mabitdpostgre = os.getenv('mabitdpostgre', None)
+ConfigSecretKey = os.getenv('mabitdconfigsecretkey', None)
+AppSecretKey = os.getenv('mabitdappsecretkey', None)
 
 if mabitdpostgre is None:
     print('Specify mabitdpostgre as environment variable.')
     sys.exit(1)
+if ConfigSecretKey is None:
+    print('Specify mabitdconfigsecretkey as environment variable.')
+    sys.exit(1)
+if AppSecretKey is None:
+    print('Specify mabitdappsecretkey as environment variable.')
+    sys.exit(1)
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
+app.config['SECRET_KEY'] = ConfigSecretKey
 app.config['SQLALCHEMY_DATABASE_URI'] = mabitdpostgre
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
@@ -23,8 +31,7 @@ socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
-
-app.secret_key = 'my_secret_key'
+app.secret_key = AppSecretKey
 
 def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
@@ -102,6 +109,7 @@ def check_status():
                       {'status': status, 'channel': channel},
                       namespace='/test')
 
+#上下線調整功能暫時開放各位使用
 @app.route('/status/online/<int:channel>', methods=['GET'])
 def switch_online(channel):
     if channel:

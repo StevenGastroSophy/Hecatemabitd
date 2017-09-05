@@ -14,7 +14,7 @@ class products(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     code = db.Column(db.String)
-    description = db.Column(db.String)
+    description = db.Column(db.Text)
     picname = db.Column(db.String)
     picext = db.Column(db.String)
     psqname = db.Column(db.String)
@@ -23,6 +23,6 @@ class products(db.Model):
 
 class hecatestatus(db.Model):
     __tablename__ = 'hecatestatus'
-    id = db.Column(db.String, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String)
     channel = db.Column(db.String)

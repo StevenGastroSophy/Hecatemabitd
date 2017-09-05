@@ -33,20 +33,15 @@ thread_lock = Lock()
 
 app.secret_key = AppSecretKey
 
+def create_app():
+    with app.app_context():
+        # Extensions like Flask-SQLAlchemy now know what the "current" app
+        # is while within this block. Therefore, you can now run........
+        db.create_all()
+    return app
+
 def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
-
-def mabipricestyle(price):
-    pricelist = []
-    w = int(int(price )/10000)
-    k = int(int(price )%10000)
-    if w  is not 0:
-        pricelist.append(str(w))
-    if k  is not 0:
-        pricelist.append(str(k))
-    else:
-        pricelist.append('')
-    return '萬'.join(pricelist)
 
 class readproduct:
     def __init__(self, orderby):
@@ -63,13 +58,28 @@ class readproduct:
                     self.defaultproduct = data.name
                     print("self.defaultproduct is "+str(self.defaultproduct))
             
-            self.productdict[data.name] = [pathbyname(data.picname, data.picext),
+            self.productdict[data.name] = [pathbyname(data.picname, data.picext), #大圖連結、縮圖連結、id、價格、描述
                                            pathbyname(data.psqname, data.psqext),
                                            data.id,
                                            data.price,
-                                           data.description,
-                                           data.external]
+                                           data.description]
             self.productlist.append(data.name)
+
+#上下線調整功能暫時開放所有人使用
+@app.route('/status/online/<int:channel>', methods=['GET'])
+def switch_online(channel):
+    if 0< channel <=99:
+        hecatestatus.query.filter_by(id=1).update({'status':'ONLINE', 'channel': channel})
+        db.session.commit()
+        return 'ONLINE '+str(channel)
+    else:
+        abort(404)
+
+@app.route('/status/offline', methods=['GET'])
+def switch_offline():
+    hecatestatus.query.filter_by(id=1).update({'status':'OFFLINE', 'channel': 0})
+    db.session.commit()
+    return 'OFFLINE'
 
 @app.route('/_update_cart', methods=['POST'])
 def update_cart():
@@ -89,41 +99,6 @@ def update_cart():
     session['CartCount'] = CartCount
     print(session.get('CartCount'))
     return 'OK', 200
-
-def create_app():
-    with app.app_context():
-        # Extensions like Flask-SQLAlchemy now know what the "current" app
-        # is while within this block. Therefore, you can now run........
-        db.create_all()
-    return app
-
-def check_status():
-    while True:
-        socketio.sleep(10)
-        create_app().app_context().push()
-        data_hecatestatus = hecatestatus.query.first()
-        status = data_hecatestatus.status
-        channel = data_hecatestatus.channel
-        print(status, channel)
-        socketio.emit('my_response',
-                      {'status': status, 'channel': channel},
-                      namespace='/test')
-
-#上下線調整功能暫時開放所有人使用
-@app.route('/status/online/<int:channel>', methods=['GET'])
-def switch_online(channel):
-    if 0< channel <=99:
-        hecatestatus.query.filter_by(id=1).update({'status':'ONLINE', 'channel': channel})
-        db.session.commit()
-        return 'ONLINE '+str(channel)
-    else:
-        abort(404)
-
-@app.route('/status/offline', methods=['GET'])
-def switch_offline():
-    hecatestatus.query.filter_by(id=1).update({'status':'OFFLINE', 'channel': 0})
-    db.session.commit()
-    return 'OFFLINE'
 
 @app.route('/_another_product', methods=['GET'])
 def another_product():
@@ -176,7 +151,6 @@ def productpage():
                            channel = channel,
                            async_mode=socketio.async_mode)
 
-
 @app.route('/', methods=['GET'])
 def index():
     data_slidepics = slidepics.query.order_by(slidepics.id).all()
@@ -212,6 +186,18 @@ def index():
                            status = status,
                            channel = channel,
                            async_mode=socketio.async_mode)
+
+def check_status():
+    while True:
+        socketio.sleep(10)
+        create_app().app_context().push()
+        data_hecatestatus = hecatestatus.query.first()
+        status = data_hecatestatus.status
+        channel = data_hecatestatus.channel
+        print(status, channel)
+        socketio.emit('my_response',
+                      {'status': status, 'channel': channel},
+                      namespace='/test')
 
 @socketio.on('connect', namespace='/test')
 def test_connect():

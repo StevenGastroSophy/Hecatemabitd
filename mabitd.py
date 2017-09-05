@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, jsonify, s
 from flask_socketio import SocketIO, emit, disconnect
 import os
 import sys
-from hmodel import db, slidepics, products, hecatestatus
+from hmodel import db, slidepics, products, productpictures, hecatestatus
 
 
 async_mode = None
@@ -58,8 +58,8 @@ class readproduct:
                     self.defaultproduct = data.name
                     print("self.defaultproduct is "+str(self.defaultproduct))
             
-            self.productdict[data.name] = [pathbyname(data.picname, data.picext), #大圖連結、縮圖連結、id、價格、描述
-                                           pathbyname(data.psqname, data.psqext),
+            self.productdict[data.name] = [pathbyname(data.productpictures.picname, data.productpictures.picext), #大圖連結、縮圖連結、id、價格、描述
+                                           pathbyname(data.productpictures.psqname, data.productpictures.psqext),
                                            data.id,
                                            data.price,
                                            data.description]

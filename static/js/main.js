@@ -135,17 +135,15 @@ $( function() {
 	var total = 0;
 	var totalquantity = 0;
     $( "#users tbody tr td:nth-child(4n-2)" ).each(function(){
+		var q = parseInt($(this).next().text());
+		totalquantity += q;
 		if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
-	      var i = parseInt($(this).text().replace('$','').split('萬',1))*10000;
+	      var i = (parseInt($(this).text().replace('$','').split('萬',1))*10000)*q;
 		}
 		else {
-		  var i = parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]);
+		  var i = (parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]))*q;
 		}
 		total += i;
-    })
-    $( "#users tbody tr td:nth-child(4n-1)" ).each(function(){
-		var q = parseInt($(this).text());
-		totalquantity += q;
     })
     if (parseInt(total%10000) !=0){
 	    var underTenThousand = parseInt(total%10000).toString();

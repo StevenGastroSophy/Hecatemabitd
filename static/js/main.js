@@ -197,6 +197,9 @@ $( function() {
     $(this).closest('tr').remove();
 	sumup();
 	UpdateSession();
+	if ($('#CartCount').text() == '0') {
+      setTimeout(function(){window.location.href='./products'}, 200);
+	}
   return false;
   }); 
 });

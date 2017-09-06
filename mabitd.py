@@ -1,5 +1,6 @@
 from threading import Lock
 from flask import Flask, render_template, request, url_for, redirect, jsonify, session
+from flask_session import Session
 from flask_socketio import SocketIO, emit, disconnect
 import os
 import sys
@@ -27,6 +28,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = mabitdpostgre
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 db.init_app(app)
+app.config['SESSION_TYPE'] = 'filesystem'
+#app.config['SESSION_TYPE'] = 'sqlalchemy'
+#app.config['SESSION_SQLALCHEMY'] = db
+Session(app)
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
@@ -145,7 +150,7 @@ def productpage():
         Cartcount = session.get('CartCount')
     else:
         Cartcount = 0
-
+    print('加載productpage',str(session.get('CartCount')))
     data_hecatestatus = hecatestatus.query.first()
     status = data_hecatestatus.status
     channel = data_hecatestatus.channel

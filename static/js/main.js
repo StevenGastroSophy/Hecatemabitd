@@ -186,20 +186,68 @@ $( function() {
   }); 
 //按下加入購物車  
   $( "#add-cart" ).button().on( "click", function() {
+	$.blockUI({
+        message: '<h1>加入購物車..</h1>',		
+		css: {
+            border: 'none',
+            padding: '15px',
+			width: '50%',
+            left: '25%',			
+            backgroundColor: '#FFBF00',
+            '-webkit-border-radius': '10px',
+            '-moz-border-radius': '10px',
+            opacity: .5,
+            color: '#191970'
+        },
+		overlayCSS:  { 
+            backgroundColor: '#000000', 
+            opacity:         0.6, 
+            cursor:          'wait' 
+        },
+		// 淡入的時間.單位為毫秒200
+		fadeIn:  200, 
+        // 淡出的時間.單位為毫秒400 
+        fadeOut: 400, 
+	});
     addcart();
 	sumup();
 	UpdateSession();
-	dialog.dialog( "open" );
+	setTimeout($.unblockUI, 600);
+	setTimeout(function () {dialog.dialog( "open" )}, 800);
   return false;
   }); 
 //按下購物車清單內的移除鈕 
   $( "#users" ).on( "click", '.remove', function() {
+	$.blockUI({
+        message: '<h1>移除物品..</h1>',		
+		css: {
+            border: 'none',
+            padding: '15px',
+			width: '50%',
+            left: '25%',			
+            backgroundColor: '#FFBF00',
+            '-webkit-border-radius': '10px',
+            '-moz-border-radius': '10px',
+            opacity: .5,
+            color: '#191970'
+        },
+		overlayCSS:  { 
+            backgroundColor: '#000000', 
+            opacity:         0.6, 
+            cursor:          'wait' 
+        },
+		// 淡入的時間.單位為毫秒200
+		fadeIn:  200, 
+        // 淡出的時間.單位為毫秒400 
+        fadeOut: 400, 
+	});
     $(this).closest('tr').remove();
 	sumup();
 	UpdateSession();
 	//if ($('#CartCount').text() == '0') {
     //  setTimeout(function(){window.location.href='./products'}, 200);
 	//}
+	setTimeout($.unblockUI, 600);
   return false;
   }); 
 });

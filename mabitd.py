@@ -44,26 +44,34 @@ def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
 
 class readproduct:
-    def __init__(self, orderby):
-        self.data_products = products.query.order_by(orderby).all()
+    def __init__(self, data_object):
+        self.data_products = data_object #傳入資料庫查詢物件
         self.productdict = dict()
         self.productlist = list()
     def addstuff(self, defaultid = None):
         self.defaultproduct = None
         print("defaultid is "+str(defaultid))
         print("self.defaultproduct is "+str(self.defaultproduct))
-        for data in self.data_products:
-            if defaultid:
-                if data.id == defaultid:
-                    self.defaultproduct = data.name
-                    print("self.defaultproduct is "+str(self.defaultproduct))
-            
-            self.productdict[data.name] = [pathbyname(data.productpictures.picname, data.productpictures.picext), #大圖連結、縮圖連結、id、價格、描述
-                                           pathbyname(data.productpictures.psqname, data.productpictures.psqext),
-                                           data.id,
-                                           data.price,
-                                           data.description]
-            self.productlist.append(data.name)
+        if isinstance(self.data_products, list):
+            print(self.data_products)
+            for data in self.data_products:
+                if defaultid:
+                    if data.id == defaultid:
+                        self.defaultproduct = data.name
+                        print("self.defaultproduct is "+str(self.defaultproduct))
+                #data_products回傳list的情況    #大圖連結、縮圖連結、id、價格、描述
+                self.productdict[data.name] = [pathbyname(data.productpictures.picname, data.productpictures.picext), 
+                                               pathbyname(data.productpictures.psqname, data.productpictures.psqext),
+                                               data.id,
+                                               data.price,
+                                               data.description]
+                self.productlist.append(data.name)
+        else:#data_products回傳單個物件的情況
+            self.productdict[self.data_products.name] = [pathbyname(self.data_products.productpictures.picname, self.data_products.productpictures.picext), 
+                                                         pathbyname(self.data_products.productpictures.psqname, self.data_products.productpictures.psqext),
+                                                         self.data_products.id,
+                                                         self.data_products.price,
+                                                         self.data_products.description]
 
 #上下線調整功能暫時開放所有人使用
 @app.route('/status/online/<int:channel>', methods=['GET'])
@@ -81,6 +89,7 @@ def switch_offline():
     db.session.commit()
     return 'OFFLINE'
 
+#接收購物車訊息，記錄於session
 @app.route('/_update_cart', methods=['POST'])
 def update_cart():
     namelist = request.form.getlist('namelist[]')
@@ -100,10 +109,12 @@ def update_cart():
     print(session.get('CartCount'))
     return 'OK', 200
 
+#用ajax調整當前顯示的產品內容
 @app.route('/_another_product', methods=['GET'])
 def another_product():
     productname = request.args.get('productname')
-    getproduct = readproduct(products.id)
+    data_object = products.query.filter_by(name=productname).first()
+    getproduct = readproduct(data_object)
     getproduct.addstuff()
     resultdict = dict()
     resultdict['resultpic'] = getproduct.productdict[productname][0]
@@ -112,15 +123,15 @@ def another_product():
     resultdict['resultdescription'] = getproduct.productdict[productname][4]
     return jsonify(resultdict)
 
+#產品頁面，接受傳入預設顯示的產品編號
 @app.route('/products', methods=['GET'])
 def productpage():
     if request.args.get('default'):
         defaultproductid = int(request.args.get('default'))
     else:
         defaultproductid = 1
-    print("defaultproductid is "+str(defaultproductid))
-    print(type(defaultproductid))
-    getproduct = readproduct(products.id)
+    data_object = products.query.order_by(products.id).all()
+    getproduct = readproduct(data_object)
     getproduct.addstuff(defaultproductid)
 
     CartNameList = session.get('name')
@@ -151,13 +162,14 @@ def productpage():
                            channel = channel,
                            async_mode=socketio.async_mode)
 
+#首頁
 @app.route('/', methods=['GET'])
 def index():
     data_slidepics = slidepics.query.order_by(slidepics.id).all()
     slidelist = [pathbyname(data.name,data.ext) for data in data_slidepics]
-    print(slidelist)
 
-    getproduct = readproduct(products.id)
+    data_object = products.query.order_by(products.id).all()
+    getproduct = readproduct(data_object)
     getproduct.addstuff()
 
     CartNameList = session.get('name')
@@ -194,7 +206,6 @@ def check_status():
         data_hecatestatus = hecatestatus.query.first()
         status = data_hecatestatus.status
         channel = data_hecatestatus.channel
-        print(status, channel)
         socketio.emit('my_response',
                       {'status': status, 'channel': channel},
                       namespace='/test')

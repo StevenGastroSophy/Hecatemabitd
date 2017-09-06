@@ -139,17 +139,6 @@ def productpage():
     getproduct = readproduct(data_object)
     getproduct.addstuff(defaultproductid)
 
-    CartNameList = session.get('name')
-    CartPriceList = session.get('price')
-    CartQuantityList = session.get('quantity')
-    if session.get('totalamount'):
-        totalamount = session.get('totalamount')
-    else:
-        totalamount = 0
-    if session.get('CartCount'):
-        Cartcount = session.get('CartCount')
-    else:
-        Cartcount = 0
     print('加載productpage',str(session.get('CartCount')))
     data_hecatestatus = hecatestatus.query.first()
     status = data_hecatestatus.status
@@ -158,11 +147,6 @@ def productpage():
                            productdict = getproduct.productdict,
                            productlist = getproduct.productlist,
                            default = getproduct.defaultproduct,
-                           CartNameList = CartNameList,
-                           CartPriceList = CartPriceList,
-                           CartQuantityList = CartQuantityList,
-                           totalamount = totalamount,
-                           CartCount = Cartcount,
                            status = status,
                            channel = channel,
                            async_mode=socketio.async_mode)
@@ -177,17 +161,6 @@ def index():
     getproduct = readproduct(data_object)
     getproduct.addstuff()
 
-    CartNameList = session.get('name')
-    CartPriceList = session.get('price')
-    CartQuantityList = session.get('quantity')
-    if session.get('totalamount'):
-        totalamount = session.get('totalamount')
-    else:
-        totalamount = 0
-    if session.get('CartCount'):
-        Cartcount = session.get('CartCount')
-    else:
-        Cartcount = 0
     data_hecatestatus = hecatestatus.query.first()
     status = data_hecatestatus.status
     channel = data_hecatestatus.channel
@@ -195,11 +168,6 @@ def index():
                            slidelist = slidelist,
                            productdict = getproduct.productdict,
                            productlist = getproduct.productlist,
-                           CartNameList = CartNameList,
-                           CartPriceList = CartPriceList,
-                           CartQuantityList = CartQuantityList,
-                           totalamount = totalamount,
-                           CartCount = Cartcount,
                            status = status,
                            channel = channel,
                            async_mode=socketio.async_mode)

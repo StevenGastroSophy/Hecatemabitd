@@ -36,7 +36,11 @@
 {% block content %}
 {% endblock %}
 <div id="btn_cart" style="cursor: pointer;">
-    <span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><h2 id="CartCount">{{CartCount}}</h2></span>
+    {% if session.CartCount %}
+    <span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><h2 id="CartCount">{{session.CartCount}}</h2></span>
+	{% else %}
+	<span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><h2 id="CartCount">0</h2></span>
+	{% endif %}
 </div>
 <div id="hecate_status">
 	{% if status == 'ONLINE' %}
@@ -61,7 +65,11 @@
   <form>
   <div style="text-align: right;">
     <label>共</label>
-    <label id="totalamount">{{totalamount}}</label>
+	{% if session.totalamount %} 
+    <label id="totalamount">{{session.totalamount}}</label>
+	{% else %}
+	<label id="totalamount">0</label>
+	{%endif %}
 	<label>gold</label>
   </div>
   <table id="users" class="ui-widget ui-widget-content">
@@ -74,12 +82,12 @@
       </tr>
     </thead>
     <tbody>
-	    {% if CartCount !=0 %} 
-	    {% for i in range(0, CartCount |int) %}
+	    {% if session.CartCount and session.CartCount !=0 %} 
+	    {% for i in range(0, session.CartCount |int) %}
         <tr style="height: 3em;">
-          <td>{{CartNameList[i]}}</td>
-          <td>{{CartPriceList[i]}}</td>
-          <td style="text-align: right; cursor: pointer;">{{CartQuantityList[i]}}</td>
+          <td>{{session.name[i]}}</td>
+          <td>{{session.price[i]}}</td>
+          <td style="text-align: right; cursor: pointer;">{{session.quantity[i]}}</td>
 	      <td class="remove" style="text-align: center; font-size: 1.6em; cursor: pointer;"><i class="fa fa-times"></i></td>
 	    </tr>
         {% endfor %}

@@ -80,12 +80,12 @@ $(document).ready(function() {
 
 //接收server端傳來的上線狀態並改變#hecate_status
 $(document).ready(function() {
-    // Use a "/test" namespace.
+    // Use a "/status" namespace.
     // An application can open a connection on multiple namespaces, and
     // Socket.IO will multiplex all those connections on a single
     // physical channel. If you don't care about multiple channels, you
     // can set the namespace to an empty string.
-    namespace = '/test';
+    namespace = '/status';
 
     // Connect to the Socket.IO server.
     // The connection URL has the following format:
@@ -125,7 +125,7 @@ $( function() {
     $( "#users tbody" ).append( "<tr style=\"height: 3em;\">" +
       "<td>" + name.text() + "</td>" +
       "<td>" + price.text().replace('$','') + "</td>" +
-      "<td style=\"text-align: right; cursor: pointer;\">" + quantity.text().replace('個', '') + "</td>" +
+      "<td style=\"text-align: right; cursor: pointer;\">" + quantity.val() + "</td>" +
 	  "<td class=\"remove\" style=\"text-align: center; font-size: 1.6em; cursor: pointer;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
       "</tr>" );
   }; 
@@ -138,12 +138,12 @@ $( function() {
 		var q = parseInt($(this).next().text());
 		totalquantity += q;
 		if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
-	      var i = (parseInt($(this).text().replace('$','').split('萬',1))*10000)*q;
+	      var p = (parseInt($(this).text().replace('$','').split('萬',1))*10000);
 		}
 		else {
-		  var i = (parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]))*q;
+		  var p = parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]);
 		}
-		total += i;
+		total += p*q;
     })
     if (parseInt(total%10000) !=0){
 	    var underTenThousand = parseInt(total%10000).toString();
@@ -196,7 +196,7 @@ $( function() {
             backgroundColor: '#FFBF00',
             '-webkit-border-radius': '10px',
             '-moz-border-radius': '10px',
-            opacity: .5,
+            opacity: .8,
             color: '#191970'
         },
 		overlayCSS:  { 
@@ -228,7 +228,7 @@ $( function() {
             backgroundColor: '#FFBF00',
             '-webkit-border-radius': '10px',
             '-moz-border-radius': '10px',
-            opacity: .5,
+            opacity: .8,
             color: '#191970'
         },
 		overlayCSS:  { 
@@ -256,8 +256,10 @@ function UpdateSession() {
 	var namelist = [];
 	var pricelist = [];
 	var quantitylist = [];
+	var subtotallist = [];
 	var totalamount = $('#totalamount').text();
 	var CartCount = $('#CartCount').text();
+	var PackCount = 0;
 	var count = 0;
     $( "#users tbody tr td" ).each(function(){
 		count += 1;
@@ -266,15 +268,38 @@ function UpdateSession() {
 		    //抓到移除紐,不做事
             break;
           case 1:
-            namelist.push($(this).text());		  
+            namelist.push($(this).text());
+            PackCount+=1 //每次抓到name就認定購物車裡多一個pack			
             break;
 		  case 2:
 		    pricelist.push($(this).text());
+		    var q = parseInt($(this).next().text()); //在收集price的時候順便計算subtotal
+		    if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
+	          var p = (parseInt($(this).text().replace('$','').split('萬',1))*10000);
+		    }
+		    else {
+		      var p = (parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]));
+		    }
+			var subtotal = p*q;
+            if (parseInt(subtotal%10000) !=0){
+	            var underTenThousand = parseInt(subtotal%10000).toString();
+	        }
+	        else {
+	            var underTenThousand = '';
+	        }
+	        var subtotalmabistyle = [ parseInt(subtotal/10000).toString(), underTenThousand];
+			subtotallist.push(subtotalmabistyle.join('萬'));
 			break;
 		  case 3:
 		    quantitylist.push($(this).text());
 			break;
 		}
     });
-    $.post("/_update_cart", { 'namelist[]':namelist, 'pricelist[]':pricelist, 'quantitylist[]':quantitylist, totalamount:totalamount, CartCount: CartCount});
+    $.post("/_update_cart", { 'namelist[]':namelist,
+                              'pricelist[]':pricelist,
+							  'quantitylist[]':quantitylist,
+							  'subtotallist[]':subtotallist,
+							  totalamount:totalamount,
+							  CartCount: CartCount,
+							  PackCount: PackCount});
 }

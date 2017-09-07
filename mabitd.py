@@ -101,17 +101,24 @@ def update_cart():
     session['name'] = namelist
     print(session.get('name'))
     pricelist = request.form.getlist('pricelist[]')
-    session['price'] = pricelist
-    print(session.get('price'))
+    session['price'] = pricelist #['XXXX萬XXXX','YYY萬YYYY']
+    print(session.get('price')) 
     quantitylist = request.form.getlist('quantitylist[]')
-    session['quantity'] = quantitylist
+    session['quantity'] = quantitylist #[X,Y]
     print(session.get('quantity'))
+    subtotallist = request.form.getlist('subtotallist[]')
+    session['subtotal'] = subtotallist
+    print(session.get('subtotal'))
+    
     totalamount = request.form.get('totalamount')
-    session['totalamount'] = totalamount
+    session['totalamount'] = totalamount #XXXX萬XXXX
     print(session.get('totalamount'))
     CartCount = request.form.get('CartCount')
-    session['CartCount'] = CartCount
+    session['CartCount'] = CartCount #X
     print(session.get('CartCount'))
+    PackCount = request.form.get('PackCount') #Y
+    session['PackCount'] = PackCount
+    print(session.get('PackCount'))
     return 'OK', 200
 
 #用ajax調整當前顯示的產品內容
@@ -181,10 +188,10 @@ def check_status():
         channel = data_hecatestatus.channel
         socketio.emit('my_response',
                       {'status': status, 'channel': channel},
-                      namespace='/test')
+                      namespace='/status')
 
-@socketio.on('connect', namespace='/test')
-def test_connect():
+@socketio.on('connect', namespace='/status')
+def check_thread():
     global thread
     with thread_lock: #thread_lock.acquire() = __enter__跟thread_lock.release() = __exit__
         if thread is None:

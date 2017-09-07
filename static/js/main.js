@@ -137,22 +137,32 @@ $( function() {
     $( "#users tbody tr td:nth-child(4n-2)" ).each(function(){
 		var q = parseInt($(this).next().text());
 		totalquantity += q;
-		if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
-	      var p = (parseInt($(this).text().replace('$','').split('萬',1))*10000);
+		//商品價格過萬且萬以下不為零
+		if ((($(this).text().replace('$','')).indexOf('萬') > -1) && parseInt($(this).text().replace('$','').split('萬',2)[1])){
+			var p = parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]);
 		}
+		//商品價格過萬且萬以下為零
+		else if ((($(this).text().replace('$','')).indexOf('萬') > -1) && isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))){
+			var p = parseInt($(this).text().replace('$','').replace('萬',''))*10000;
+		}
+		//商品價格不過萬
 		else {
-		  var p = parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]);
+			var p = parseInt($(this).text().replace('$',''));
 		}
 		total += p*q;
     })
-    if (parseInt(total%10000) !=0){
-	    var underTenThousand = parseInt(total%10000).toString();
+	//金額過萬且萬以下不為零
+    if ((total >= 10000) && (parseInt(total%10000) != 0)){
+		$('#totalamount').text([parseInt(total/10000).toString(), parseInt(total%10000).toString()].join('萬'));
 	}
-	else {
-	    var underTenThousand = '';
+	//金額過萬且萬以下為零
+	else if ((total >= 10000) && (parseInt(total%10000) == 0)){
+	    $('#totalamount').text(parseInt(total/10000).toString()+'萬');
 	}
-	var totalmabistyle = [ parseInt(total/10000).toString(), underTenThousand];
-	$('#totalamount').text(totalmabistyle.join('萬'));
+	//金額不過萬
+    else {
+	    $('#totalamount').text(total.toString());;
+	}
 	$('#CartCount').text(totalquantity);
   }; 
  
@@ -274,24 +284,34 @@ function UpdateSession() {
 		  case 2:
 		    pricelist.push($(this).text());
 		    var q = parseInt($(this).next().text()); //在收集price的時候順便計算subtotal
-		    if (isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))) {
-	          var p = (parseInt($(this).text().replace('$','').split('萬',1))*10000);
+		    //商品價格過萬且萬以下不為零
+		    if ((($(this).text().replace('$','')).indexOf('萬') > -1) && parseInt($(this).text().replace('$','').split('萬',2)[1])){
+			    var p = parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1])
 		    }
+		    //商品價格過萬且萬以下為零
+		    else if ((($(this).text().replace('$','')).indexOf('萬') > -1) && isNaN(parseInt($(this).text().replace('$','').split('萬',2)[1]))){
+			    var p = parseInt($(this).text().replace('$','').replace('萬',''))*10000
+		    }
+		    //商品價格不過萬
 		    else {
-		      var p = (parseInt($(this).text().replace('$','').split('萬',1))*10000 + parseInt($(this).text().replace('$','').split('萬',2)[1]));
+			    var p = parseInt($(this).text().replace('$',''))
 		    }
-			var subtotal = p*q;
-            if (parseInt(subtotal%10000) !=0){
-	            var underTenThousand = parseInt(subtotal%10000).toString();
+		    var subtotal = p*q;
+	        //金額過萬且萬以下不為零
+            if ((subtotal >= 10000) && (parseInt(subtotal%10000) != 0)){
+		        subtotallist.push([parseInt(subtotal/10000).toString(), parseInt(subtotal%10000).toString()].join('萬'));
 	        }
-	        else {
-	            var underTenThousand = '';
+	        //金額過萬且萬以下為零
+	        else if ((subtotal >= 10000) && (parseInt(subtotal%10000) == 0)){
+	            subtotallist.push(parseInt(subtotal/10000).toString()+'萬');
 	        }
-	        var subtotalmabistyle = [ parseInt(subtotal/10000).toString(), underTenThousand];
-			subtotallist.push(subtotalmabistyle.join('萬'));
+	        //金額不過萬
+            else {
+	            subtotallist.push(subtotal.toString());;
+	        }
 			break;
 		  case 3:
-		    quantitylist.push($(this).text());
+		    quantitylist.push(parseInt($(this).text()));
 			break;
 		}
     });

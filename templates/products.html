@@ -15,14 +15,7 @@
       }, function(data) {
         $('#productpic').attr("src", "static/"+data.resultpic);
 		$('#name').text(data.resultname);
-		if (data.resultprice%10000 !=0){
-		  var underTenThousand = parseInt(data.resultprice%10000).toString();
-		}
-		else {
-		  var underTenThousand = '';
-		}
-		var totalmabistyle = [ parseInt(data.resultprice/10000).toString(), underTenThousand];
-		$('#price').text('$'+totalmabistyle.join('萬'));
+		$('#price').text('$'+data.resultprice);
 		$('#description').text(data.resultdescription);
         $('#quantity')[0].selectedIndex = 0;
 		$('html,body').animate({scrollTop:$('.row-fluid').offset().top - 100}, 800);
@@ -65,7 +58,7 @@
 				
 				  <div class="form-horizontal qtyFrm">
 				    <div class="control-group">
-					  <label class="control-label" id="price"><span>${{[(productdict[default][3]/10000) |int, (productdict[default][3]%10000 if productdict[default][3]%10000 != 0) ] |join('萬')}}</span></label>
+					  <label class="control-label" id="price"><span>${{productdict[default][3]}}</span></label>
 				    </div>
 				    <div class="control-group">
 					  <select id="quantity" style="background: #FFBF00 0px 0px; color: #191970; font-size: 14px; border: #000000 1px solid; padding: 5px;">

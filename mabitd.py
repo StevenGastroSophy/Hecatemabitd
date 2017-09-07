@@ -48,6 +48,25 @@ def create_app():
 def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
 
+#將純數字的價格轉成瑪奇格式的價格
+def mabipricestyle(price):
+    if int(price) >= 10000 and int(int(price)%10000) != 0:
+        return '萬'.join([str(int(int(price)/10000)), str(int(int(price)%10000))])
+    elif int(price) >= 10000 and int(int(price)%10000) == 0:
+        return str(int(int(price)/10000))+'萬'
+    else:
+        return str(price)
+
+#將瑪奇格式的價格轉成純數字的價格
+def demabipricestyle(price):
+    if '萬' in price and  price.split('萬')[1]:
+        return int(price.split('萬')[0])*10000+int(price.split('萬')[1])
+    elif '萬' in price and not price.split('萬')[1]:
+        return int(price.strip('萬'))*10000
+    else:
+        return int(price)
+    
+
 class readproduct:
     def __init__(self, data_object):
         self.data_products = data_object #傳入資料庫查詢物件
@@ -55,28 +74,44 @@ class readproduct:
         self.productlist = list()
     def addstuff(self, defaultid = None):
         self.defaultproduct = None
-        print("defaultid is "+str(defaultid))
-        print("self.defaultproduct is "+str(self.defaultproduct))
         if isinstance(self.data_products, list):
             print(self.data_products)
             for data in self.data_products:
-                if defaultid:
-                    if data.id == defaultid:
-                        self.defaultproduct = data.name
-                        print("self.defaultproduct is "+str(self.defaultproduct))
+                if defaultid and data.id == defaultid:
+                    self.defaultproduct = data.name
+                    print("self.defaultproduct is "+str(self.defaultproduct))
                 #data_products回傳list的情況    #大圖連結、縮圖連結、id、價格、描述
                 self.productdict[data.name] = [pathbyname(data.productpictures.picname, data.productpictures.picext), 
                                                pathbyname(data.productpictures.psqname, data.productpictures.psqext),
                                                data.id,
-                                               data.price,
+                                               mabipricestyle(data.price), #瑪奇格式,XXXX萬XXXX
                                                data.description]
                 self.productlist.append(data.name)
         else:#data_products回傳單個物件的情況
             self.productdict[self.data_products.name] = [pathbyname(self.data_products.productpictures.picname, self.data_products.productpictures.picext), 
                                                          pathbyname(self.data_products.productpictures.psqname, self.data_products.productpictures.psqext),
                                                          self.data_products.id,
-                                                         self.data_products.price,
+                                                         mabipricestyle(self.data_products.price), #瑪奇格式,XXXX萬XXXX
                                                          self.data_products.description]
+
+#檢查session裡面的price跟資料庫是否一致
+def CheckSession(session, productdict):
+    session_in = session
+    try:
+        for i in range(len(session_in['name'])):
+            if productdict[session_in['name'][i]][3] != session_in['price'][i]: #如果session的價格跟查到的價格不一樣
+                print(session_in['name'][i]+'\'s price has been modified from '+str(session['price'][i]))
+                session['price'][i] = productdict[session_in['name'][i]][3]
+                session['subtotal'][i] = mabipricestyle(demabipricestyle(productdict[session_in['name'][i]][3])*int(session['quantity'][i])) #session['quantity'][i]是string
+                session['totalamount'] = mabipricestyle(sum([demabipricestyle(subtotal) for subtotal in session['subtotal']]))
+                print(session_in['name'][i]+'\'s price has been modified to '+str(session['price'][i]))
+            elif i == (len(session_in['name'])-1):
+                print('All prices were checked')
+            else:
+                pass
+    except:
+        print('there is an except')
+        
 
 #上下線調整功能暫時開放所有人使用
 @app.route('/status/online/<int:channel>', methods=['GET'])
@@ -146,6 +181,8 @@ def productpage():
     getproduct = readproduct(data_object)
     getproduct.addstuff(defaultproductid)
 
+    CheckSession(session, getproduct.productdict)
+
     print('加載productpage',str(session.get('CartCount')))
     data_hecatestatus = hecatestatus.query.first()
     status = data_hecatestatus.status
@@ -167,6 +204,8 @@ def index():
     data_object = products.query.order_by(products.id).all()
     getproduct = readproduct(data_object)
     getproduct.addstuff()
+
+    CheckSession(session, getproduct.productdict)
 
     data_hecatestatus = hecatestatus.query.first()
     status = data_hecatestatus.status
@@ -198,6 +237,6 @@ def check_thread():
             thread = socketio.start_background_task(target=check_status)
 
 if __name__ == '__main__':
-    socketio.run(app,host='0.0.0.0',port=os.environ['PORT'])
+    socketio.run(app, host='0.0.0.0',port=os.environ['PORT'])
 
 

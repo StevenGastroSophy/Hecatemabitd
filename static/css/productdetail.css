@@ -108,7 +108,7 @@
 }
 
 #productpic{
-  height: 200px;
+  height: 100px;
 }
 .row-fluid [class*="span"] {
   float: none;

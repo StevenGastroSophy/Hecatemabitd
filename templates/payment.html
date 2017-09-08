@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}結帳{% endblock %}
+{% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}" type="text/css">
+{% endblock %}
+
+{% block header %}
+<header>
+	<div class="nav-bar">
+		<a href=""><i class="fa fa-bars"></i><span>MENU</span></a>
+	</div>
+	<nav>
+		<ul>
+			<li><a href="https://hecatemabitd.herokuapp.com" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 回首頁 </a></li>
+			<li><a href="https://hecatemabitd.herokuapp.com/products" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 繼續購買 </a></li>
+			<li><a id="footer_payment-click"  style="cursor: pointer;"><i class="ra ra-wooden-sign"></i> 版權聲明 </a></li>
+		</ul>
+	</nav>
+		
+</header>
+{% endblock %}
+{% block content %}
+<div id="blank"></div>
+
+    <h1 style="padding-right:50px;">購物清單 <small class="pull-right"> 購物車內有2樣物品 </small></h1>
+    <table class="table">
+              <thead>
+                <tr>
+                  <th>產品名稱</th>
+                  <th>描述</th>
+                  <th>單價</th>
+                  <th>數量</th>
+                  <th>小計</th>
+				</tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img width="100" src={{ url_for('static', filename='img/p005.jpg') }} alt=""></td>
+                  <td>Items name here<br>Carate : 22<br>Model : n/a</td>
+                  <td>$50.00</td>
+				  <td>2</td>
+                  <td>$100.00</td>
+                </tr>
+				<tr>
+                  <td><img width="100" src={{ url_for('static', filename='img/p005.jpg') }} alt=""></td>
+                  <td>Item names and brief details<br>Carate:24 <br>Model:HBK24</td>
+                  <td>$348.42</td>
+				  <td>1</td>
+                  <td>$348.42</td>
+                </tr>
+                <tr>
+                  <td colspan="4">購物總計:	</td>
+                  <td> $448.42</td>
+                </tr>
+				</tbody>
+    </table>
+        <table class="table table-bordered">
+			<tbody>
+                <tr><td>請填寫您的交易資料</td></tr>
+                 <tr> 
+				 <td>
+					<form class="form-horizontal">
+					  <div style="display: inline-block;">
+					    <div class="control-group">
+					      <div style="display: inline-block;">
+						    <label class="control-label" for="inputEmail">遊戲ID</label>
+						  </div>
+						  <div style="display: inline-block;">
+						    <input type="text" placeholder="請填寫交易角色ID" style="height:25px;">
+						  </div>
+					    </div>
+					    <div class="control-group">
+					      <div style="display: inline-block;">
+						    <label class="control-label" for="inputPassword">希望交易時間</label>
+					  	  </div>
+						  <div style="display: inline-block;">
+						    <input type="text" placeholder="將盡力配合您方便的時間" style="height:25px;">
+						  </div>
+					    </div>
+					    <div class="control-group">
+					      <div style="display: inline-block;">
+						    <label class="control-label" for="inputPassword">希望交易分流</label>
+						  </div>
+						  <div style="display: inline-block;">
+						    <input type="text" placeholder="1~12" style="height:25px;">
+						  </div>
+					    </div>
+					  </div>
+					  <div style="display: inline-block; padding-left: 10px;">
+					    <div class="control-group">
+					      <div>
+						    <label class="control-label" for="inputPassword">備註</label>
+						  </div>
+						  <div>
+						    <textarea style="width:300px;height:100px;">
+                            </textarea>
+						  </div>
+					    </div>
+					  </div>
+					    <div class="control-group">
+						  <div>
+						    <button type="submit" class="ui-button ui-corner-all ui-widget" >Click to check the price</button>
+						  </div>
+					    </div>
+					</form> 
+				  </td>
+				  </tr>
+              </tbody>
+    </table>
+    <footer id="footer_payment">
+      <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
+      <p>
+	    <br><strong>本站所有遊戲圖片以及數據皆由遊戲官方Nexon, Devcat, Gamania所有</strong></br>
+	    <br><strong>若有任何侵權之疑慮請聯絡本站協助撤下內容</strong></br>
+	  </p>
+    </footer>
+{% endblock %}

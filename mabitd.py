@@ -110,7 +110,7 @@ def CheckSession(session, productdict):
             else:
                 pass
     except:
-        print('there is an except')
+        pass
         
 
 #上下線調整功能暫時開放所有人使用
@@ -169,6 +169,24 @@ def another_product():
     resultdict['resultprice'] = getproduct.productdict[productname][3]
     resultdict['resultdescription'] = getproduct.productdict[productname][4]
     return jsonify(resultdict)
+
+#結帳頁面
+@app.route('/pay', methods=['GET'])
+def paymentpage():
+    data_object = products.query.order_by(products.id).all()
+    getproduct = readproduct(data_object)
+    getproduct.addstuff()
+    
+    CheckSession(session, getproduct.productdict)
+    
+    data_hecatestatus = hecatestatus.query.first()
+    status = data_hecatestatus.status
+    channel = data_hecatestatus.channel
+    
+    return render_template('payment.html',
+                           status = status,
+                           channel = channel,
+                           async_mode=socketio.async_mode)
 
 #產品頁面，接受傳入預設顯示的產品編號
 @app.route('/products', methods=['GET'])
@@ -237,6 +255,6 @@ def check_thread():
             thread = socketio.start_background_task(target=check_status)
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0',port=os.environ['PORT'])
+    socketio.run(app,host='0.0.0.0',port=os.environ['PORT'])
 
 

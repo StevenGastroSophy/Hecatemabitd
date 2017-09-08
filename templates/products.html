@@ -3,7 +3,7 @@
 {% block css %}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/productdetail.css') }}" type="text/css">
 {% endblock %}
-{% block content %}
+{% block EmbeddingJS %}
 <script type="text/javascript">
 //產品頁用ajax更改產品資訊
   var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
@@ -24,7 +24,9 @@
     });
   });
 </script>
+{% endblock %}
 
+{% block header %}
 <header>
 	<div class="nav-bar">
 		<a href=""><i class="fa fa-bars"></i><span>MENU</span></a>
@@ -38,10 +40,10 @@
 	</nav>
 		
 </header>
+{% endblock %}
+{% block content %}
 <div id="blank"></div>
-  
 
-<body>
     <div class="row-fluid">
 			  <div class="span5">
 			    <div id="myCarousel" class="carousel slide cntr">
@@ -100,5 +102,4 @@
 	    <br><strong>若有任何侵權之疑慮請聯絡本站協助撤下內容</strong></br>
 	  </p>
     </footer>
-</body>
 {% endblock %}

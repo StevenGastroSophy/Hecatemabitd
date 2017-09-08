@@ -68,6 +68,10 @@ $(document).ready(function() {
         $('html,body').animate({
 	        scrollTop:$('#footer_products').offset().top - 60}, 800);
     });
+	$('#footer_payment-click').click(function(){ 
+        $('html,body').animate({
+	        scrollTop:$('#footer_payment').offset().top - 60}, 800);
+    });
 });
  
 // 次級選單
@@ -161,7 +165,7 @@ $( function() {
 	}
 	//金額不過萬
     else {
-	    $('#totalamount').text(total.toString());;
+	    $('#totalamount').text(total.toString());
 	}
 	$('#CartCount').text(totalquantity);
   }; 
@@ -307,7 +311,7 @@ function UpdateSession() {
 	        }
 	        //金額不過萬
             else {
-	            subtotallist.push(subtotal.toString());;
+	            subtotallist.push(subtotal.toString());
 	        }
 			break;
 		  case 3:

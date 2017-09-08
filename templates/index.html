@@ -5,7 +5,8 @@
 {% block css %}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}" type="text/css">
 {% endblock %}
-{% block content %}
+
+{% block EmbeddingJS %}
 <script type="text/javascript">
 //首頁的投影片
 $(function() {
@@ -22,7 +23,9 @@ $(function() {
 	}); 
 }); 
 </script>
+{% endblock %}
 
+{% block EmbeddingCSS %}
 <style>
 
 @media (min-width: 768px) and (max-width:992px){
@@ -93,15 +96,17 @@ $(function() {
 }
 
 #footer_index{
-text-align:center;
-color: #191970;
-background:#FFBF00;
-filter:alpha(opacity=70);
-background-color: rgba(255, 191, 0, .7);
-padding-right:50px;
+  text-align:center;
+  color: #191970;
+  background:#FFBF00;
+  filter:alpha(opacity=70);
+  background-color: rgba(255, 191, 0, .7);
+  padding-right:50px;
 }
 </style>
+{% endblock %}
 
+{% block header %}
 <header>
 	<div class="nav-bar">
 		<a href=""><i class="fa fa-bars"></i><span>MENU</span></a>
@@ -116,11 +121,11 @@ padding-right:50px;
 	</nav>
 		
 </header> 
-
+{% endblock %}
+{% block content %}
 <div id="blank"></div>
 
 
-<body>
 	<div class="flexslider"> 
       <ul class="slides"> 
 	    {% for slidepic in slidelist %}
@@ -196,6 +201,4 @@ padding-right:50px;
 	    <br><strong>若有任何侵權之疑慮請聯絡本站協助撤下內容</strong></br>
 	  </p>
     </footer>
-	
-</body>
 {% endblock %}

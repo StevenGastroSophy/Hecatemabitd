@@ -1,0 +1,50 @@
+.pull-right {
+  float: right;
+}
+.table {
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: #191970;
+  color: #FFBF00;
+  padding-right:50px;
+}
+.table th,
+.table td {
+  padding: 8px;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #FFBF00;
+}
+
+.table th {
+  font-weight: bold;
+}
+
+.table thead th {
+  vertical-align: bottom;
+}
+
+.table-bordered th,
+.table-bordered td {
+  text-align: center;
+}
+
+.form-horizontal .control-group {
+  margin-bottom: 20px;
+}
+
+
+.control-label {
+  padding-top: 5px;
+  text-align: right;
+}
+
+#footer_payment{
+text-align:center;
+color: #191970;
+background:#FFBF00;
+filter:alpha(opacity=70);
+background-color: rgba(255, 191, 0, .7);
+padding-right:50px;
+}

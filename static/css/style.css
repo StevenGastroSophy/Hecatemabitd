@@ -24,7 +24,7 @@ body{
 
 #products_index{
   width: 100%;
-  padding-right:50px;
+  padding-right:50px;   /*給購物車留點空間*/
 }
 
 .ui-widget {

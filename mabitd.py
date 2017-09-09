@@ -68,31 +68,52 @@ def demabipricestyle(price):
     
 
 class readproduct:
-    def __init__(self, data_object):
+    def __init__(self, data_object, defaultid = None):
         self.data_products = data_object #傳入資料庫查詢物件
-        self.productdict = dict()
-        self.productlist = list()
-    def addstuff(self, defaultid = None):
-        self.defaultproduct = None
+        self.defaultid = defaultid #傳入預設的產品名稱，可選值
+        
+    @property
+    def productdict(self):
+        productdict = dict()
+        #data_products回傳list的情況
         if isinstance(self.data_products, list):
-            print(self.data_products)
             for data in self.data_products:
-                if defaultid and data.id == defaultid:
-                    self.defaultproduct = data.name
-                    print("self.defaultproduct is "+str(self.defaultproduct))
-                #data_products回傳list的情況    #大圖連結、縮圖連結、id、價格、描述
-                self.productdict[data.name] = [pathbyname(data.productpictures.picname, data.productpictures.picext), 
-                                               pathbyname(data.productpictures.psqname, data.productpictures.psqext),
-                                               data.id,
-                                               mabipricestyle(data.price), #瑪奇格式,XXXX萬XXXX
-                                               data.description]
-                self.productlist.append(data.name)
-        else:#data_products回傳單個物件的情況
-            self.productdict[self.data_products.name] = [pathbyname(self.data_products.productpictures.picname, self.data_products.productpictures.picext), 
-                                                         pathbyname(self.data_products.productpictures.psqname, self.data_products.productpictures.psqext),
-                                                         self.data_products.id,
-                                                         mabipricestyle(self.data_products.price), #瑪奇格式,XXXX萬XXXX
-                                                         self.data_products.description]
+                productdict[data.name] = [pathbyname(data.productpictures.picname, data.productpictures.picext), 
+                                          pathbyname(data.productpictures.psqname, data.productpictures.psqext),
+                                          data.id,
+                                          mabipricestyle(data.price), #瑪奇格式,XXXX萬XXXX
+                                          data.description]
+            return productdict
+        #data_products回傳單個物件的情況
+        else:
+            productdict[self.data_products.name] = [pathbyname(self.data_products.productpictures.picname, self.data_products.productpictures.picext), 
+                                                    pathbyname(self.data_products.productpictures.psqname, self.data_products.productpictures.psqext),
+                                                    self.data_products.id,
+                                                    mabipricestyle(self.data_products.price), #瑪奇格式,XXXX萬XXXX
+                                                    self.data_products.description]
+            return productdict
+    @property
+    def productlist(self):
+        if isinstance(self.data_products, list):
+            productlist = list()
+            for data in self.data_products:
+                productlist.append(data.name)
+            return productlist
+        else:
+            raise Exception("productlist只能在data_object回傳list的情況使用")
+    @property
+    def defaultproduct(self):
+        if isinstance(self.data_products, list):
+            if self.defaultid:
+                for data in self.data_products:
+                    if  data.id == self.defaultid:
+                        print("defaultproduct is "+data.name)
+                        return data.name
+            else:
+               raise Exception("記得在建立readproduct實例的時候傳入defaultid")                     
+        else:
+            raise Exception("defaultproduct只能在data_object回傳list的情況使用")
+        
 
 #檢查session裡面的price跟資料庫是否一致
 def CheckSession(session, productdict):
@@ -162,12 +183,12 @@ def another_product():
     productname = request.args.get('productname')
     data_object = products.query.filter_by(name=productname).first()
     getproduct = readproduct(data_object)
-    getproduct.addstuff()
+    productdict = getproduct.productdict
     resultdict = dict()
-    resultdict['resultpic'] = getproduct.productdict[productname][0]
+    resultdict['resultpic'] = productdict[productname][0]
     resultdict['resultname'] = productname
-    resultdict['resultprice'] = getproduct.productdict[productname][3]
-    resultdict['resultdescription'] = getproduct.productdict[productname][4]
+    resultdict['resultprice'] = productdict[productname][3]
+    resultdict['resultdescription'] = productdict[productname][4]
     return jsonify(resultdict)
 
 #結帳頁面
@@ -175,9 +196,9 @@ def another_product():
 def paymentpage():
     data_object = products.query.order_by(products.id).all()
     getproduct = readproduct(data_object)
-    getproduct.addstuff()
+    productdict = getproduct.productdict
     
-    CheckSession(session, getproduct.productdict)
+    CheckSession(session, productdict)
     
     data_hecatestatus = hecatestatus.query.first()
     status = data_hecatestatus.status
@@ -196,19 +217,21 @@ def productpage():
     else:
         defaultproductid = 1
     data_object = products.query.order_by(products.id).all()
-    getproduct = readproduct(data_object)
-    getproduct.addstuff(defaultproductid)
+    getproduct = readproduct(data_object, defaultproductid)
+    productdict = getproduct.productdict
+    productlist = getproduct.productlist
+    defaultproduct = getproduct.defaultproduct
 
-    CheckSession(session, getproduct.productdict)
+    CheckSession(session, productdict)
 
     print('加載productpage',str(session.get('CartCount')))
     data_hecatestatus = hecatestatus.query.first()
     status = data_hecatestatus.status
     channel = data_hecatestatus.channel
     return render_template('products.html',
-                           productdict = getproduct.productdict,
-                           productlist = getproduct.productlist,
-                           default = getproduct.defaultproduct,
+                           productdict = productdict,
+                           productlist = productlist,
+                           default = defaultproduct,
                            status = status,
                            channel = channel,
                            async_mode=socketio.async_mode)
@@ -221,17 +244,18 @@ def index():
 
     data_object = products.query.order_by(products.id).all()
     getproduct = readproduct(data_object)
-    getproduct.addstuff()
+    productdict = getproduct.productdict
+    productlist = getproduct.productlist
 
-    CheckSession(session, getproduct.productdict)
+    CheckSession(session, productdict)
 
     data_hecatestatus = hecatestatus.query.first()
     status = data_hecatestatus.status
     channel = data_hecatestatus.channel
     return render_template('index.html',
                            slidelist = slidelist,
-                           productdict = getproduct.productdict,
-                           productlist = getproduct.productlist,
+                           productdict = productdict,
+                           productlist = productlist,
                            status = status,
                            channel = channel,
                            async_mode=socketio.async_mode)

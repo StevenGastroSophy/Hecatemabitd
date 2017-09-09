@@ -6,7 +6,6 @@
   margin-bottom: 20px;
   background-color: #191970;
   color: #FFBF00;
-  padding-right:50px;
 }
 .table th,
 .table td {
@@ -32,12 +31,14 @@
 
 .form-horizontal .control-group {
   margin-bottom: 20px;
+  display: table;
 }
 
 
 .control-label {
   padding-top: 5px;
   text-align: right;
+  padding-right: 10px;
 }
 
 #footer_payment{

@@ -21,13 +21,13 @@
 {% endblock %}
 {% block content %}
 <div id="blank"></div>
-
-    <h1 style="padding-right:50px;">購物清單 <small class="pull-right"> 購物車內有2樣物品 </small></h1>
+<div style="padding-right:50px;">
+    <h1 style="text-align: center;">購物清單</h1>
+	<h3><small class="pull-right"> 購物車內有2樣物品 </small></h3>
     <table class="table">
               <thead>
                 <tr>
                   <th>產品名稱</th>
-                  <th>描述</th>
                   <th>單價</th>
                   <th>數量</th>
                   <th>小計</th>
@@ -35,78 +35,77 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><img width="100" src={{ url_for('static', filename='img/p005.jpg') }} alt=""></td>
-                  <td>Items name here<br>Carate : 22<br>Model : n/a</td>
-                  <td>$50.00</td>
+                  <td><p>桐人服裝SAO版本</p><img src={{ url_for('static', filename='img/p005.jpg') }} alt=""></td>
+                  <td>$50</td>
 				  <td>2</td>
-                  <td>$100.00</td>
+                  <td>$100</td>
                 </tr>
 				<tr>
-                  <td><img width="100" src={{ url_for('static', filename='img/p005.jpg') }} alt=""></td>
-                  <td>Item names and brief details<br>Carate:24 <br>Model:HBK24</td>
-                  <td>$348.42</td>
+                  <td><p>桐人服裝SAO版本</p><img src={{ url_for('static', filename='img/p005.jpg') }} alt=""></td>
+                  <td>$348</td>
 				  <td>1</td>
-                  <td>$348.42</td>
+                  <td>$348</td>
                 </tr>
                 <tr>
-                  <td colspan="4">購物總計:	</td>
-                  <td> $448.42</td>
+                  <td colspan="3">購物總計:	</td>
+                  <td> $448</td>
                 </tr>
 				</tbody>
     </table>
-        <table class="table table-bordered">
-			<tbody>
-                <tr><td>請填寫您的交易資料</td></tr>
-                 <tr> 
-				 <td>
-					<form class="form-horizontal">
-					  <div style="display: inline-block;">
-					    <div class="control-group">
-					      <div style="display: inline-block;">
-						    <label class="control-label" for="inputEmail">遊戲ID</label>
-						  </div>
-						  <div style="display: inline-block;">
+    <table class="table table-bordered">
+	    <tbody>
+            <tr>
+			    <td>請填寫您的交易資料</td>
+			</tr>
+            <tr> 
+		    <td>
+			<form class="form-horizontal">
+			    <div style="display: inline-block;">
+					<div class="control-group">
+					    <div style="display: inline-block;">
+						    <label class="control-label" for="inputEmail">您的人物名稱</label>
+						</div>
+					    <div style="display: inline-block;">
 						    <input type="text" placeholder="請填寫交易角色ID" style="height:25px;">
-						  </div>
-					    </div>
-					    <div class="control-group">
-					      <div style="display: inline-block;">
+						</div>
+					</div>
+					<div class="control-group">
+					    <div style="display: inline-block;">
 						    <label class="control-label" for="inputPassword">希望交易時間</label>
-					  	  </div>
-						  <div style="display: inline-block;">
+					  	</div>
+						<div style="display: inline-block;">
 						    <input type="text" placeholder="將盡力配合您方便的時間" style="height:25px;">
-						  </div>
-					    </div>
-					    <div class="control-group">
-					      <div style="display: inline-block;">
+						</div>
+					</div>
+					<div class="control-group">
+					    <div style="display: inline-block;">
 						    <label class="control-label" for="inputPassword">希望交易分流</label>
-						  </div>
-						  <div style="display: inline-block;">
+					    </div>
+						<div style="display: inline-block;">
 						    <input type="text" placeholder="1~12" style="height:25px;">
-						  </div>
-					    </div>
-					  </div>
-					  <div style="display: inline-block; padding-left: 10px;">
-					    <div class="control-group">
-					      <div>
-						    <label class="control-label" for="inputPassword">備註</label>
-						  </div>
-						  <div>
-						    <textarea style="width:300px;height:100px;">
+						</div>
+					</div>
+			    </div>
+			    <div style="display: inline-block; padding-left: 10px;">
+					<div class="control-group">
+					    <div>
+						    <label for="inputPassword">備註</label>
+						</div>
+						<div>
+						    <textarea style="height: 120px;">
                             </textarea>
-						  </div>
-					    </div>
-					  </div>
-					    <div class="control-group">
-						  <div>
-						    <button type="submit" class="ui-button ui-corner-all ui-widget" >Click to check the price</button>
-						  </div>
-					    </div>
-					</form> 
-				  </td>
-				  </tr>
-              </tbody>
+						</div>
+					</div>
+				</div>
+				<div>
+					<button type="submit" class="ui-button ui-corner-all ui-widget" >送出</button>
+				</div>
+			</form> 
+			</td>
+			</tr>
+        </tbody>
     </table>
+</div>
     <footer id="footer_payment">
       <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
       <p>

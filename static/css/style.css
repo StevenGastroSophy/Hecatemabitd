@@ -79,7 +79,6 @@ body{
   top: 15%;  /*垂直位置*/
   right: 0;  /*水平位置*/
   background: #FFBF00;
-  padding: 0px 6px 50px 4px;
   color: #191970;
   z-index: 1000;
   border-radius:50px;

@@ -48,9 +48,9 @@
 {% endblock %}
 <div id="btn_cart" style="cursor: pointer;">
     {% if session.CartCount %}
-    <span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><h2 id="CartCount">{{session.CartCount}}</h2></span>
+    <span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><b id="CartCount">{{session.CartCount}}</b></span>
 	{% else %}
-	<span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><h2 id="CartCount">0</h2></span>
+	<span style="position:relative; font-size:35px;"><i class="fa fa-shopping-cart"></i><b id="CartCount">0</b></span>
 	{% endif %}
 </div>
 <div id="hecate_status">

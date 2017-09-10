@@ -201,7 +201,7 @@ $( function() {
             fadeOut: 400, 
 	    }); 
         window.location.href='./pay';
-		setTimeout($.unblockUI, 4000);
+		setTimeout($.unblockUI, 3000);
       },
       '繼續購買': function() {
         dialog.dialog( "close" );

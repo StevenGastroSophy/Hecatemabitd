@@ -3,6 +3,12 @@
 {% block css %}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}" type="text/css">
 {% endblock %}
+{% block EmbeddingJS %}
+<script type="text/javascript">
+//用ajax更改結帳清單內容
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+{% endblock %}
 
 {% block header %}
 <header>
@@ -23,8 +29,8 @@
 <div id="blank"></div>
 <div style="padding-right:50px;">
     <h1 style="text-align: center;">購物清單</h1>
-	<h3><small class="pull-right"> 購物車內有2樣物品 </small></h3>
-    <table class="table">
+	<h3><small class="pull-right" id="countsmalltext"> 購物車內有{{session.CartCount}}樣物品 </small></h3>
+    <table class="table" id="CartContent">
               <thead>
                 <tr>
                   <th>產品名稱</th>
@@ -34,21 +40,17 @@
 				</tr>
               </thead>
               <tbody>
+	            {% for i in range(0, session.PackCount |int) %}
                 <tr>
-                  <td><p>桐人服裝SAO版本</p><img src={{ url_for('static', filename='img/p005.jpg') }} alt=""></td>
-                  <td>$50</td>
-				  <td>2</td>
-                  <td>$100</td>
+                  <td><p>{{session.name[i]}}</p><img src={{ url_for('static', filename=productdict[session.name[i]][0]) }} title={{session.name[i]}}></td>
+                  <td>{{session.price[i]}}</td>
+				  <td>{{session.quantity[i]}}</td>
+                  <td>{{session.subtotal[i]}}</td>
                 </tr>
-				<tr>
-                  <td><p>桐人服裝SAO版本</p><img src={{ url_for('static', filename='img/p005.jpg') }} alt=""></td>
-                  <td>$348</td>
-				  <td>1</td>
-                  <td>$348</td>
-                </tr>
+				{% endfor %}
                 <tr>
                   <td colspan="3">購物總計:	</td>
-                  <td> $448</td>
+                  <td>{{session.totalamount}}</td>
                 </tr>
 				</tbody>
     </table>

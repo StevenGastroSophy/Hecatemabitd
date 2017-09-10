@@ -42,6 +42,7 @@ $(document).ready(function(){
 	}
 	return false;
     });
+});
 //選單內選項的捲動特效
 $(document).ready(function() {
     $('#products_index-click').click(function(){ 
@@ -79,8 +80,6 @@ $(document).ready(function() {
   	$(this).children('.children').slideToggle();
   return false;
   })
-
-});
 
 //接收server端傳來的上線狀態並改變#hecate_status
 $(document).ready(function() {
@@ -178,7 +177,31 @@ $( function() {
 	position: { my: "center-9%", at: "center", of: window  } ,
     buttons: {
 	  '結帳': function() {
-        dialog.dialog( "close" );
+	    $.blockUI({
+            message: '<h1>前往結帳..</h1>',		
+		    css: {
+                border: 'none',
+                padding: '15px',
+			    width: '50%',
+                left: '25%',			
+                backgroundColor: '#FFBF00',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .8,
+                color: '#191970'
+            },
+		    overlayCSS:  { 
+                backgroundColor: '#000000', 
+                opacity:         0.6, 
+                cursor:          'wait' 
+            },
+		    // 淡入的時間.單位為毫秒200
+		    fadeIn:  200, 
+            // 淡出的時間.單位為毫秒400 
+            fadeOut: 400, 
+	    }); 
+        window.location.href='./pay';
+		setTimeout($.unblockUI, 4000);
       },
       '繼續購買': function() {
         dialog.dialog( "close" );
@@ -258,13 +281,33 @@ $( function() {
     $(this).closest('tr').remove();
 	sumup();
 	UpdateSession();
-	//if ($('#CartCount').text() == '0') {
-    //  setTimeout(function(){window.location.href='./products'}, 200);
-	//}
-	setTimeout($.unblockUI, 600);
+	if ((location.pathname == "/pay") && ($('#CartCount').text() == '0')) {
+		setTimeout(function(){window.location.href='./products'}, 500);
+	}
+	else if (location.pathname == "/pay"){
+		setTimeout(function(){
+	        $.getJSON($SCRIPT_ROOT + '/_paycontent_reset', function(data) {
+	            $( "#CartContent tbody" ).html("");
+	            for (i = 0; i < data.resultname.length; i++) {
+                    $( "#CartContent tbody" ).append( "<tr>" +
+                        "<td><p>" + data.resultname[i] + "</p>" + "<img src=static/" + data.resultpic[i] + "></td>" +
+                        "<td>" + data.resultprice[i] + "</td>" +
+                        "<td>" + data.resultquantity[i] + "</td>" +
+	                    "<td>" + data.resultsubtotal[i] + "</td>" +
+                        "</tr>" );
+	            };
+				$("#CartContent tbody").append("<tr><td colspan=\"3\">購物總計:	</td> <td>" + data.resulttotalamount + "</td></tr>");
+				$('#countsmalltext').text("購物車內有"+data.PackCount+"樣物品");
+			});
+		},500);
+	    setTimeout($.unblockUI, 4000);
+    }
+	else {
+        setTimeout($.unblockUI, 600); 	
+	}; 
   return false;
-  }); 
-});
+  });
+})
 //將購物車的內容用post傳回server更新session
 function UpdateSession() {
 	var namelist = [];
@@ -272,7 +315,7 @@ function UpdateSession() {
 	var quantitylist = [];
 	var subtotallist = [];
 	var totalamount = $('#totalamount').text();
-	var CartCount = $('#CartCount').text();
+	var CartCount = parseInt($('#CartCount').text());
 	var PackCount = 0;
 	var count = 0;
     $( "#users tbody tr td" ).each(function(){

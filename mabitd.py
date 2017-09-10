@@ -95,9 +95,7 @@ class readproduct:
     @property
     def productlist(self):
         if isinstance(self.data_products, list):
-            productlist = list()
-            for data in self.data_products:
-                productlist.append(data.name)
+            productlist = [data.name for data in self.data_products]
             return productlist
         else:
             raise Exception("productlist只能在data_object回傳list的情況使用")
@@ -163,7 +161,7 @@ def update_cart():
     session['quantity'] = quantitylist #[X,Y]
     print(session.get('quantity'))
     subtotallist = request.form.getlist('subtotallist[]')
-    session['subtotal'] = subtotallist
+    session['subtotal'] = subtotallist #['XXXX萬XXXX','YYY萬YYYY']
     print(session.get('subtotal'))
     
     totalamount = request.form.get('totalamount')
@@ -176,6 +174,26 @@ def update_cart():
     session['PackCount'] = PackCount
     print(session.get('PackCount'))
     return 'OK', 200
+
+#用ajax刷新結帳頁面
+@app.route('/_paycontent_reset', methods=['GET'])
+def reset_paycontent():
+    if session.get('name'):
+        data_object = products.query.order_by(products.id).all()
+        getproduct = readproduct(data_object)
+        productdict = getproduct.productdict
+        resultdict = dict()
+        resultdict['resultpic'] = [productdict[name][0] for name in session.get('name')]
+        resultdict['resultname'] = session.get('name')
+        resultdict['resultprice'] = session.get('price')
+        resultdict['resultquantity'] = session.get('quantity')
+        resultdict['resultsubtotal'] = session.get('subtotal')
+        resultdict['resulttotalamount'] = session.get('totalamount')
+        resultdict['PackCount'] = session.get('PackCount')
+        print('/_paycontent_reset success!')
+        return jsonify(resultdict)
+    else:
+        return redirect(url_for('productpage'))
 
 #用ajax調整當前顯示的產品內容
 @app.route('/_another_product', methods=['GET'])
@@ -194,20 +212,28 @@ def another_product():
 #結帳頁面
 @app.route('/pay', methods=['GET'])
 def paymentpage():
-    data_object = products.query.order_by(products.id).all()
-    getproduct = readproduct(data_object)
-    productdict = getproduct.productdict
+    try:
+        if int(session['CartCount']) > 0:
+            data_object = products.query.order_by(products.id).all()
+            getproduct = readproduct(data_object)
+            productdict = getproduct.productdict
     
-    CheckSession(session, productdict)
-    
-    data_hecatestatus = hecatestatus.query.first()
-    status = data_hecatestatus.status
-    channel = data_hecatestatus.channel
-    
-    return render_template('payment.html',
-                           status = status,
-                           channel = channel,
-                           async_mode=socketio.async_mode)
+            CheckSession(session, productdict)
+        
+            data_hecatestatus = hecatestatus.query.first()
+            status = data_hecatestatus.status
+            channel = data_hecatestatus.channel
+
+            return render_template('payment.html',
+                                   productdict = productdict,
+                                   status = status,
+                                   channel = channel,
+                                   async_mode=socketio.async_mode)
+        else:
+            return redirect(url_for('productpage'))
+    except:
+        return redirect(url_for('productpage'))
+
 
 #產品頁面，接受傳入預設顯示的產品編號
 @app.route('/products', methods=['GET'])

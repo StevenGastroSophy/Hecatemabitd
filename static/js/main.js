@@ -299,7 +299,7 @@ $( function() {
 				$("#CartContent tbody").append("<tr><td colspan=\"3\">購物總計:	</td> <td>" + data.resulttotalamount + "</td></tr>");
 				$('#countsmalltext').text("購物車內有"+data.PackCount+"樣物品");
 			});
-		},500);
+		},700);
 	    setTimeout($.unblockUI, 3000);
     }
 	else {

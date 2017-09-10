@@ -282,7 +282,7 @@ $( function() {
 	sumup();
 	UpdateSession();
 	if ((location.pathname == "/pay") && ($('#CartCount').text() == '0')) {
-		setTimeout(function(){window.location.href='./products'}, 500);
+		setTimeout(function(){window.location.href='./products'}, 800);
 	}
 	else if (location.pathname == "/pay"){
 		setTimeout(function(){
@@ -300,7 +300,7 @@ $( function() {
 				$('#countsmalltext').text("購物車內有"+data.PackCount+"樣物品");
 			});
 		},500);
-	    setTimeout($.unblockUI, 4000);
+	    setTimeout($.unblockUI, 3000);
     }
 	else {
         setTimeout($.unblockUI, 600); 	

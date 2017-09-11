@@ -4,6 +4,12 @@ from flask_session import Session
 from flask_socketio import SocketIO, emit, disconnect
 import os
 import sys
+import time
+from math import modf
+from random import randint
+from flask_wtf import FlaskForm
+from wtforms import StringField, IntegerField , TextAreaField
+from wtforms.validators import DataRequired, NumberRange, InputRequired
 from hmodel import db, slidepics, products, productpictures, hecatestatus
 
 
@@ -47,6 +53,12 @@ def create_app():
 
 def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
+
+def createcode(time):
+    timestamp = int(time)
+    RandomThree = randint(100,999)
+    millisecond = int(round(modf(time)[0],2)*100)
+    return str(timestamp)+str(RandomThree)+str(millisecond)
 
 #將純數字的價格轉成瑪奇格式的價格
 def mabipricestyle(price):
@@ -112,6 +124,11 @@ class readproduct:
         else:
             raise Exception("defaultproduct只能在data_object回傳list的情況使用")
         
+class PayForm(FlaskForm):
+    User_id = StringField(validators=[InputRequired(), DataRequired()])
+    Hope_time = StringField()
+    Hope_channel = IntegerField(validators=[NumberRange(message='請填入1到12分流', min=1, max=12)])
+    PS = TextAreaField()
 
 #檢查session裡面的price跟資料庫是否一致
 def CheckSession(session, productdict):
@@ -169,7 +186,7 @@ def update_cart():
     print(session.get('totalamount'))
     CartCount = request.form.get('CartCount')
     session['CartCount'] = CartCount #X
-    print(session.get('CartCount'))
+    print('CartCount is'+str(session.get('CartCount')))
     PackCount = request.form.get('PackCount') #Y
     session['PackCount'] = PackCount
     print(session.get('PackCount'))
@@ -207,29 +224,53 @@ def another_product():
     return jsonify(resultdict)
 
 #結帳頁面
-@app.route('/pay', methods=['GET'])
+@app.route('/pay', methods=['GET', 'POST'])
 def paymentpage():
-    try:
-        if int(session['CartCount']) > 0:
-            data_object = products.query.order_by(products.id).all()
-            getproduct = readproduct(data_object)
-            productdict = getproduct.productdict
+    form = PayForm()
     
-            CheckSession(session, productdict)
+    if request.method == 'GET':
+        try:
+            if int(session['CartCount']) > 0:
+                data_object = products.query.order_by(products.id).all()
+                getproduct = readproduct(data_object)
+                productdict = getproduct.productdict
+    
+                CheckSession(session, productdict)
         
-            data_hecatestatus = hecatestatus.query.first()
-            status = data_hecatestatus.status
-            channel = data_hecatestatus.channel
+                data_hecatestatus = hecatestatus.query.first()
+                status = data_hecatestatus.status
+                channel = data_hecatestatus.channel
 
-            return render_template('payment.html',
-                                   productdict = productdict,
-                                   status = status,
-                                   channel = channel,
-                                   async_mode=socketio.async_mode)
-        else:
+                return render_template('payment.html',
+                                       productdict = productdict,
+                                       form = form,
+                                       status = status,
+                                       channel = channel,
+                                       async_mode=socketio.async_mode)
+            else:
+                return redirect(url_for('productpage'))
+        except PermissionError:
+            print('Redirect')
             return redirect(url_for('productpage'))
-    except:
-        return redirect(url_for('productpage'))
+    if request.method == 'POST':
+        try:
+            if int(session['CartCount']) > 0 and form.validate_on_submit():
+                print("Validate!")
+                User_id = form.User_id.data
+                Hope_time = form.Hope_time.data
+                Hope_channel = form.Hope_channel.data
+                PS = form.PS.data
+
+                time = time.time()
+                code = createcode(time)
+
+                return str(User_id)+str(Hope_time)+str(Hope_channel)+str(PS)+" code is "+code 
+            else:
+                print('Redirect')
+                return redirect(url_for('productpage'))
+        except PermissionError:
+            print('Redirect')
+            return redirect(url_for('productpage'))       
 
 
 #產品頁面，接受傳入預設顯示的產品編號

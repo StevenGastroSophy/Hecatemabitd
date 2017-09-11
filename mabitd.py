@@ -178,22 +178,19 @@ def update_cart():
 #用ajax刷新結帳頁面
 @app.route('/_paycontent_reset', methods=['GET'])
 def reset_paycontent():
-    if session.get('name'):
-        data_object = products.query.order_by(products.id).all()
-        getproduct = readproduct(data_object)
-        productdict = getproduct.productdict
-        resultdict = dict()
-        resultdict['resultpic'] = [productdict[name][0] for name in session.get('name')]
-        resultdict['resultname'] = session.get('name')
-        resultdict['resultprice'] = session.get('price')
-        resultdict['resultquantity'] = session.get('quantity')
-        resultdict['resultsubtotal'] = session.get('subtotal')
-        resultdict['resulttotalamount'] = session.get('totalamount')
-        resultdict['PackCount'] = session.get('PackCount')
-        print('/_paycontent_reset success!')
-        return jsonify(resultdict)
-    else:
-        return redirect(url_for('productpage'))
+    data_object = products.query.order_by(products.id).all()
+    getproduct = readproduct(data_object)
+    productdict = getproduct.productdict
+    resultdict = dict()
+    resultdict['resultpic'] = [productdict[name][0] for name in session.get('name')]
+    resultdict['resultname'] = session.get('name')
+    resultdict['resultprice'] = session.get('price')
+    resultdict['resultquantity'] = session.get('quantity')
+    resultdict['resultsubtotal'] = session.get('subtotal')
+    resultdict['resulttotalamount'] = session.get('totalamount')
+    resultdict['PackCount'] = session.get('PackCount')
+    print('/_paycontent_reset success!')
+    return jsonify(resultdict)
 
 #用ajax調整當前顯示的產品內容
 @app.route('/_another_product', methods=['GET'])

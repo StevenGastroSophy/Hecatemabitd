@@ -116,23 +116,6 @@ $(document).ready(function() {
 
 }); 
 
-//購物車
-$( function() {
-    var dialog, form,	
-    name = $( "#name" ),
-    price = $( "#price" ),
-    quantity = $( "#quantity" );
- 
-//將商品加入購物車清單 
-  function addcart() {
-    $( "#users tbody" ).append( "<tr style=\"height: 3em;\">" +
-      "<td>" + name.text() + "</td>" +
-      "<td>" + price.text().replace('$','') + "</td>" +
-      "<td style=\"text-align: right; cursor: pointer;\">" + quantity.val() + "</td>" +
-	  "<td class=\"remove\" style=\"text-align: center; font-size: 1.6em; cursor: pointer;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
-      "</tr>" );
-  }; 
-
 //計算購物車清單內的加總  
   function sumup() {
 	var total = 0;
@@ -168,7 +151,11 @@ $( function() {
 	}
 	$('#CartCount').text(totalquantity);
   }; 
- 
+
+//購物車
+$( function() {
+    var dialog, form,
+	
   dialog = $( "#dialog-form" ).dialog({
     autoOpen: false,
     height: 300,
@@ -207,15 +194,24 @@ $( function() {
         dialog.dialog( "close" );
       },
     },
+	
     close: function() {
       form[ 0 ].reset();
     }
   });
-  
  
-  form = dialog.find( "form" ).on( "submit", function( event ) {
-    event.preventDefault();
-  });
+  form = dialog.find( "form" ); 
+  
+//將商品加入購物車清單 
+  function addcart() {
+    $( "#users tbody" ).append( "<tr style=\"height: 3em;\">" +
+      "<td>" + $( "#name" ).text() + "</td>" +
+      "<td>" + $( "#price" ).text().replace('$','') + "</td>" +
+      "<td style=\"text-align: right; cursor: pointer;\">" + $( "#quantity" ).val() + "</td>" +
+	  "<td class=\"remove\" style=\"text-align: center; font-size: 1.6em; cursor: pointer;\">" + "<i class=\"fa fa-times\"></i>" + "</td>" +
+      "</tr>" );
+  }; 
+ 
 //按下購物車按鈕 
   $( "#btn_cart" ).on( "click", function() {
 	$("#dialog-form").parent().css({position : "fixed" }).end();
@@ -252,7 +248,7 @@ $( function() {
 	setTimeout($.unblockUI, 600);
 	setTimeout(function () {dialog.dialog( "open" )}, 800);
   return false;
-  }); 
+  });
 //按下購物車清單內的移除鈕 
   $( "#users" ).on( "click", '.remove', function() {
 	$.blockUI({
@@ -308,6 +304,7 @@ $( function() {
   return false;
   });
 })
+
 //將購物車的內容用post傳回server更新session
 function UpdateSession() {
 	var namelist = [];

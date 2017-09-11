@@ -55,10 +55,10 @@ def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
 
 def createcode(time):
-    timestamp = int(time)
+    INTtimestamp = int(time)
     RandomThree = randint(100,999)
     millisecond = int(round(modf(time)[0],2)*100)
-    return str(timestamp)+str(RandomThree)+str(millisecond)
+    return str(INTtimestamp)+str(RandomThree)+str(millisecond)
 
 #將純數字的價格轉成瑪奇格式的價格
 def mabipricestyle(price):
@@ -261,8 +261,8 @@ def paymentpage():
                 Hope_channel = form.Hope_channel.data
                 PS = form.PS.data
 
-                time = time.time()
-                code = createcode(time)
+                timestamp = time.time()
+                code = createcode(timestamp)
 
                 return str(User_id)+str(Hope_time)+str(Hope_channel)+str(PS)+" code is "+code 
             else:

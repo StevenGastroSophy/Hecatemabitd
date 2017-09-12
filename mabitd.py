@@ -422,6 +422,6 @@ def check_thread():
             thread = socketio.start_background_task(target=check_status)
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app,host='0.0.0.0',port=os.environ['PORT'])
 
 

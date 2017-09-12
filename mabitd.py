@@ -5,7 +5,7 @@ from flask_socketio import SocketIO, emit, disconnect
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, InputRequired
-from os import getenv
+from os import getenv, environ
 import sys
 import time
 from math import modf
@@ -422,6 +422,6 @@ def check_thread():
             thread = socketio.start_background_task(target=check_status)
 
 if __name__ == '__main__':
-    socketio.run(app,host='0.0.0.0',port=os.environ['PORT'])
+    socketio.run(app,host='0.0.0.0',port=environ['PORT'])
 
 

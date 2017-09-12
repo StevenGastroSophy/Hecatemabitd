@@ -17,7 +17,9 @@ class products(db.Model):
     description = db.Column(db.Text)
     price = db.Column(db.Integer)
     productpictures_id = db.Column(db.Integer, db.ForeignKey('productpictures.id'))
-
+    orderitems= db.relationship('orderitems',
+                               backref='products',
+                               lazy='dynamic')
 
 class productpictures(db.Model):
     __tablename__ = 'productpictures'
@@ -30,6 +32,27 @@ class productpictures(db.Model):
                                backref='productpictures',
                                lazy='dynamic')
 
+class order(db.Model):
+    __tablename__ = 'order'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String)
+    time = db.Column(db.String)
+    channel = db.Column(db.String)
+    ps = db.Column(db.String)
+    code= db.Column(db.String)
+    orderitems= db.relationship('orderitems',
+                               backref='order',
+                               lazy='dynamic')
+
+class orderitems(db.Model):
+    __tablename__ = 'orderitems'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    price = db.Column(db.String)
+    quantity = db.Column(db.String)
+    subtotal = db.Column(db.String)
+    products_id = db.Column(db.Integer, db.ForeignKey('products.id')))
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id')))
         
 class hecatestatus(db.Model):
     __tablename__ = 'hecatestatus'

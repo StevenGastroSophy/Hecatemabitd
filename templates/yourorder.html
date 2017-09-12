@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}訂單查詢{% endblock %}
+{% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}" type="text/css">
+{% endblock %}
+{% block jquery %}
+	<script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/additional-methods.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/messages_zh_TW.js') }}"></script>
+{% endblock %}
+{% block EmbeddingJS %}
+<script type="text/javascript">
+$(function(){
+	    jQuery.validator.addMethod("noSpace", function(value, element) { 
+        return value.indexOf(" ") < 0 && value != ""; 
+    }, "不可含有空白");
+	
+    jQuery.validator.addMethod("noSpecial", function(value, element) {
+        return this.optional(element) || /^[\u0391-\uFFE5\w]+$/.test(value);
+    }, "不可含有特殊符號");
+	
+    $("#OrderCode").validate({	
+        rules: {
+            Order_code: {
+			  required: true,
+			  noSpace: true,
+			  noSpecial: true,
+			  digits: true,
+			  minlength: 15,
+            },
+        },
+		errorPlacement: function(error, element) { 
+		    var p = $("<p>").append(error).append("</p>");
+            p.appendTo(element.parent()); 
+        },
+    });
+});
+</script>
+{% endblock %}
+
+{% block EmbeddingCSS %}
+<style>
+.error {
+color:#f00000;
+}
+</style>
+{% endblock %}
+
+{% block header %}
+<header>
+	<div class="nav-bar">
+		<a href=""><i class="fa fa-bars"></i><span>MENU</span></a>
+	</div>
+	<nav>
+		<ul>
+			<li><a href="https://hecatemabitd.herokuapp.com" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 回首頁 </a></li>
+			<li><a href="https://hecatemabitd.herokuapp.com/products" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 繼續購買 </a></li>
+			<li><a href="https://hecatemabitd.herokuapp.com/products" style="cursor: pointer;"><i class="ra ra-scroll-unfurled"></i> 訂單查詢 </a></li>
+			<li><a id="footer_payment-click"  style="cursor: pointer;"><i class="ra ra-wooden-sign"></i> 版權聲明 </a></li>
+		</ul>
+	</nav>
+		
+</header>
+{% endblock %}
+{% block content %}
+<div id="blank"></div>
+<div style="padding-right:50px; min-height: calc(100vh - 200px)">
+    <table class="table table-bordered">
+	    <tbody>
+            <tr>
+			    <td>
+				    <h1 style="padding:2% 0;">訂單查詢</h1>
+				    <p style="font-size: 20px; margin-top: 10px;"><small>本站測試中，不會真的與您交易</small></p>
+				</td>
+			</tr>
+            <tr> 
+		        <td>
+			        <form method="POST" action="/yourorder" class="form-horizontal" id="OrderCode">
+			            {{ form.csrf_token }}
+						<div style="text-align:center; min-height:150px">
+				            <div style="padding-top:2%">
+						        <label for="Order_code"><h2>請輸入您的訂單號碼</h2></label>
+					        </div>
+						    <div style="padding:5% 0;">
+						        {{form.Order_code(placeholder="訂單號碼最少15位數", style="height:30px; font-size:20px;", id="Order_code", required=True)}}
+						    </div>
+				            <div style="padding-bottom:2%;">
+					            <button type="submit" class="ui-button ui-corner-all ui-widget">送出</button>
+				            </div>
+						</div>
+			        </form> 
+			    </td>
+			</tr>
+        </tbody>
+    </table>
+</div>
+<footer id="footer_payment">
+    <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
+    <p>
+	    <br><strong>本站所有遊戲圖片以及數據皆由遊戲官方Nexon, Devcat, Gamania所有</strong></br>
+	    <br><strong>若有任何侵權之疑慮請聯絡本站協助撤下內容</strong></br>
+    </p>
+</footer>
+{% endblock %}

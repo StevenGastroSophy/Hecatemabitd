@@ -1,54 +1,9 @@
 {% extends "base.html" %}
-{% block title %}結帳{% endblock %}
+{% block title %}感謝您的購買{% endblock %}
 {% block css %}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/payment.css') }}" type="text/css">
 {% endblock %}
-{% block jquery %}
-	<script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/additional-methods.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/messages_zh_TW.js') }}"></script>
-{% endblock %}
-{% block EmbeddingJS %}
-<script type="text/javascript">
-//用ajax更改結帳清單內容
-  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-</script>
-<script type="text/javascript">
-$(function(){
-    jQuery.validator.addMethod("noSpace", function(value, element) { 
-        return value.indexOf(" ") < 0 && value != ""; 
-    }, "不可含有空白");
-	
-    jQuery.validator.addMethod("noSpecial", function(value, element) {
-        return this.optional(element) || /^[\u0391-\uFFE5\w]+$/.test(value);
-    }, "不可含有特殊符號");
 
-    $("#UserInfo").validate({
-        rules: {
-            User_id: {
-			  required: true,
-			  noSpace: true,
-			  noSpecial: true,
-			  minlength: 3,
-			  maxlength: 12,
-            },
-            Hope_time: {
-			  noSpace: true,
-			  noSpecial: true,
-            },
-            Hope_channel: {
-			  digits: true,
-              min: 1,
-	          max: 12,
-            },
-            PS: {
-              maxlength: 70,
-            },
-        },
-    });
-});
-</script>
-{% endblock %}
 
 {% block header %}
 <header>
@@ -59,6 +14,7 @@ $(function(){
 		<ul>
 			<li><a href="https://hecatemabitd.herokuapp.com" style="cursor: pointer;"><i class="fa fa-map-marker"></i> 回首頁 </a></li>
 			<li><a href="https://hecatemabitd.herokuapp.com/products" style="cursor: pointer;"><i class="ra ra-crossed-swords"></i> 繼續購買 </a></li>
+			<li><a href="https://hecatemabitd.herokuapp.com/products" style="cursor: pointer;"><i class="ra ra-scroll-unfurled"></i> 訂單查詢 </a></li>
 			<li><a id="footer_payment-click"  style="cursor: pointer;"><i class="ra ra-wooden-sign"></i> 版權聲明 </a></li>
 		</ul>
 	</nav>
@@ -68,8 +24,8 @@ $(function(){
 {% block content %}
 <div id="blank"></div>
 <div style="padding-right:50px;">
-    <h1 style="text-align: center;">購物清單</h1>
-	<h3><small class="pull-right" id="countsmalltext"> 購物車內有{{session.CartCount}}樣物品 </small></h3>
+    <h2 style="text-align: center;">您的訂單編號為: {{code}}</h2>
+	<h3><small class="pull-right" id="countsmalltext"> 請保留訂單編號用於訂單查詢 </small></h3>
     <table class="table" id="CartContent">
               <thead>
                 <tr>
@@ -80,79 +36,81 @@ $(function(){
 				</tr>
               </thead>
               <tbody>
-	            {% for i in range(0, session.PackCount |int) %}
+	            {% for i in range(0, Orderitem['PackCount'] |int) %}
                 <tr>
-                  <td><p>{{session.name[i]}}</p><img src={{ url_for('static', filename=productdict[session.name[i]][0]) }} title={{session.name[i]}}></td>
-                  <td>{{session.price[i]}}</td>
-				  <td>{{session.quantity[i]}}</td>
-                  <td>{{session.subtotal[i]}}</td>
+                  <td><p>{{Orderitem['name'][i]}}</p><img src={{ url_for('static', filename=productdict[Orderitem['name'][i]][0]) }} title={{Orderitem['name'][i]}}></td>
+                  <td>{{Orderitem['price'][i]}}</td>
+				  <td>{{Orderitem['quantity'][i]}}</td>
+                  <td>{{Orderitem['subtotal'][i]}}</td>
                 </tr>
 				{% endfor %}
                 <tr>
                   <td colspan="3">購物總計:	</td>
-                  <td>{{session.totalamount}}</td>
+                  <td>{{Orderitem['totalamount']}}</td>
                 </tr>
 				</tbody>
     </table>
     <table class="table table-bordered">
 	    <tbody>
             <tr>
-			    <td>請填寫您的交易資料</td>
+			    <td>
+				    <h2>您此次的交易資料</h2>
+				    <p style="font-size: 10px; margin-top: 10px;"><small>本站測試中，不會真的與您交易</small></p>
+				</td>	
 			</tr>
             <tr> 
-		    <td>
-			<form method="POST" action="/pay" class="form-horizontal" id="UserInfo">
-			    {{ form.csrf_token }}
-			    <div style="display: inline-block;">
-					<div class="control-group">
-					    <div style="display: inline-block;">
-						    <label class="control-label" for="User_id">您的人物名稱</label>
-						</div>
-					    <div style="display: inline-block;">
-						    {{form.User_id(placeholder="請填寫交易角色ID", style="height:25px;", id="User_id", required=True)}}
-						</div>
-					</div>
-					<div class="control-group">
-					    <div style="display: inline-block;">
-						    <label class="control-label" for="Hope_time">希望交易時間</label>
-					  	</div>
-						<div style="display: inline-block;">
-						    {{form.Hope_time(placeholder="將盡力配合您方便的時間", style="height:25px;", id="Hope_time")}}
-						</div>
-					</div>
-					<div class="control-group">
-					    <div style="display: inline-block;">
-						    <label class="control-label" for="Hope_channel">希望交易分流</label>
+		        <td>
+			    <div class="form-horizontal" id="UserInfo">
+			        <div style="display: inline-block;">
+					    <div class="control-group">
+					        <div style="display: inline-block;">
+						        <label class="control-label">您的人物名稱: </label>
+						    </div>
+					        <div style="display: inline-block;">
+						        {{User_id}}
+						    </div>
 					    </div>
-						<div style="display: inline-block;">
-						    {{form.Hope_channel(placeholder="1~12", style="height:25px;", id="Hope_channel")}}
-						</div>
-					</div>
-			    </div>
-			    <div style="display: inline-block; padding-left: 10px;">
-					<div class="control-group">
-					    <div>
-						    <label for="PS">備註</label>
-						</div>
-						<div>
-						    {{form.PS(style="height:120px;", id="PS")}}
-						</div>
-					</div>
-				</div>
-				<div>
-					<button type="submit" action="/submit" class="ui-button ui-corner-all ui-widget" >送出</button>
-				</div>
-			</form> 
-			</td>
+					    <div class="control-group">
+					        <div style="display: inline-block;">
+						        <label class="control-label">希望交易時間: </label>
+					  	    </div>
+						    <div style="display: inline-block;">
+						        {{Hope_time}}
+						    </div>
+					    </div>
+					    <div class="control-group">
+					        <div style="display: inline-block;">
+						        <label class="control-label">希望交易分流: </label>
+					        </div>
+						    <div style="display: inline-block;">
+						        {{Hope_channel}}
+						    </div>
+					    </div>
+			        </div>
+			        <div style="display: inline-block; padding-left: 10px;">
+					    <div class="control-group">
+					        <div>
+						        <label>備註</label>
+						    </div>
+						    <div>
+						        <p style="height:90px;">{{PS}}</p>
+						    </div>
+					    </div>
+				    </div>
+				    <div>
+					    <button onclick="javascript:location.href='https://hecatemabitd.herokuapp.com/products'" class="ui-button ui-corner-all ui-widget" >繼續購物</button>
+				    </div>
+			    </div> 
+			    </td>
 			</tr>
         </tbody>
     </table>
 </div>
-    <footer id="footer_payment">
-      <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
-      <p>
-	    <br><strong>本站所有遊戲圖片以及數據皆由遊戲官方Nexon, Devcat, Gamania所有</strong></br>
-	    <br><strong>若有任何侵權之疑慮請聯絡本站協助撤下內容</strong></br>
-	  </p>
-    </footer>
+<footer id="footer_payment">
+    <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
+    <p>
+	  <br><strong>本站所有遊戲圖片以及數據皆由遊戲官方Nexon, Devcat, Gamania所有</strong></br>
+	  <br><strong>若有任何侵權之疑慮請聯絡本站協助撤下內容</strong></br>
+    </p>
+</footer>
 {% endblock %}

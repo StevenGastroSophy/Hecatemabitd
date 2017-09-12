@@ -2,21 +2,21 @@ from threading import Lock
 from flask import Flask, render_template, request, url_for, redirect, jsonify, session
 from flask_session import Session
 from flask_socketio import SocketIO, emit, disconnect
-import os
+from flask_wtf import FlaskForm
+from wtforms import StringField, SelectField, TextAreaField, IntegerField
+from wtforms.validators import DataRequired, InputRequired
+from os import getenv
 import sys
 import time
 from math import modf
 from random import randint
-from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField , TextAreaField
-from wtforms.validators import DataRequired, NumberRange, InputRequired
 from hmodel import db, slidepics, products, productpictures, hecatestatus
 
 
 async_mode = None
-mabitdpostgre = os.getenv('mabitdpostgre', None)
-ConfigSecretKey = os.getenv('mabitdconfigsecretkey', None)
-AppSecretKey = os.getenv('mabitdappsecretkey', None)
+mabitdpostgre = getenv('mabitdpostgre', None)
+ConfigSecretKey = getenv('mabitdconfigsecretkey', None)
+AppSecretKey = getenv('mabitdappsecretkey', None)
 
 if mabitdpostgre is None:
     print('Specify mabitdpostgre as environment variable.')
@@ -51,9 +51,11 @@ def create_app():
         db.create_all()
     return app
 
+#產生檔案路徑
 def pathbyname(name, ext):
     return '{folder}/{file}.{filetype}'.format(folder = 'img', file = name, filetype = ext)
 
+#產生訂單編號
 def createcode(time):
     INTtimestamp = int(time)
     RandomThree = randint(100,999)
@@ -78,7 +80,7 @@ def demabipricestyle(price):
     else:
         return int(price)
     
-
+#查詢資料庫內的產品資料
 class readproduct:
     def __init__(self, data_object, defaultid = None):
         self.data_products = data_object #傳入資料庫查詢物件
@@ -123,12 +125,17 @@ class readproduct:
                raise Exception("記得在建立readproduct實例的時候傳入defaultid")                     
         else:
             raise Exception("defaultproduct只能在data_object回傳list的情況使用")
-        
+
+#結帳頁(/pay)表單        
 class PayForm(FlaskForm):
     User_id = StringField(validators=[InputRequired(), DataRequired()])
-    Hope_time = StringField()
-    Hope_channel = IntegerField(validators=[NumberRange(message='請填入1到12分流', min=1, max=12)])
+    Hope_time = SelectField(choices=[('{h}:00'.format(h=i),'{h}:00'.format(h=i)) for i in range(19,25)],validators=[DataRequired()])
+    Hope_channel = SelectField(choices=[(str(i), str(i)) for i in range(1,13)],validators=[DataRequired()])
     PS = TextAreaField()
+
+#訂單查詢頁(/yourorder)表單
+class OrderForm(FlaskForm):
+    Order_code = IntegerField(validators=[InputRequired(), DataRequired()])
 
 #檢查session裡面的price跟資料庫是否一致
 def CheckSession(session, productdict):
@@ -256,6 +263,22 @@ def paymentpage():
         try:
             if int(session['CartCount']) > 0 and form.validate_on_submit():
                 print("Validate!")
+                data_object = products.query.order_by(products.id).all()
+                getproduct = readproduct(data_object)
+                productdict = getproduct.productdict
+                
+                CheckSession(session, productdict)
+
+                Orderitem=dict()
+                Orderitem['name'] = session.get('name')
+                Orderitem['price'] = session.get('price')
+                Orderitem['quantity'] = session.get('quantity')
+                Orderitem['subtotal'] = session.get('subtotal')
+                Orderitem['totalamount'] = session.get('totalamount')
+                Orderitem['PackCount'] = session.get('PackCount')
+
+                session.clear()
+                
                 User_id = form.User_id.data
                 Hope_time = form.Hope_time.data
                 Hope_channel = form.Hope_channel.data
@@ -264,14 +287,70 @@ def paymentpage():
                 timestamp = time.time()
                 code = createcode(timestamp)
 
-                return str(User_id)+str(Hope_time)+str(Hope_channel)+str(PS)+" code is "+code 
+                data_hecatestatus = hecatestatus.query.first()
+                status = data_hecatestatus.status
+                channel = data_hecatestatus.channel
+
+                return render_template('paysuccess.html',
+                                       productdict = productdict,
+                                       Orderitem = Orderitem,
+                                       User_id = User_id,
+                                       Hope_time = Hope_time,
+                                       Hope_channel = Hope_channel,
+                                       PS = PS,
+                                       code = code,
+                                       status = status,
+                                       channel = channel,
+                                       async_mode=socketio.async_mode)
             else:
-                print('Redirect')
+                print('Redirect due to invalid value')
                 return redirect(url_for('productpage'))
         except PermissionError:
             print('Redirect')
             return redirect(url_for('productpage'))       
 
+@app.route('/yourorder', methods=['GET', 'POST'])
+def orderpage():
+    form = OrderForm()
+    
+    if request.method == 'GET':
+        data_object = products.query.order_by(products.id).all()
+        getproduct = readproduct(data_object)
+        productdict = getproduct.productdict
+        
+        CheckSession(session, productdict)
+        
+        data_hecatestatus = hecatestatus.query.first()
+        status = data_hecatestatus.status
+        channel = data_hecatestatus.channel
+
+        return render_template('yourorder.html',
+                                form = form,
+                                status = status,
+                                channel = channel,
+                                async_mode=socketio.async_mode)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            print("Validate!")
+            data_object = products.query.order_by(products.id).all()
+            getproduct = readproduct(data_object)
+            productdict = getproduct.productdict
+                
+            CheckSession(session, productdict)
+                
+            Hope_channel = form.Hope_channel.data
+
+            data_hecatestatus = hecatestatus.query.first()
+            status = data_hecatestatus.status
+            channel = data_hecatestatus.channel
+
+            return render_template('paysuccess.html',
+                                    status = status,
+                                    channel = channel,
+                                    async_mode=socketio.async_mode)
+        else:
+            print('Redirect due to invalid value')
+            return redirect(url_for('yourorder'))      
 
 #產品頁面，接受傳入預設顯示的產品編號
 @app.route('/products', methods=['GET'])

@@ -10,7 +10,7 @@ import sys
 import time
 from math import modf
 from random import randint
-from hmodel import db, slidepics, products, productpictures, hecatestatus
+from hmodel import db, slidepics, products, productpictures, order, orderitems, hecatestatus
 
 
 async_mode = None
@@ -422,6 +422,6 @@ def check_thread():
             thread = socketio.start_background_task(target=check_status)
 
 if __name__ == '__main__':
-    socketio.run(app,host='0.0.0.0',port=os.environ['PORT'])
+    socketio.run(app)
 
 

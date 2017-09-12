@@ -51,8 +51,8 @@ class orderitems(db.Model):
     price = db.Column(db.String)
     quantity = db.Column(db.String)
     subtotal = db.Column(db.String)
-    products_id = db.Column(db.Integer, db.ForeignKey('products.id')))
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id')))
+    products_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
         
 class hecatestatus(db.Model):
     __tablename__ = 'hecatestatus'

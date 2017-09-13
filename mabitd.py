@@ -256,7 +256,7 @@ def paymentpage():
                                        async_mode=socketio.async_mode)
             else:
                 return redirect(url_for('productpage'))
-        except PermissionError:
+        except:
             print('Redirect')
             return redirect(url_for('productpage'))
     if request.method == 'POST':
@@ -287,6 +287,21 @@ def paymentpage():
                 timestamp = time.time()
                 code = createcode(timestamp)
 
+                new_order = order(username = User_id,
+                                  hope_time = Hope_time,
+                                  channel = Hope_channel,
+                                  ps = PS,
+                                  code = code,
+                                  totalamount = demabipricestyle(Orderitem.get('totalamount')))
+                orderitemlist = [orderitems(name = Orderitem['name'][i],
+                                            price = demabipricestyle(Orderitem['price'][i]),
+                                            quantity = Orderitem['quantity'][i],
+                                            subtotal = demabipricestyle(Orderitem['subtotal'][i]), order=new_order) for i in range(int(Orderitem['PackCount']))]
+                db.session.add(new_order)
+                for data in orderitemlist:
+                     db.session.add(data)
+                db.session.commit()
+
                 data_hecatestatus = hecatestatus.query.first()
                 status = data_hecatestatus.status
                 channel = data_hecatestatus.channel
@@ -305,7 +320,7 @@ def paymentpage():
             else:
                 print('Redirect due to invalid value')
                 return redirect(url_for('productpage'))
-        except PermissionError:
+        except:
             print('Redirect')
             return redirect(url_for('productpage'))       
 
@@ -337,17 +352,46 @@ def orderpage():
             productdict = getproduct.productdict
                 
             CheckSession(session, productdict)
-                
-            Hope_channel = form.Hope_channel.data
 
             data_hecatestatus = hecatestatus.query.first()
             status = data_hecatestatus.status
             channel = data_hecatestatus.channel
-
-            return render_template('paysuccess.html',
-                                    status = status,
-                                    channel = channel,
-                                    async_mode=socketio.async_mode)
+                
+            Order_code = form.Order_code.data
+            try:
+                order_object = order.query.filter_by(code=str(Order_code)).first()
+                order_id = order_object.id
+                order_totalamount = order_object.totalamount
+                orderitems_object = orderitems.query.filter_by(order_id=order_id).all()
+                Orderitem=dict()
+                Orderitem['name'] = [data.name for data in orderitems_object]
+                Orderitem['price'] = [mabipricestyle(data.price) for data in orderitems_object]
+                Orderitem['quantity'] = [data.quantity for data in orderitems_object]
+                Orderitem['subtotal'] = [mabipricestyle(data.subtotal) for data in orderitems_object]
+                Orderitem['totalamount'] = mabipricestyle(order_totalamount)
+                Orderitem['PackCount'] = len(Orderitem.get('name'))
+                User_id = order_object.username
+                Hope_time = order_object.hope_time
+                Hope_channel = order_object.channel
+                PS = order_object.ps
+                
+                return render_template('paysuccess.html',
+                                       productdict = productdict,
+                                       Orderitem = Orderitem,
+                                       User_id = User_id,
+                                       Hope_time = Hope_time,
+                                       Hope_channel = Hope_channel,
+                                       PS = PS,
+                                       code = Order_code,
+                                       status = status,
+                                       channel = channel,
+                                       async_mode=socketio.async_mode)
+            except:
+                return render_template('yourorderfailed.html',
+                                       status = status,
+                                       channel = channel,
+                                       async_mode=socketio.async_mode)
+                
         else:
             print('Redirect due to invalid value')
             return redirect(url_for('yourorder'))      

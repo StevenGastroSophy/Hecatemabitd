@@ -96,7 +96,8 @@ class readproduct:
                                           pathbyname(data.productpictures.psqname, data.productpictures.psqext),
                                           data.id,
                                           mabipricestyle(data.price), #瑪奇格式,XXXX萬XXXX
-                                          data.description]
+                                          data.description,
+                                          data]
             return productdict
         #data_products回傳單個物件的情況
         else:
@@ -104,7 +105,8 @@ class readproduct:
                                                     pathbyname(self.data_products.productpictures.psqname, self.data_products.productpictures.psqext),
                                                     self.data_products.id,
                                                     mabipricestyle(self.data_products.price), #瑪奇格式,XXXX萬XXXX
-                                                    self.data_products.description]
+                                                    self.data_products.description,
+                                                    self.data_products]
             return productdict
     @property
     def productlist(self):
@@ -296,7 +298,9 @@ def paymentpage():
                 orderitemlist = [orderitems(name = Orderitem['name'][i],
                                             price = demabipricestyle(Orderitem['price'][i]),
                                             quantity = Orderitem['quantity'][i],
-                                            subtotal = demabipricestyle(Orderitem['subtotal'][i]), order=new_order) for i in range(int(Orderitem['PackCount']))]
+                                            subtotal = demabipricestyle(Orderitem['subtotal'][i]),
+                                            order=new_order,
+                                            products=productdict[Orderitem['name'][i]][5]) for i in range(int(Orderitem['PackCount']))]
                 db.session.add(new_order)
                 for data in orderitemlist:
                      db.session.add(data)

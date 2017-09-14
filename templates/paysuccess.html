@@ -25,7 +25,10 @@
 <div id="blank"></div>
 <div style="padding-right:50px;">
     <h2 style="text-align: center;">您的訂單編號為: {{code}}</h2>
-	<h3><small class="pull-right" id="countsmalltext"> 請保留訂單編號用於訂單查詢 </small></h3>
+	{% if warning_keep_code %}
+	<br><h3><small class="pull-right"> 請保留訂單編號用於訂單查詢 </small></h3></br>
+	{% endif %}
+	<br><h4><small class="pull-right"> 於遊戲內邀請「沐刃一大」為好友或發短訊給「沐刃一大」可以加快交易進行</small></h4></br>
     <table class="table" id="CartContent">
               <thead>
                 <tr>

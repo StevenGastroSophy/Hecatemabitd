@@ -311,6 +311,7 @@ def paymentpage():
                 channel = data_hecatestatus.channel
 
                 return render_template('paysuccess.html',
+                                       warning_keep_code = True,
                                        productdict = productdict,
                                        Orderitem = Orderitem,
                                        User_id = User_id,
@@ -329,7 +330,7 @@ def paymentpage():
             return redirect(url_for('productpage'))       
 
 @app.route('/yourorder', methods=['GET', 'POST'])
-def orderpage():
+def yourorder():
     form = OrderForm()
     
     if request.method == 'GET':
@@ -380,6 +381,7 @@ def orderpage():
                 PS = order_object.ps
                 
                 return render_template('paysuccess.html',
+                                       warning_keep_code = False,
                                        productdict = productdict,
                                        Orderitem = Orderitem,
                                        User_id = User_id,

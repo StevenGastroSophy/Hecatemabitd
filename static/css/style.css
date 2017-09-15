@@ -11,8 +11,8 @@ body{
   font-family:Microsoft JhengHei;
   font-weight:lighter;
   font-size:12pt;
-  background-color:#191970;
-  color:#FFBF00;
+  background-color:#143063;
+  color:#c8b559;
 }
 
 #blank {
@@ -35,22 +35,22 @@ body{
   
 .ui-widget-header {
   border: 1px solid #dddddd;
-  background: #FFBF00;
-  color: #191970;
+  background: #c8b559;
+  color: #143063;
   font-weight: bold;
   text-align: left;
 }
 
 .ui-widget-content{
   border: 1px solid #cccccc;
-  background: #191970;
+  background: #143063;
   font-weight: normal;
-  color: #FFBF00;
+  color: #c8b559;
 }
 
 .ui-button {
-  background: #FFBF00;
-  color: #191970;
+  background: #c8b559;
+  color: #143063;
   text-decoration: none;
 }
 
@@ -61,9 +61,9 @@ body{
 .ui-button:hover,
 .ui-button:focus {
   border: 1px solid #cccccc;
-  background: #FFBF00;
+  background: #c8b559;
   font-weight: normal;
-  color: #191970;
+  color: #143063;
 }
 
 .ui-button:active,
@@ -78,8 +78,8 @@ body{
   position: fixed;
   top: 15%;  /*垂直位置*/
   right: 0;  /*水平位置*/
-  background: #FFBF00;
-  color: #191970;
+  background: #c8b559;
+  color: #143063;
   z-index: 1000;
   border-radius:50px;
   width:48px;
@@ -103,7 +103,7 @@ body{
 
 #hecate_status{
   position: fixed;
-  background-color: #FFBF00;
+  background-color: #c8b559;
   top: 70%;  /*垂直位置*/
   right:0;  /*水平位置*/
   z-index: 1000;
@@ -126,9 +126,9 @@ header nav {
   font-family:Microsoft JhengHei;
   font-weight: lighter;
   font-size:12pt;
-  color:#191970;
+  color:#143063;
   position: fixed;
-  background: #FFBF00;
+  background: #c8b559;
   z-index: 1000;
   width: 100%;
   margin: auto;
@@ -151,7 +151,7 @@ header nav:after {
 }
 
 header nav ul li a {
-  color: #191970;
+  color: #143063;
   display: block;
   padding: 0.5em;
   text-decoration: none;
@@ -159,7 +159,7 @@ header nav ul li a {
   font-family: Microsoft JhengHei;
 }
 
-header nav ul li:hover { background: #FFBF00; }
+header nav ul li:hover { background: #c8b559; }
 
 header nav ul li:hover i { color: yellow; }
 
@@ -169,7 +169,7 @@ header nav ul li:hover .children { display: block; }
 
 header nav ul li .children {
   display: none;
-  background: #FFBF00;
+  background: #c8b559;
   position: absolute;
   width: 150%;
   z-index: 1000;
@@ -206,20 +206,20 @@ body { padding-top: 80px; }
   width: 100%;
   position: fixed;
   top: 0;
-  background: #FFBF00;
+  background: #c8b559;
 }
 
 .nav-bar span {
   float: right;
   font-size: 1.8em;
   padding: 0.3em;
-  color: #191970;
+  color: #143063;
 }
 
 .nav-bar .fa-bars , .nav-bar .fa-close{
   display: block;
   padding: 0.5em;
-  color: #191970;
+  color: #143063;
   overflow: hidden;
   font-size: 1.8em;
   font-weight: bold;

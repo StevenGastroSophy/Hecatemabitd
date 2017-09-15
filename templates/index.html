@@ -39,7 +39,7 @@ $(function() {
     }
 	
 	#cautionb{
-	    font-size: 1.8em;
+	    font-size: 1.3em;
 		text-align:center;
 	}
 }
@@ -54,7 +54,7 @@ $(function() {
     }
 	
 	#cautionb{
-	    font-size: 2em;
+	    font-size: 1.5em;
 		text-align:center;
 	}
 }
@@ -69,7 +69,7 @@ $(function() {
     }
 	
 	#cautionb{
-	    font-size: 2em;
+	    font-size: 1.5em;
 		text-align:center;
 	}
 }
@@ -83,25 +83,24 @@ $(function() {
     }
 	
 	#cautionb{
-	    font-size: 1em;
+	    font-size: 0.5em;
 		text-align:center;
 	}
 }
 
 #aboutme{
-  text-align:center;
-  width: 100%;
-  margin-bottom: 5%;
-  padding-right:50px;
+    width: 100%;
+    margin-bottom: 2%;
+    padding-right:50px;
 }
 
 #footer_index{
-  text-align:center;
-  color: #191970;
-  background:#FFBF00;
-  filter:alpha(opacity=70);
-  background-color: rgba(255, 191, 0, .7);
-  padding-right:50px;
+    text-align:center;
+    color: #143063;
+    background:#c8b559;
+    filter:alpha(opacity=70);
+    background-color: rgba(200, 181, 89, .7);
+    padding-right:50px;
 }
 </style>
 {% endblock %}
@@ -128,84 +127,72 @@ $(function() {
 
 
 	<div class="flexslider"> 
-      <ul class="slides"> 
-	    {% for slidepic in slidelist %}
-          <li>
-			<img src="{{ url_for('static', filename=slidepic) }}"/>
-　        </li>
-        {% endfor %}
+        <ul class="slides"> 
+	        {% for slidepic in slidelist %}
+            <li>
+			  <img src="{{ url_for('static', filename=slidepic) }}"/>
+　          </li>
+            {% endfor %}
         
-     </ul> 
+        </ul> 
     </div>
 	
 	<div id="products_index">
-      <h1 style="font-size: 3em; text-align: center; margin-bottom: 0.3em; border-bottom:thick dashed #FFBF00;">
-        <strong>所有商品</strong>
-	  </h1>
-      <ul class="album">
-		{% for product in productlist %}
-		<li class="pic">
-				<a href="../products?default={{productdict[product][2]}}">
-	    	     <img src="{{ url_for('static', filename=productdict[product][1]) }}" title={{product}}>
+        <h1 style="font-size: 3em; text-align: center; margin-bottom: 0.3em; border-bottom:ridge #c8b559;">
+            <strong>所有商品</strong>
+	    </h1>
+        <ul class="album">
+		    {% for product in productlist %}
+		    <li class="pic">
+			    <a href="../products?default={{productdict[product][2]}}">
+	    	        <img src="{{ url_for('static', filename=productdict[product][1]) }}" title={{product}}>
 	    	    </a>
-		</li>
-        {% endfor %}	    	
-      </ul>
+		    </li>
+            {% endfor %}	    	
+        </ul>
     </div>
 	
 	<div id="flowchart">
-	  <div style="padding: 5%">
-        <h1 style="font-size: 3em; text-align:center;">
-          <strong>購物流程</strong>
-	    </h1>
-	    <p id="cautionb">
-          <i class="ra ra-biohazard" aria-hidden="true"></i><strong>本賣場之物品皆於貝婷伺服器</strong><i class="ra ra-biohazard" aria-hidden="true"></i>
-        </p>
-	    <div style="font-size: 2em; text-align: left;">
-		  <br>
-            <strong>STEP 1: 選擇商品</strong>
-          </br>
-          <br>
-            <strong>STEP 2: 將商品放入購物車</strong>
-          </br>
-          <br>
-            <strong>STEP 3: 點選結帳</strong>
-　        </br>
-          <br>
-            <strong>STEP 4: 填寫遊戲ID、希望交易時段及分流</strong>
-　        </br>
-          <br>
-            <strong>STEP 5: 結帳完成取得交易序號。交易序號可用於訂單查詢，請妥善保存。</strong>
-          </br>
-          <br>
-            <strong>STEP 6: 於遊戲內邀請「沐刃一大」成為好友或發短訊給「沐刃一大」</strong>
-          </br>
-          <br>
-            <strong>STEP 7: 等候天梁與您聯絡</strong>
-          </br>
+	    <div style="padding: 5%">
+            <h1 style="font-size: 3em; text-align:center;">
+                <strong>購物流程</strong>
+	        </h1>
+	        <p id="cautionb">
+                <i class="ra ra-biohazard" aria-hidden="true"></i><strong>本賣場之物品皆於貝婷伺服器</strong><i class="ra ra-biohazard" aria-hidden="true"></i>
+            </p>
+	        <div style="font-size: 1em; text-align:justify; max-width:550px; margin:0 auto;">
+		        <br>STEP 1: 選擇商品</br>
+                <br>STEP 2: 將商品放入購物車</br>
+                <br>STEP 3: 點選結帳</br>
+                <br>STEP 4: 填寫遊戲ID、希望交易時段及分流</br>
+                <br>STEP 5: 結帳完成取得交易序號。交易序號可用於訂單查詢，請妥善保存。</br>
+                <br>STEP 6: 於遊戲內邀請「沐刃一大」成為好友或發短訊給「沐刃一大」</br>
+                <br>STEP 7: 等候天梁與您聯絡</br>
+	        </div>
 	    </div>
-	  </div>
     </div>
 	
 	<div id="aboutme">
-	  <h1>
-      <strong style="font-family:Microsoft JhengHei; font-size: 2em; border-bottom:thick dashed #FFBF00;">關於天梁</strong>
-	  </h1>
-      <img src="{{ url_for('static', filename='img/icon.jpg') }}" style="display:block; margin:auto; margin-top: 1em;" /> 
-	  <p>
-	    <br>遊戲ID: 沐刃一大</br>
-        <br>伺服器: 貝婷</br>
-        <br>出沒時間: 19:00~23:00</br>
-        <br>賦予、生產技能皆R1無大師，歡迎短訊代賦代工</br>
-		<br>「酒的好喝，往往，就在於它的難喝。」</br>
-      </p>
+	    <div  style="font-family:Microsoft JhengHei; font-size: 2em; text-align:center;">
+	        <h1><strong>關於天梁</strong></h1>
+	    </div>
+        <img src="{{ url_for('static', filename='img/icon.jpg') }}" style="display:block; margin:auto; margin-top: 1em;" /> 
+		<div  style="font-family:Microsoft JhengHei; font-size: 1em; max-width: 400px; margin:0 auto; text-align:justify;">
+	        <p>
+	            <br>遊戲ID: 沐刃一大</br>
+                <br>伺服器: 貝婷</br>
+                <br>出沒時間: 19:00~23:00</br>
+                <br>賦予、生產技能皆R1無大師，歡迎短訊代賦代工</br>
+		        <br>「酒的好喝，往往，就在於它的難喝。」</br>
+            </p>
+		</div>
     </div>
 
     <footer id="footer_index">
-      <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
-      <p>
-	    <br><strong>本站所有遊戲圖片以及數據皆由遊戲官方Nexon, Devcat, Gamania所有</strong></br>
-	    <br><strong>若有任何侵權之疑慮請聯絡本站協助撤下內容</strong></br>
-	  </p>
+        <strong style="font-family:Microsoft JhengHei; font-size: 3em;">版權聲明</strong>
+        <p>
+	        <br><strong>本站所有遊戲圖片以及數據皆由遊戲官方Nexon, Devcat, Gamania所有</strong></br>
+	        <br><strong>若有任何侵權之疑慮請聯絡本站協助撤下內容</strong></br>
+	    </p>
     </footer>
 {% endblock %}

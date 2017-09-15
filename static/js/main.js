@@ -171,11 +171,11 @@ $( function() {
                 padding: '15px',
 			    width: '50%',
                 left: '25%',			
-                backgroundColor: '#FFBF00',
+                backgroundColor: '#c8b559',
                 '-webkit-border-radius': '10px',
                 '-moz-border-radius': '10px',
                 opacity: .8,
-                color: '#191970'
+                color: '#143063'
             },
 		    overlayCSS:  { 
                 backgroundColor: '#000000', 
@@ -226,11 +226,11 @@ $( function() {
             padding: '15px',
 			width: '50%',
             left: '25%',			
-            backgroundColor: '#FFBF00',
+            backgroundColor: '#c8b559',
             '-webkit-border-radius': '10px',
             '-moz-border-radius': '10px',
             opacity: .8,
-            color: '#191970'
+            color: '#143063'
         },
 		overlayCSS:  { 
             backgroundColor: '#000000', 
@@ -258,11 +258,11 @@ $( function() {
             padding: '15px',
 			width: '50%',
             left: '25%',			
-            backgroundColor: '#FFBF00',
+            backgroundColor: '#c8b559',
             '-webkit-border-radius': '10px',
             '-moz-border-radius': '10px',
             opacity: .8,
-            color: '#191970'
+            color: '#143063'
         },
 		overlayCSS:  { 
             backgroundColor: '#000000', 

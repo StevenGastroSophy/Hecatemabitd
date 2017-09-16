@@ -73,6 +73,7 @@ $(document).ready(function() {
         $('html,body').animate({
 	        scrollTop:$('#footer_payment').offset().top - 60}, 800);
     });
+	$(“.flexslider”).height($(.flexslider .slides img).height());
 });
  
 // 次級選單

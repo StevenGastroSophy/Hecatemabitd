@@ -26,15 +26,6 @@
         }); 
     }
 
-
-        setEqualHeight('.slides li');
-
-        $(window).resize(function() {
-
-            setTimeout(function() {
-                setEqualHeight('.slides li');
-            }, 120);
-        });
 //首頁的投影片
 $(function() {
     $(".flexslider").flexslider({
@@ -48,6 +39,14 @@ $(function() {
     }
   }
 	}); 
+	    setEqualHeight('.slides li');
+
+        $(window).resize(function() {
+
+            setTimeout(function() {
+                setEqualHeight('.slides li');
+            }, 120);
+        });
 }); 
 </script>
 {% endblock %}

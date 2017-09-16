@@ -103,7 +103,7 @@ body{
 
 #hecate_status{
   position: fixed;
-  background-color: #c8b559;
+  background-color: rgba(200, 181, 89, .7);
   top: 70%;  /*垂直位置*/
   right:0;  /*水平位置*/
   z-index: 1000;

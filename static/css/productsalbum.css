@@ -35,7 +35,7 @@
 	background: #143063;
 }
 	
-
+/*
 @media (min-width: 768px) and (max-width:992px){
 		
 	.album .pic{
@@ -44,7 +44,6 @@
 		height: 0;
 		padding-top: 10%;
 		float: left;
-		/*will-change: all;*/
 	}
 	.album .pic:nth-child(24n+4),
 	.album .pic:nth-child(24n+8){
@@ -60,6 +59,7 @@
 		margin-top: -10%;
 	}
 }
+
 @media (min-width: 992px) and (max-width:1200px){
 		
 	.album .pic{
@@ -68,7 +68,6 @@
 		height: 0;
 		padding-top: 10%;
 		float: left;
-		/*will-change: auto;*/
 	}
 	.album .pic:nth-child(24n+1),
 	.album .pic:nth-child(24n+6){
@@ -90,7 +89,6 @@
 		height: 0;
 		padding-top: 10%;
 		float: left;
-		/*will-change: all;*/
 	}
 	.album .pic:nth-child(21n+3),
 	.album .pic:nth-child(21n+7),
@@ -105,7 +103,7 @@
 		margin-top: -10%;
 	}
 }
-@media (max-width: 767px){
+*/
 	.album .pic{
 		position: relative;
 		width: 25%;
@@ -122,4 +120,3 @@
 		padding-top: 75%;
 		float: right;
 	}
-}

@@ -124,6 +124,10 @@ header {
 	display:none;
 }
 
+#navTopIcon span img{
+	max-height:40px;
+}
+
 .nav-bar { display: none; }
 
 header nav {
@@ -207,7 +211,6 @@ body { padding-top: 80px; }
 #navTopIcon{
 	display: inline-block;
 	padding-top: 0.8em;
-	max-height:40px;
 }
 
 .nav-bar {

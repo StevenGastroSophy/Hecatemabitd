@@ -3,12 +3,6 @@
   padding-right:50px;
   margin-top: 10%;
   float:left; /*對應底下li的float:left,做個閉合浮動*/
-  clear: both;
-  text-align:center;
-  color: #143063;
-  background:#c8b559;
-  filter:alpha(opacity=70);
-  background-color: rgba(200, 181, 89, .7);
 }
 
 #productpic{
@@ -17,6 +11,12 @@
 
 #footer_products{
 	padding-right:50px;
+	clear: both;
+    text-align:center;
+    color: #143063;
+    background:#c8b559;
+    filter:alpha(opacity=70);
+    background-color: rgba(200, 181, 89, .7);
 }
 
 #name {font-size: 18px;line-height: 1.5em;}

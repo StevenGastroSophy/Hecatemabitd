@@ -2,6 +2,7 @@
   width: 100%;
   padding-right:50px;
   margin-top: 10%;
+  float:left; /*對應底下li的float:left,做個閉合浮動*/
 }
 
 #productpic{
@@ -9,7 +10,6 @@
 }
 
 #footer_products{
-    margin-top: 33%;
 	padding-right:50px;
 }
 
@@ -129,10 +129,6 @@
   display: block;
 }
 
-#footer_products{
-    margin-top: 190%;
-	padding-right:50px;
-}
 }
 
 

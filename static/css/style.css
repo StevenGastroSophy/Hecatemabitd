@@ -120,6 +120,10 @@ header {
   width: 100%; 
 }
 
+#navTopIcon{
+	visibility:hidden;
+}
+
 .nav-bar { display: none; }
 
 header nav {
@@ -198,6 +202,10 @@ body { padding-top: 80px; }
 
 #blank {
 	   height:0em;
+}
+
+#navTopIcon{
+	visibility:visible;
 }
 
 .nav-bar {

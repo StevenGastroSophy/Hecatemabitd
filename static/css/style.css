@@ -122,6 +122,7 @@ header {
 
 #navTopIcon{
 	visibility:hidden;
+	height: 0;
 }
 
 .nav-bar { display: none; }
@@ -206,6 +207,8 @@ body { padding-top: 80px; }
 
 #navTopIcon{
 	visibility:visible;
+	height: auto;
+	padding-top: 0.2em;
 }
 
 .nav-bar {

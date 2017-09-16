@@ -206,7 +206,8 @@ body { padding-top: 80px; }
 
 #navTopIcon{
 	display: inline-block;
-	padding-top: 0.2em;
+	padding-top: 0.8em;
+	max-height:40px;
 }
 
 .nav-bar {
@@ -237,8 +238,7 @@ body { padding-top: 80px; }
 }
 
 header nav {
-  width: 45%;
-  
+  width: 45%; /*選單彈出時覆蓋的畫面百分比*/
   position: fixed;
   right: 100%;
   top : 0;

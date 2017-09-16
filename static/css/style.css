@@ -28,6 +28,14 @@ body{
   float:left; /*對應底下li的float:left,做個閉合浮動*/
 }
 
+#flowchart{
+	background: url({{ url_for('static', filename='img/mabibackground.png') }}) center center no-repeat;
+    background-size: cover;
+    margin-bottom: 2%;
+	padding-right:50px;
+	clear: both;
+}
+
 .ui-widget {
   font-family: Microsoft JhengHei;
   font-size: 0.8em;

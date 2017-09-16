@@ -102,7 +102,7 @@ $(document).ready(function() {
     // section of the page.
     socket.on('my_response', function(msg) {
 	    if (msg.status == 'ONLINE') {
-            $('#hecate_status span').css('color','#39A735');
+            $('#hecate_status span').css('color','#2d7c3b');
 			$('#status').text('ONLINE');
 			$('.channel').css('visibility','visible');
 			$('h2.channel').text(msg.channel);

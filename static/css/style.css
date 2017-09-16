@@ -68,10 +68,10 @@ body{
 
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-  border: 1px solid #003eff;
-  background: #8F5D00;
+  border: 1px solid #327bff;
+  background: #c1a000;
   font-weight: normal;
-  color: #8C8CFF;
+  color: #327bff;
 }
 
 #btn_cart{

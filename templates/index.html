@@ -8,12 +8,39 @@
 
 {% block EmbeddingJS %}
 <script type="text/javascript">
+ function setEqualHeight(selector) {
+        var heights = new Array();
+
+        $(selector).each(function() {
+
+            $(this).css('min-height', '0');
+            $(this).css('max-height', 'none');
+            $(this).css('height', 'auto');
+
+            heights.push($(this).height());
+        });
+
+        var max = Math.max.apply( Math, heights );
+    $(selector).each(function() {
+            $(this).css('height', max + 'px');
+        }); 
+    }
+
+
+        setEqualHeight('.slides li');
+
+        $(window).resize(function() {
+
+            setTimeout(function() {
+                setEqualHeight('.slides li');
+            }, 120);
+        });
 //首頁的投影片
 $(function() {
     $(".flexslider").flexslider({
 	slideshowSpeed: 4000,
 	animationSpeed: 400,
-	controlNav: true,
+	controlNav: false,
 	after: function(slider) {
     /* auto-restart player if paused after action */
     if (!slider.playing) {

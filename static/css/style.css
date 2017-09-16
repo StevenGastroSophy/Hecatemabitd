@@ -25,7 +25,6 @@ body{
 #products_index{
   width: 100%;
   padding-right:50px;   /*給購物車留點空間*/
-  float:left; /*對應底下li的float:left,做個閉合浮動*/
 }
 
 .ui-widget {

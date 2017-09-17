@@ -111,21 +111,22 @@ $(function() {
         
         </ul> 
     </div>
-	
-	<div id="products_index">
-        <h1 style="font-size: 1.5em; text-align: center; margin-bottom: 0.3em; border-bottom:ridge #c8b559;">
-            <strong>所有商品</strong>
-	    </h1>
-        <ul class="album">
-		    {% for product in productlist %}
-		    <li class="pic">
-			    <a href="../products?default={{productdict[product][2]}}">
-	    	        <img src="{{ url_for('static', filename=productdict[product][1]) }}" title={{product}}>
-	    	    </a>
-		    </li>
-            {% endfor %}	    	
-        </ul>
-    </div>
+	<div style="margin:0 auto;">
+	    <div id="products_index">
+            <h1 style="font-size: 1.5em; text-align: center; margin-bottom: 0.3em; border-bottom:ridge #c8b559;">
+                <strong>所有商品</strong>
+	        </h1>
+            <ul class="album">
+		        {% for product in productlist %}
+		        <li class="pic">
+			        <a href="../products?default={{productdict[product][2]}}">
+	    	            <img src="{{ url_for('static', filename=productdict[product][1]) }}" title={{product}}>
+	    	        </a>
+		        </li>
+                {% endfor %}	    	
+            </ul>
+        </div>
+	</div>
 	
 	<div id="flowchart">
 	    <div style="padding: 5%">

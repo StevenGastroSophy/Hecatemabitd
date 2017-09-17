@@ -1,6 +1,7 @@
 
 .album{
 	width: 100%;
+	max-width: 675px;
 }
 .album img{
 	position: absolute;
@@ -104,6 +105,7 @@
 	}
 }
 */
+/*
 @media (max-width: 767px){
 	.album .pic{
 		position: relative;
@@ -122,7 +124,7 @@
 		float: right;
 	}
 }
-@media (min-width: 768px){
+*/
 	.album .pic{
 		position: relative;
 		width: 20%;

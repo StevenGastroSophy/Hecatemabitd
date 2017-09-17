@@ -130,13 +130,15 @@
 		padding-top: 20%;
 		float: left;
 	}
-	.album .pic:nth-child(15n+6){
-		width: 80%;
-		padding-top: 80%;
+	.album .pic:nth-child(8n+1),
+	.album .pic:nth-child(8n+2){
+		width: 40%;
+		padding-top: 40%;
 	}
-	.album .pic:nth-child(15n+11){
-		width: 80%;
-		padding-top: 80%;
+	.album .pic:nth-child(8n+5),
+	.album .pic:nth-child(8n+6){
+		width: 40%;
+		padding-top: 40%;
 		float: right;
 	}
 }

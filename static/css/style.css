@@ -54,7 +54,7 @@ body{
 
 .ui-widget-content{
   border: 1px solid #cccccc;
-  background: #071f3b;
+  background-color: rgba(7, 31, 59, .7);
   font-weight: normal;
   color: #c8b559;
 }

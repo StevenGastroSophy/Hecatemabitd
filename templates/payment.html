@@ -73,8 +73,10 @@ color:#f00000;
 {% block content %}
 <div id="blank"></div>
 <div style="padding-right:50px;">
-    <h1 style="text-align: center;">購物清單</h1>
-	<h3><small class="pull-right" id="countsmalltext"> 購物車內有{{session.CartCount}}樣物品 </small></h3>
+    <div style="background-color: rgba(7, 31, 59, .7);">
+        <h1 style="text-align: center;">購物清單</h1>
+	    <h3><small class="pull-right" id="countsmalltext"> 購物車內有{{session.CartCount}}樣物品 </small></h3>
+	</div>
     <table class="table" id="CartContent">
               <thead>
                 <tr>

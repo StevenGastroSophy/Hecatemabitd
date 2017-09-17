@@ -11,6 +11,11 @@
 	height: 100%;
 	width: auto;
 }
+.album img:hover,
+.album img:focus{
+	transition: .5s filter;
+    filter:sepia() saturate(4) hue-rotate(295deg);
+}
 .album a{
 	display:block;
 	position: absolute;

@@ -83,6 +83,18 @@ $(function() {
     padding-right:50px;
 }
 
+#ShoppingStep{
+    font-size: 1em;
+	text-align:justify;
+	max-width:550px;
+	margin:0 auto;
+	background: hsla(0,0%,100%,.3)
+}
+#ShoppingStep::before{
+    content:'';
+	top: 0; right: 0; bottom: 0; left: 0;
+	filter: blur(20px);
+}
 </style>
 {% endblock %}
 
@@ -143,7 +155,7 @@ $(function() {
 	        <p id="cautionb">
                 <i class="ra ra-biohazard" aria-hidden="true"></i><strong>本賣場之物品皆於貝婷伺服器</strong><i class="ra ra-biohazard" aria-hidden="true"></i>
             </p>
-	        <div style="font-size: 1em; text-align:justify; max-width:550px; margin:0 auto;">
+	        <div id="ShoppingStep">
 		        <br>STEP 1: 選擇商品</br>
                 <br>STEP 2: 將商品放入購物車</br>
                 <br>STEP 3: 點選結帳</br>

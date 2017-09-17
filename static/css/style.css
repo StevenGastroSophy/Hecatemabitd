@@ -32,7 +32,7 @@ body{
     float: left;
     max-width: 675px;
     border-width: 5px;
-    border-style: double;
+    border-style: inset;
     border-color: #c8b559;
     background-color: rgba(7, 31, 59, .7);
 }
@@ -89,7 +89,7 @@ body{
   position: fixed;
   top: 15%;  /*垂直位置*/
   right: 0;  /*水平位置*/
-  background: #c8b559;
+  background-color: rgba(200, 181, 89, .7);
   color: #071f3b;
   z-index: 1000;
   border-radius:50px;
@@ -105,7 +105,7 @@ body{
   right:-8px;
   position:absolute;
   font-size:12px;
-  background:#f00000;
+  background:background-color: rgba(240, 0, 0, .7);
   border-radius: 10px;
   width:20px;
   height:20px;
@@ -147,7 +147,7 @@ header nav {
   font-size:12pt;
   color:#071f3b;
   position: fixed;
-  background: #c8b559;
+  background-color: rgba(200, 181, 89, .7);
   z-index: 1000;
   width: 100%;
   margin: auto;
@@ -178,7 +178,7 @@ header nav ul li a {
   font-family: Microsoft JhengHei;
 }
 
-header nav ul li:hover { background: #c8b559; }
+header nav ul li:hover { background-color: rgba(200, 181, 89, .7); }
 
 header nav ul li:hover i { color: yellow; }
 
@@ -188,7 +188,7 @@ header nav ul li:hover .children { display: block; }
 
 header nav ul li .children {
   display: none;
-  background: #c8b559;
+  background-color: rgba(200, 181, 89, .7);
   position: absolute;
   width: 150%;
   z-index: 1000;
@@ -230,7 +230,7 @@ body { padding-top: 80px; }
   width: 100%;
   position: fixed;
   top: 0;
-  background: #c8b559;
+  background-color: rgba(200, 181, 89, .7);
 }
 
 .nav-bar span {

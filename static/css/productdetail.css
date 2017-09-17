@@ -3,6 +3,7 @@
   padding-right:50px;
   margin-top: 5%;
   float:left; /*對應底下li的float:left,做個閉合浮動*/
+  max-width: 675px;
 }
 
 #productpic{

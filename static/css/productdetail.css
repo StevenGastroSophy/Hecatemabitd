@@ -33,9 +33,12 @@
 .carousel .item > img {display:inline;}
 
 .row-fluid {
-  width: 100%;
-  padding-left:50px;
-  padding-right:55px;
+    width: 90%;
+    max-width: 675px;
+    margin: 0 auto;
+    padding-left: 50px;
+    padding-right: 55px;
+    background-color: rgba(7, 31, 59, .7);
 }
 
 .row-fluid:before,

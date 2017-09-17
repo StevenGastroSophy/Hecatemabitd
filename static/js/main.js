@@ -175,7 +175,7 @@ $( function() {
                 '-webkit-border-radius': '10px',
                 '-moz-border-radius': '10px',
                 opacity: .8,
-                color: '#143063'
+                color: '#071f3b'
             },
 		    overlayCSS:  { 
                 backgroundColor: '#000000', 
@@ -230,7 +230,7 @@ $( function() {
             '-webkit-border-radius': '10px',
             '-moz-border-radius': '10px',
             opacity: .8,
-            color: '#143063'
+            color: '#071f3b'
         },
 		overlayCSS:  { 
             backgroundColor: '#000000', 
@@ -262,7 +262,7 @@ $( function() {
             '-webkit-border-radius': '10px',
             '-moz-border-radius': '10px',
             opacity: .8,
-            color: '#143063'
+            color: '#071f3b'
         },
 		overlayCSS:  { 
             backgroundColor: '#000000', 

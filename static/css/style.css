@@ -11,7 +11,8 @@ body{
   font-family:Microsoft JhengHei;
   font-weight:lighter;
   font-size:12pt;
-  background-color:#071f3b;
+  background: linear-gradient(45deg,#CBD0D8 25%,#071f3b 0,#071f3b 50%,#CBD0D8 0,#CBD0D8 75%,#071f3b 0);
+  background-size: 210px 210px;
   color:#c8b559;
 }
 
@@ -24,8 +25,10 @@ body{
 
 #products_index{
   width: 100%;
-  padding-right:50px;   /*給購物車留點空間*/
-  padding-left: 55px;   /*偏右一點才能在視覺上置中*/
+  padding-right:35px;   /*給購物車留點空間*/
+  padding-left: 40px;   /*偏右一點才能在視覺上置中*/
+  padding-bottom:10px;
+  margin-bottom: 21px;
   float:left; /*對應底下li的float:left,做個閉合浮動*/
   max-width: 675px;
   border-width: 5px;

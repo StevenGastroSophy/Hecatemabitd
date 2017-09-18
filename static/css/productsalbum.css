@@ -110,7 +110,7 @@
 	}
 }
 */
-/*
+
 @media (max-width: 767px){
 	.album .pic{
 		position: relative;
@@ -119,17 +119,18 @@
 		padding-top: 25%;
 		float: left;
 	}
-	.album .pic:nth-child(12n+5){
+	.album .pic:nth-child(12n+1){
 		width: 75%;
 		padding-top: 75%;
 	}
-	.album .pic:nth-child(12n+9){
+	.album .pic:nth-child(12n+5){
 		width: 75%;
 		padding-top: 75%;
 		float: right;
 	}
 }
-*/
+
+@media (min-width: 768px){
 	.album .pic{
 		position: relative;
 		width: 20%;

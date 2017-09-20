@@ -26,7 +26,7 @@ $(function(){
 			  noSpace: true,
 			  noSpecial: true,
 			  digits: true,
-			  minlength: 15,
+			  minlength: 14,
             },
         },
 		errorPlacement: function(error, element) { 
@@ -83,7 +83,7 @@ color:#f00000;
 						        <label for="Order_code"><h2>請輸入您的訂單號碼</h2></label>
 					        </div>
 						    <div style="padding:5% 0;">
-						        {{form.Order_code(placeholder="訂單號碼最少15位數", style="height:30px; font-size:20px;", id="Order_code", required=True)}}
+						        {{form.Order_code(placeholder="訂單號碼最少14位數", style="height:30px; font-size:20px;", id="Order_code", required=True)}}
 						    </div>
 				            <div style="padding-bottom:2%;">
 					            <button type="submit" class="ui-button ui-corner-all ui-widget">送出</button>
